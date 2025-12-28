@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-* {
-  box-sizing: border-box;
-}
-
 @theme {
   /* Font Family - Set as default */
   --font-family-sans: "Poppins", sans-serif;
@@ -36,6 +32,15 @@
   --color-brand-red: #EB5164;
 }
 
+@layer base {
+  html {
+    font-family: var(--font-family-sans);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+}
 /* Typography Utility Classes */
 @layer utilities {
   .text-headline-1 {
