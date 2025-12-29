@@ -1,3 +1,5 @@
+import PictureProfile from "@/assets/images/picture-profile.jpg"
+
 function HeroSection() {
   return (
     <div className="w-full max-w-[1200px] flex flex-row items-center gap-[3.75rem] mx-auto">
@@ -10,7 +12,7 @@ function HeroSection() {
       </div>
       <div className="w-full h-[529px] overflow-hidden rounded-2xl">
         <img
-          src="src/components/images/picture-profile.jpg"
+          src={PictureProfile}
           alt="picture-profile"
           className="w-full h-full object-cover"
         />

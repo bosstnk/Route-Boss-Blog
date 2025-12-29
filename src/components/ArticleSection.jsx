@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import SearchIcon from "@/assets/images/Search_light.svg"
 
 function ArticleSection() {
   return (
@@ -9,7 +10,7 @@ function ArticleSection() {
         </h3>
         <div className="w-full px-6 py-4 rounded-2xl flex flex-row items-center justify-between bg-base-brown-200">
           <nav aria-label="Category tabs">
-            <ul class="flex gap-2">
+            <ul className="flex gap-2">
               <li>
                 <button className="text-body-1 px-5 py-3 text-base-brown-500 bg-base-brown-300 rounded-lg">Highlight</button>
               </li>
@@ -38,7 +39,7 @@ function ArticleSection() {
                 focus-visible:outline-none"
             />
             <img
-              src="src\components\images\Search_light.svg"
+              src={SearchIcon}
               alt="search-icon"
             />
           </div>
