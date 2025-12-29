@@ -10,7 +10,7 @@ function HeroSection() {
       </div>
       <div className="w-full h-[529px] overflow-hidden rounded-2xl">
         <img
-          src="src/components/images/picture-profile.jpg"
+          src="src\assets\images\picture-profile.jpg"
           alt="picture-profile"
           className="w-full h-full object-cover"
         />

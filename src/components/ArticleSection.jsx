@@ -38,7 +38,7 @@ function ArticleSection() {
                 focus-visible:outline-none"
             />
             <img
-              src="src\components\images\Search_light.svg"
+              src="src\assets\images\Search_light.svg"
               alt="search-icon"
             />
           </div>
