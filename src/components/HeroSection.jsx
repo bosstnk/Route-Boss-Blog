@@ -4,14 +4,13 @@ function HeroSection() {
   return (
     <div className="w-full px-4 py-10 flex flex-col items-center gap-10 lg:max-w-[1200px] lg:flex-row lg:gap-[3.75rem] lg:mx-auto lg:p-0">
       <div className="w-full max-w-[343px] flex flex-col gap-4 lg:max-w-[347px] lg:gap-6">
-        {/* lg:text-headline-1 ไม่ทำงาน */}
         <h1 className="text-headline-2 text-center leading-12 text-base-brown-600 lg:text-headline-1 lg:text-right lg:leading-[60px]">Stay Informed, Stay Inspired</h1>
         <p className="text-body-1 text-center text-base-brown-400 leading-6 lg:text-right">
           Discover a World of Knowledge at Your Fingertips. Your Daily Dose of
           Inspiration and Information.
         </p>
       </div>
-      <div className="w-[343px] h-[470px] lg:w-full lg:h-[529px] overflow-hidden rounded-2lg">
+      <div className="w-[343px] h-[470px] lg:w-full lg:h-[529px] overflow-hidden rounded-2xl">
         <img
           src={PictureProfile}
           alt="picture-profile"

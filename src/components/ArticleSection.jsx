@@ -82,7 +82,7 @@ function ArticleSection() {
           </div>
         </div>
       </div>
-      <div className="px-4 pt-6 pb-20 flex flex-col gap-12 lg:gap-20 lg:p-0">
+      <div className="px-4 pt-6 flex flex-col gap-12 lg:gap-20 lg:p-0">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
         {blogPosts.map(blog => 
         <BlogCard
@@ -95,8 +95,8 @@ function ArticleSection() {
           date={blog.date}
         />)}
         </div>
-        <button className="text-body-1 text-base-brown-600 underline">View more</button>
       </div>
+      <button className="text-body-1 text-base-brown-600 underline mt-12 mb-20">View more</button>
     </div>
   );
 }
