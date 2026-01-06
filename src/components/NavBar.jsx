@@ -1,21 +1,16 @@
 import LogoPage from "@/assets/images/logo.svg";
 import Frame from "@/assets/images/frame.svg"
+import Button from "./common/Button";
 
 function NavBar() {
   return (
-    // pading x-[7.5rem] 120px or padding x-32 128px
-    <nav className="w-full px-6 py-3 flex items-center justify-between bg-base-brown-100 border-b border-b-base-brown-300">
+    <nav className="w-full px-6 py-3 flex items-center justify-between bg-base-brown-100 border-b border-b-base-brown-300 lg:px-[120px] lg:py-4">
       <img src={LogoPage} alt="logo-page" className="w-6 h-6 lg:w-auto lg:h-auto" />
       <img src={Frame} alt="hamburger-bar" className="lg:hidden" />
 
       <div className="hidden lg:flex gap-8">
-        <button className="text-body-1 text-base-brown-600 bg-base-white inline-flex items-center justify-center rounded-full px-10 py-3 leading-6 border border-base-brown-400">
-          Log in
-        </button>
-
-        <button className="text-body-1 text-base-white bg-base-brown-600 inline-flex items-center justify-center rounded-full px-10 py-3 leading-6">
-          Sign up
-        </button>
+        <Button text="Log in" variant="secondary"/>
+        <Button text="Sign up" variant="primary"/>
       </div>
     </nav>
   );

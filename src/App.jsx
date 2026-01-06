@@ -7,9 +7,9 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
-{/*       <NavBar /> */}
-      <LandingPage />
-{/*       <Footer /> */}
+      <NavBar />
+{/*       <LandingPage />
+      <Footer /> */}
     </>
   );
 }
