@@ -80,6 +80,44 @@
     font-size: var(--font-size-body-3);
     font-weight: var(--font-weight-body);
   }
+
+  /* Responsive variants for typography classes */
+  @media (min-width: 1024px) {
+    .lg\:text-headline-1 {
+      font-size: var(--font-size-headline-1);
+      font-weight: var(--font-weight-headline);
+    }
+
+    .lg\:text-headline-2 {
+      font-size: var(--font-size-headline-2);
+      font-weight: var(--font-weight-headline);
+    }
+
+    .lg\:text-headline-3 {
+      font-size: var(--font-size-headline-3);
+      font-weight: var(--font-weight-headline);
+    }
+
+    .lg\:text-headline-4 {
+      font-size: var(--font-size-headline-4);
+      font-weight: var(--font-weight-headline);
+    }
+
+    .lg\:text-body-1 {
+      font-size: var(--font-size-body-1);
+      font-weight: var(--font-weight-body);
+    }
+
+    .lg\:text-body-2 {
+      font-size: var(--font-size-body-2);
+      font-weight: var(--font-weight-body);
+    }
+
+    .lg\:text-body-3 {
+      font-size: var(--font-size-body-3);
+      font-weight: var(--font-weight-body);
+    }
+  }
 }
 
 @theme inline {
