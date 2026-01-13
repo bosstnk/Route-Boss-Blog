@@ -31,22 +31,22 @@ function ArticleSection() {
           Latest articles
         </h3>
         <div className="w-full p-4 flex flex-col items-center gap-4 bg-base-brown-200 lg:px-6 lg:py-4 lg:flex-row lg:justify-between lg:rounded-lg">
-          <nav aria-label="Category tabs" className="hidden lg:block">
-            <div className="flex gap-2">
-              {categories.map((category) => (
+          <nav aria-label="Category tabs" className="hidden lg:flex lg:gap-2">
+            {categories.map((category) => {
+              return (
                 <Button
                   key={category}
                   text={category}
                   variant="tab"
                   onClick={() => setActiveCategory(category)}
-                  className={
-                    activeCategory === category
-                      ? "bg-base-brown-300 text-base-brown-500 rounded-lg"
-                      : ""
+                  disabled={activeCategory === category}
+                  className={activeCategory === category
+                      ? "bg-base-brown-300 text-base-brown-500"
+                      : "hover:bg-base-brown-100/70"
                   }
                 />
-              ))}
-            </div>
+              );
+            })}
           </nav>
           <InputGroup className="text-body-1 py-3 pl-4 pr-3 lg:max-w-[304px]  bg-base-white border-base-brown-300 rounded-lg">
             <InputGroupInput
@@ -59,7 +59,7 @@ function ArticleSection() {
           </InputGroup>
           <div className="w-full flex flex-col gap-1 lg:hidden">
             <div className="text-body-1 text-base-brown-400">Category</div>
-            <Select value={activeCategory} onValueChange={setActiveCategory}>
+            <Select value={activeCategory} onValueChange={(value) =>setActiveCategory(value)}>
               <SelectTrigger
                 className="
                 w-full !h-auto pl-4 pr-3 py-3
@@ -73,11 +73,7 @@ function ArticleSection() {
               </SelectTrigger>
               <SelectContent position="popper" sideOffset={4}>
                 {categories.map((category) => (
-                  <SelectItem
-                    key={category}
-                    value={category}
-                    className="text-body-1"
-                  >
+                  <SelectItem key={category} value={category} className="transition-colors data-[highlighted]:bg-base-brown-100/70">
                     {category}
                   </SelectItem>
                 ))}
