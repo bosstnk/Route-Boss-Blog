@@ -1,6 +1,6 @@
 import LogoPage from "@/assets/images/logo.svg";
 import Frame from "@/assets/images/frame.svg"
-import Button from "./common/Button";
+import {Button} from "./common/Button";
 
 function NavBar() {
   return (
