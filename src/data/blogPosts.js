@@ -1,8 +1,9 @@
 export const blogPosts = [
   {
+    id: 1,
     image:
       "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449771/my-blog-post/e739huvlalbfz9eynysc.jpg",
-    category: "Cat",
+    category: "General",
     title:
       "Understanding Cat Behavior: Why Your Feline Friend Acts the Way They Do",
     description:
@@ -11,6 +12,7 @@ export const blogPosts = [
     date: "11 September 2024",
   },
   {
+    id: 2,
     image:
       "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449771/my-blog-post/gsutzgam24abrvgee9r4.jpg",
     category: "Cat",
@@ -21,9 +23,10 @@ export const blogPosts = [
     date: "11 September 2024",
   },
   {
+    id: 3,
     image:
       "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449771/my-blog-post/zzye4nxfm3pmh81z7hni.jpg",
-    category: "Cat",
+    category: "Inspiration",
     title: "Finding Motivation: How to Stay Inspired Through Life's Challenges",
     description:
       "This article explores strategies to maintain motivation when faced with personal or professional challenges. From setting small goals to practicing mindfulness and seeking support, discover ways to keep your spirits high and your goals in sight.",
@@ -31,9 +34,10 @@ export const blogPosts = [
     date: "11 September 2024",
   },
   {
+    id: 4,
     image:
       "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449771/my-blog-post/e0haxst38li4g8i0vpsr.jpg",
-    category: "Cat",
+    category: "General",
     title:
       "The Science of the Cat's Purr: How It Benefits Cats and Humans Alike",
     description:
@@ -42,9 +46,10 @@ export const blogPosts = [
     date: "11 September 2024",
   },
   {
+    id: 5,
     image:
       "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449771/my-blog-post/g8qpepvgnz6gioylyhrz.jpg",
-    category: "Cat",
+    category: "Inspiration",
     title: "Unlocking Creativity: Simple Habits to Spark Inspiration Daily",
     description:
       "Discover practical ways to nurture creativity in your everyday life. Whether it's through journaling, taking breaks, or exploring new hobbies, this article offers strategies to keep your creative juices flowing and overcome creative blocks.",
@@ -52,6 +57,7 @@ export const blogPosts = [
     date: "11 September 2024",
   },
   {
+    id: 6,
     image:
       "https://res.cloudinary.com/dcbpjtd1r/image/upload/v1728449771/my-blog-post/koydfh6jpmzhtxvwein3.jpg",
     category: "Cat",

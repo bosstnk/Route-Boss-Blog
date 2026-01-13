@@ -1,4 +1,4 @@
-import PictureProfile from "@/assets/images/picture-profile.jpg"
+import imageProfile from "@/assets/images/picture-profile.jpg"
 
 function HeroSection() {
   return (
@@ -12,7 +12,7 @@ function HeroSection() {
       </div>
       <div className="w-[343px] h-[470px] lg:w-full lg:h-[529px] overflow-hidden rounded-2xl">
         <img
-          src={PictureProfile}
+          src={imageProfile}
           alt="picture-profile"
           className="w-full h-full object-cover"
         />
