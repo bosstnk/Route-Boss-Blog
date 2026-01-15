@@ -1,4 +1,5 @@
 import imageProfile from "@/assets/images/picture-profile.jpg"
+import { formatDate } from "@/utils/formatDate";
 
 export function BlogCard({post}) {
   return (
@@ -30,7 +31,7 @@ export function BlogCard({post}) {
           />
           <span className="text-base-brown-500">{post.author}</span>
           <span className="mx-2 text-base-brown-300">|</span>
-          <span className="text-base-brown-400">{post.date}</span>
+          <span className="text-base-brown-400">{formatDate(post.date)}</span>
         </div>
       </div>
     </div>

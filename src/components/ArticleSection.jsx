@@ -1,7 +1,7 @@
 import { BlogCard } from "./common/BlogCard.jsx";
-import { blogPosts } from "@/data/blogPosts.js";
 import { Button } from "./common/Button.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { filterPostsByCategory } from "@/utils/filterPosts.js";
 import { Search } from "lucide-react";
 import {
@@ -13,9 +13,7 @@ import {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -23,7 +21,57 @@ import {
 const categories = ["Highlight", "Cat", "Inspiration", "General"];
 
 function ArticleSection() {
-  const [activeCategory, setActiveCategory] = useState("Highlight");
+  const [filterCategory, setFilterCategory] = useState("Highlight");
+  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  async function getPosts() {
+    setIsLoading(true);
+    try {
+      const categoryParam = filterCategory === "Highlight" ? "" : filterCategory;
+      const response = await axios.get("https://blog-post-project-api.vercel.app/posts",
+        {
+          params: {
+            page: page,
+            limit: 6,
+            category: categoryParam,
+          },
+        }
+      );
+      console.log(response.data);
+
+      if (page === 1) {
+        setPosts(response.data.posts);
+      } else {
+        setPosts((prevPost) => [...prevPost, ...response.data.posts]);
+      }
+
+      if (response.data.currentPage >= response.data.totalPages) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  useEffect(() => {
+    setPosts([]);
+    setPage(1);
+    setHasMore(true);
+  }, [filterCategory]);
+
+  useEffect(() => {
+    if (isLoading) return;
+    getPosts();
+  }, [page, filterCategory]);
+
   return (
     <div className="w-full flex flex-col mx-auto lg:gap-12 lg:max-w-[1200px]">
       <div className="w-full flex flex-col lg:gap-8">
@@ -38,9 +86,10 @@ function ArticleSection() {
                   key={category}
                   text={category}
                   variant="tab"
-                  onClick={() => setActiveCategory(category)}
-                  disabled={activeCategory === category}
-                  className={activeCategory === category
+                  onClick={() => setFilterCategory(category)}
+                  disabled={category === filterCategory}
+                  className={
+                    category === filterCategory
                       ? "bg-base-brown-300 text-base-brown-500"
                       : "hover:bg-base-brown-100/70"
                   }
@@ -59,7 +108,10 @@ function ArticleSection() {
           </InputGroup>
           <div className="w-full flex flex-col gap-1 lg:hidden">
             <div className="text-body-1 text-base-brown-400">Category</div>
-            <Select value={activeCategory} onValueChange={(value) =>setActiveCategory(value)}>
+            <Select
+              value={filterCategory}
+              onValueChange={(value) => setFilterCategory(value)}
+            >
               <SelectTrigger
                 className="
                 w-full !h-auto pl-4 pr-3 py-3
@@ -73,7 +125,11 @@ function ArticleSection() {
               </SelectTrigger>
               <SelectContent position="popper" sideOffset={4}>
                 {categories.map((category) => (
-                  <SelectItem key={category} value={category} className="transition-colors data-[highlighted]:bg-base-brown-100/70">
+                  <SelectItem
+                    key={category}
+                    value={category}
+                    className="transition-colors data-[highlighted]:bg-base-brown-100/70"
+                  >
                     {category}
                   </SelectItem>
                 ))}
@@ -84,14 +140,22 @@ function ArticleSection() {
       </div>
       <div className="px-4 pt-6 flex flex-col gap-12 lg:gap-20 lg:p-0">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {filterPostsByCategory(blogPosts, activeCategory).map((post) => (
+          {filterPostsByCategory(posts, filterCategory).map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
       </div>
-      <button className="text-body-1 text-base-brown-600 underline mt-12 mb-20">
-        View more
-      </button>
+      {hasMore && (
+        <div className="text-center mt-8">
+          <button
+            onClick={handleLoadMore}
+            className="hover:text-muted-foreground font-medium underline"
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "View more"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
