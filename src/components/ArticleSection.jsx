@@ -140,7 +140,7 @@ function ArticleSection() {
       </div>
       <div className="px-4 pt-6 flex flex-col gap-12 lg:gap-20 lg:p-0">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {filterPostsByCategory(posts, filterCategory).map((post) => (
+          {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
