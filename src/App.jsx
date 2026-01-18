@@ -1,15 +1,20 @@
 import './App.css'
-import NavBar from './components/NavBar'
-import LandingPage from './components/LandingPage'
-import Footer from './components/Footer';
+import HomePage from './pages/HomePage'
+import ViewPostPage from './pages/ViewPostPage';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 function App() {
   return (
     <>
-      <NavBar />
-      <LandingPage />
-      <Footer />
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/post/:postId" element={<ViewPostPage />} />
+        </Routes>
+      </Router>
+    </div>
     </>
   );
 }
