@@ -7,7 +7,7 @@ function LandingPage() {
   return (
     <>
       <NavBar />
-      <div className="w-full lg:px-[120px] lg:py-[60px] bg-base-brown-100 flex flex-col lg:gap-20">
+      <div className="w-full pb-14 lg:px-[120px] lg:py-[60px] bg-base-brown-100 flex flex-col lg:gap-20">
         <HeroSection />
         <ArticleSection />
       </div>

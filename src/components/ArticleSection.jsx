@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { BlogCard } from "./common/BlogCard.jsx";
 import { Button } from "./common/Button.jsx";
 import { Search } from "lucide-react";
+import { Input } from "./ui/input.jsx";
 import {
   InputGroup,
   InputGroupAddon,
@@ -16,14 +18,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSuggestions, useKeyword } from "@/hooks/useSearchPost.js";
 
 function ArticleSection() {
+  const navigate = useNavigate();
+  const { keyword, setKeyword } = useKeyword()
+  const { suggestions, isLoading: isLoadingg } = useSuggestions(keyword);
+  const [showDropdown, setShowDropdown] = useState(false);
   const categories = ["Highlight", "Cat", "Inspiration", "General"];
   const [category, setCategory] = useState("Highlight");
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -95,15 +103,36 @@ function ArticleSection() {
               );
             })}
           </nav>
-          <InputGroup className="text-body-1 py-3 pl-4 pr-3 lg:max-w-[304px]  bg-base-white border-base-brown-300 rounded-lg">
-            <InputGroupInput
+          <div className="relative w-full flex py-3 pl-4 pr-3 lg:max-w-[304px] bg-base-white border border-base-brown-300 rounded-lg transition-colors focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300">
+            <input
+              type="text"
               placeholder="Search"
-              className="text-body-1 bg-base-white text-base-brown-400 placeholder:text-base-brown-400 focus-visible:border-muted-foreground"
+              className="w-full text-body-1 bg-base-white text-base-brown-400 placeholder:text-base-brown-400 focus:outline-none focus:ring-0"
+              onChange={(e) => setKeyword(e.target.value)}
+              onFocus={() => setShowDropdown(true)}
+              onBlur={() => {
+                setTimeout(() => {
+                  setShowDropdown(false);
+                }, 200);
+              }}
             />
-            <InputGroupAddon align="inline-end" className="p-0">
-              <Search size={24} />
-            </InputGroupAddon>
-          </InputGroup>
+            <Search size={24} color="#62748e" />
+            {!isLoadingg &&
+              showDropdown &&
+              keyword && (
+                <div className="absolute z-10 w-full bg-background rounded-lg shadow-sm p-1 right-0 top-14">
+                  {suggestions.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      className="text-start px-4 py-2 block w-full text-sm text-foreground hover:bg-[#EFEEEB] hover:text-muted-foreground hover:rounded-sm cursor-pointer"
+                      onClick={() => navigate(`/post/${suggestion.id}`)}
+                    >
+                      {suggestion.title}
+                    </button>
+                  ))}
+                </div>
+              )}
+          </div>
           <div className="w-full flex flex-col gap-1 lg:hidden">
             <div className="text-body-1 text-base-brown-400">Category</div>
             <Select
@@ -143,7 +172,7 @@ function ArticleSection() {
         <div className="text-center">
           <button
             onClick={handleLoadMore}
-            className="hover:text-muted-foreground font-medium underline"
+            className="hover:text-base-brown-400 font-medium underline cursor-pointer"
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "View more"}

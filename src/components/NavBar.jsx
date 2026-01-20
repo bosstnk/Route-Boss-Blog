@@ -5,6 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
@@ -18,9 +19,9 @@ function NavBar() {
         border-b border-b-base-brown-300
       "
     >
-      <a href="/" className="text-2xl font-bold">
+      <Link to={"/"} className="text-2xl font-bold">
         Boss<span className="text-green-400">.</span>
-      </a>
+      </Link>
 
       
       <div className="hidden lg:flex lg:gap-2">

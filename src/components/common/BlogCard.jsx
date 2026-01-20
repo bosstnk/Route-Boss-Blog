@@ -8,7 +8,7 @@ export function BlogCard({ post }) {
     <div className="flex flex-col gap-4 sm:gap-6 ">
       <button className="relative h-[212px] sm:h-[360px]" onClick={() => navigate(`/post/${post.id}`)}>
         <img
-          className="w-full h-full object-cover rounded-2xl"
+          className="w-full h-full object-cover rounded-2xl cursor-pointer"
           src={post.image}
           alt={post.title}
         />

@@ -10,7 +10,16 @@ import {
     Smile,
     Copy,
     Loader2,
+    X,
 } from "lucide-react";
+import {
+    AlertDialog,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { toast } from "sonner"
 import { formatDate } from "@/utils/formatDate";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./common/Button";
@@ -19,6 +28,7 @@ import { comments } from "@/data/comments";
 export default function ViewPost() {
     const [postInfo, setPostInfo] = useState({})
     const [isLoading, setIsLoading] = useState(false);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
     const param = useParams()
 
     async function getPost() {
@@ -26,6 +36,8 @@ export default function ViewPost() {
         try {
             const response = await axios.get(`https://blog-post-project-api.vercel.app/posts/${param.postId}`)
             setPostInfo(response.data)
+            // รอ 3 วินาทีก่อนซ่อน loading
+            await new Promise(resolve => setTimeout(resolve, 1900))
         } catch (error) {
             console.log(error)
         } finally {
@@ -36,6 +48,8 @@ export default function ViewPost() {
     useEffect(() => {
         getPost()
     }, [])
+
+    if (isLoading) {return <LoadingScreen/>}
 
     return (
         <div className="max-w-[1440px] mx-auto pb-10 md:px-8 md:pt-8 xl:px-[120px] xl:pt-[60px] xl:pb-[120px]">
@@ -65,27 +79,17 @@ export default function ViewPost() {
                         <AuthorProfile />
                     </div>
                     <div className="md:px-4 xl:p-0">
-                        <Share likeAmount={postInfo.likes} />
+                        <Share likeAmount={postInfo.likes} setAlertState={setIsAlertOpen} />
                     </div>
-                    <Comments />
+                    <Comments setAlertState={setIsAlertOpen} />
                 </div>
-                <div className="hidden xl:block xl:max-w-[305px]">
+                <div className="sticky top-25 hidden xl:block xl:max-w-[305px] self-start">
                     <AuthorProfile />
                 </div>
             </div>
+            <CreateAccountAlert alertState={isAlertOpen} setAlertState={setIsAlertOpen} />
         </div >
     )
-}
-
-function LoadingScreen() {
-    return (
-        <div className="fixed inset-0 flex items-center justify-center">
-            <div className="flex flex-col items-center">
-                <Loader2 className="w-16 h-16 animate-spin text-foreground" />
-                <p className="mt-4 text-lg font-semibold">Loading...</p>
-            </div>
-        </div>
-    );
 }
 
 function AuthorProfile() {
@@ -110,15 +114,36 @@ function AuthorProfile() {
     )
 }
 
-function Share({ likeAmount }) {
+function Share({ likeAmount, setAlertState }) {
+    const shareLink = encodeURI(window.location.href);
     return (
         <div className="bg-base-brown-200 flex flex-col gap-6 p-4 md:flex-row md:justify-between md:rounded-2xl xl:px-6">
-            <button className="bg-white flex items-center justify-center gap-1.5 px-10 py-3 rounded-full border border-base-brown-400">
+            <button className="bg-white flex items-center justify-center gap-1.5 px-10 py-3 rounded-full border border-base-brown-400" onClick={() => setAlertState(true)}>
                 <Smile size={24} color="#43403B" />
                 <span className="text-body-1 text-base-brown-600">{likeAmount}</span>
             </button>
             <div className="flex gap-2 md:gap-3">
-                <button className="bg-white flex items-center justify-center grow gap-1.5 px-7 py-3 rounded-full border border-base-brown-400">
+                <button
+                    className="bg-white flex items-center justify-center grow gap-1.5 px-7 py-3 rounded-full border border-base-brown-400"
+                    onClick={() => {
+                        navigator.clipboard.writeText(shareLink);
+                        toast.custom((t) => (
+                            <div className="bg-green-500 text-white p-4 rounded-lg flex justify-between items-start max-w-md w-full">
+                                <div>
+                                    <h2 className="font-bold text-lg mb-1">Copied!</h2>
+                                    <p className="text-sm">
+                                        This article has been copied to your clipboard.
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => toast.dismiss(t)}
+                                    className="text-white hover:text-gray-200"
+                                >
+                                    <X size={20} />
+                                </button>
+                            </div>
+                        ));
+                    }}>
                     <Copy size={24} color="#26231E" />
                     <span className="text-body-1 text-base-brown-600">Copy link</span>
                 </button>
@@ -136,16 +161,19 @@ function Share({ likeAmount }) {
     )
 }
 
-function Comments() {
+function Comments({ setAlertState }) {
     return (
         <div className="px-4 pt-6">
             <div className="flex flex-col gap-3">
                 <p className="text-body-1 text-base-brown-400">Comment</p>
-                <Textarea placeholder="What are your thoughts?" className="w-full h-24 rounded-lg border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-muted-foreground"></Textarea>
+                <Textarea
+                    onFocus={() => setAlertState(true)}
+                    placeholder="What are your thoughts?"
+                    className="w-full h-24 rounded-lg border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-muted-foreground">
+                </Textarea>
                 <div className="flex justify-end">
                     <Button variant="primary" text="Send" />
                 </div>
-
             </div>
             <div className="flex flex-col gap-6 mt-11">
                 {comments.map((comment, index) => (
@@ -170,4 +198,40 @@ function Comments() {
             </div>
         </div>
     )
+}
+
+
+function CreateAccountAlert({ alertState, setAlertState }) {
+    return (
+        <AlertDialog open={alertState} onOpenChange={setAlertState}>
+            <AlertDialogContent className="flex flex-col items-center gap-0 bg-base-brown-100 px-4 pt-4 pb-10 lg:max-w-[621px] rounded-2xl">
+                <AlertDialogTitle className="text-headline-3 text-center pt-12 pb-4">Create an account to Continue</AlertDialogTitle>
+                <Button variant="primary" text="Create Account"></Button>
+                <AlertDialogDescription className="flex flex-row gap-3 justify-center pt-4 text-body-1 text-base-brown-400">
+                    Already have an account?
+                    <a
+                        href="/login"
+                        className="text-foreground hover:text-muted-foreground transition-colors underline font-semibold"
+                    >
+                        <Button variant="text" text="Log in"></Button>
+                    </a>
+                </AlertDialogDescription>
+                <AlertDialogCancel className="absolute right-4 top-2 bg-base-brown-100 border-none shadow-none">
+                    <X size={24} />
+                </AlertDialogCancel>
+            </AlertDialogContent>
+        </AlertDialog>
+    )
+}
+
+function LoadingScreen() {
+    return (
+        <div className="h-screen inset-0 flex items-center justify-center">
+{/*             <div className="flex flex-col items-center">
+                <Loader2 className="w-16 h-16 animate-spin text-foreground" />
+                <p className="mt-4 text-lg font-semibold">Loading...</p>
+            </div> */}
+            <div class="loader"></div>
+        </div>
+    );
 }
