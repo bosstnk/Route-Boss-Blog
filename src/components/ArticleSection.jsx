@@ -1,9 +1,10 @@
-import { BlogCard } from "./common/BlogCard.jsx";
-import { Button } from "./common/Button.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { filterPostsByCategory } from "@/utils/filterPosts.js";
+import { useNavigate } from "react-router-dom";
+import { BlogCard } from "./common/BlogCard.jsx";
+import { Button } from "./common/Button.jsx";
 import { Search } from "lucide-react";
+import { Input } from "./ui/input.jsx";
 import {
   InputGroup,
   InputGroupAddon,
@@ -17,15 +18,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const categories = ["Highlight", "Cat", "Inspiration", "General"];
+import { useSuggestions, useKeyword } from "@/hooks/useSearchPost.js";
 
 function ArticleSection() {
-  const [filterCategory, setFilterCategory] = useState("Highlight");
+  const navigate = useNavigate();
+  const { keyword, setKeyword } = useKeyword()
+  const { suggestions, isLoading: isLoadingg } = useSuggestions(keyword);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const categories = ["Highlight", "Cat", "Inspiration", "General"];
+  const [category, setCategory] = useState("Highlight");
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -34,7 +40,7 @@ function ArticleSection() {
   async function getPosts() {
     setIsLoading(true);
     try {
-      const categoryParam = filterCategory === "Highlight" ? "" : filterCategory;
+      const categoryParam = category === "Highlight" ? "" : category;
       const response = await axios.get("https://blog-post-project-api.vercel.app/posts",
         {
           params: {
@@ -65,31 +71,31 @@ function ArticleSection() {
     setPosts([]);
     setPage(1);
     setHasMore(true);
-  }, [filterCategory]);
+  }, [category]);
 
   useEffect(() => {
     if (isLoading) return;
     getPosts();
-  }, [page, filterCategory]);
+  }, [page, category]);
 
   return (
-    <div className="w-full flex flex-col mx-auto lg:gap-12 lg:max-w-[1200px]">
+    <div className="w-full max-w-[1200px] flex flex-col mx-auto lg:gap-12">
       <div className="w-full flex flex-col lg:gap-8">
         <h3 className="text-headline-3 leading-8 text-base-brown-600 p-4 lg:p-0">
           Latest articles
         </h3>
         <div className="w-full p-4 flex flex-col items-center gap-4 bg-base-brown-200 lg:px-6 lg:py-4 lg:flex-row lg:justify-between lg:rounded-lg">
           <nav aria-label="Category tabs" className="hidden lg:flex lg:gap-2">
-            {categories.map((category) => {
+            {categories.map((cat) => {
               return (
                 <Button
-                  key={category}
-                  text={category}
+                  key={cat}
+                  text={cat}
                   variant="tab"
-                  onClick={() => setFilterCategory(category)}
-                  disabled={category === filterCategory}
+                  onClick={() => setCategory(cat)}
+                  disabled={cat === category}
                   className={
-                    category === filterCategory
+                    cat === category
                       ? "bg-base-brown-300 text-base-brown-500"
                       : "hover:bg-base-brown-100/70"
                   }
@@ -97,20 +103,41 @@ function ArticleSection() {
               );
             })}
           </nav>
-          <InputGroup className="text-body-1 py-3 pl-4 pr-3 lg:max-w-[304px]  bg-base-white border-base-brown-300 rounded-lg">
-            <InputGroupInput
+          <div className="relative w-full flex py-3 pl-4 pr-3 lg:max-w-[304px] bg-base-white border border-base-brown-300 rounded-lg transition-colors focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300">
+            <input
+              type="text"
               placeholder="Search"
-              className="text-body-1 bg-base-white text-base-brown-400 placeholder:text-base-brown-400"
+              className="w-full text-body-1 bg-base-white text-base-brown-400 placeholder:text-base-brown-400 focus:outline-none focus:ring-0"
+              onChange={(e) => setKeyword(e.target.value)}
+              onFocus={() => setShowDropdown(true)}
+              onBlur={() => {
+                setTimeout(() => {
+                  setShowDropdown(false);
+                }, 200);
+              }}
             />
-            <InputGroupAddon align="inline-end" className="p-0">
-              <Search size={24} />
-            </InputGroupAddon>
-          </InputGroup>
+            <Search size={24} color="#62748e" />
+            {!isLoadingg &&
+              showDropdown &&
+              keyword && (
+                <div className="absolute z-10 w-full bg-background rounded-lg shadow-sm p-1 right-0 top-14">
+                  {suggestions.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      className="text-start px-4 py-2 block w-full text-sm text-foreground hover:bg-[#EFEEEB] hover:text-muted-foreground hover:rounded-sm cursor-pointer"
+                      onClick={() => navigate(`/post/${suggestion.id}`)}
+                    >
+                      {suggestion.title}
+                    </button>
+                  ))}
+                </div>
+              )}
+          </div>
           <div className="w-full flex flex-col gap-1 lg:hidden">
             <div className="text-body-1 text-base-brown-400">Category</div>
             <Select
-              value={filterCategory}
-              onValueChange={(value) => setFilterCategory(value)}
+              value={category}
+              onValueChange={(value) => setCategory(value)}
             >
               <SelectTrigger
                 className="
@@ -124,13 +151,9 @@ function ArticleSection() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent position="popper" sideOffset={4}>
-                {categories.map((category) => (
-                  <SelectItem
-                    key={category}
-                    value={category}
-                    className="transition-colors data-[highlighted]:bg-base-brown-100/70"
-                  >
-                    {category}
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat} className="transition-colors data-[highlighted]:bg-base-brown-300/50">
+                    {cat}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -138,7 +161,7 @@ function ArticleSection() {
           </div>
         </div>
       </div>
-      <div className="px-4 pt-6 flex flex-col gap-12 lg:gap-20 lg:p-0">
+      <div className="px-4 pt-6 pb-12 flex flex-col gap-12 lg:gap-20 lg:p-0">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
@@ -146,10 +169,10 @@ function ArticleSection() {
         </div>
       </div>
       {hasMore && (
-        <div className="text-center mt-8">
+        <div className="text-center">
           <button
             onClick={handleLoadMore}
-            className="hover:text-muted-foreground font-medium underline"
+            className="hover:text-base-brown-400 font-medium underline cursor-pointer"
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "View more"}

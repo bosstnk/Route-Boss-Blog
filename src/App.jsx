@@ -1,15 +1,24 @@
 import './App.css'
-import NavBar from './components/NavBar'
-import LandingPage from './components/LandingPage'
-import Footer from './components/Footer';
+import HomePage from './pages/HomePage'
+import ViewPostPage from './pages/ViewPostPage';
+import NotFoundPage from './pages/NotFoundPage';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Toaster } from "sonner";
 
 
 function App() {
   return (
     <>
-      <NavBar />
-      <LandingPage />
-      <Footer />
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/post/:postId" element={<ViewPostPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+      <Toaster position="bottom-right" richColors />
+    </div>
     </>
   );
 }
