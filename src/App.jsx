@@ -6,7 +6,7 @@ import SignUpPage from './pages/SignUpPage';
 import LogInPage from './pages/LogInPage';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
-import MemberManagementPage from './pages/MemberManageMentPage';
+import MemberManagementPage from './pages/MemberManagementPage';
 
 
 function App() {

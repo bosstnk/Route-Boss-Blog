@@ -3,7 +3,7 @@ import imageUser from "@/assets/images/user-picture-demo.jpg"
 import { Button } from "./common/Button";
 import { useSelectMenu } from "@/hooks/useSelectMenu";
 
-function MeberManagement() {
+function MemberManagement() {
     const {activeMenu,selectProfile,selectResetPass} = useSelectMenu()
     const inputStyle = "bg-white py-3 pr-3 pl-4 text-body-1 outline-none rounded-lg transition-colors"
     return (
@@ -37,7 +37,7 @@ function MeberManagement() {
     )
 }
 
-export default MeberManagement;
+export default MemberManagement;
 
 function ProfileManagement({ classInput }) {
     return (
