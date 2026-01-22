@@ -3,7 +3,7 @@ export function Button({text,variant="primary",className="",...props}) {
     const variants = {
         primary: `${base} text-white bg-base-brown-600`,
         secondary: `${base} text-base-brown-600 bg-white border border-base-brown-400`,
-        text:"text-body-1 text-base-brown-600 underline",
+        text:"text-body-1 text-base-brown-600 underline cursor-pointer",
         tab:"text-body-1 px-5 py-3 rounded-lg text-base-brown-400 cursor-pointer"
     }
     return (
