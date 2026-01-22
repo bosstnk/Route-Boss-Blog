@@ -6,6 +6,7 @@ import SignUpPage from './pages/SignUpPage';
 import LogInPage from './pages/LogInPage';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
+import MemberManagementPage from './pages/MemberManageMentPage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/post/:postId" element={<ViewPostPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage/>}/>
+          <Route path="/member" element={<MemberManagementPage/>}/>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

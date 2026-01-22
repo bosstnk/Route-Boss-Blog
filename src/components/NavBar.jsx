@@ -1,5 +1,5 @@
 import { Button } from "./common/Button";
-import { Menu, Bell, User, IterationCw, LogOut, ChevronDown } from "lucide-react";
+import { Menu, Bell, User, IterationCw, LogOut, ChevronDown, SquareArrowOutUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -10,7 +10,7 @@ import imageUser from "@/assets/images/user-picture-demo.jpg"
 import { useToggleMenu } from "@/hooks/useToggleMenu";
 
 function NavBar() {
-  const {isShow,switchToggle} = useToggleMenu()
+  const { isShow, switchToggle } = useToggleMenu()
   return (
     <nav
       className="
@@ -27,18 +27,18 @@ function NavBar() {
       </Link>
 
 
-      {/* <div className="hidden lg:flex lg:gap-2">
+      <div className="hidden lg:flex lg:gap-2">
         <Link to={"/login"}>
           <Button text="Log in" variant="secondary" />
         </Link>
         <Link to={"/signup"}>
           <Button text="Sign up" variant="primary" />
         </Link>
-      </div> */}
-      <div className="relative">
+      </div>
+      {/* <div className="relative">
         <UserLoginProfileWindow onToggle={switchToggle} />
         {isShow && <MenuBarWindow />}
-      </div>
+      </div> */}
 
       <DropdownMenu>
         <DropdownMenuTrigger className="lg:hidden ">
@@ -105,6 +105,10 @@ function UserLoginProfileMobile() {
           <IterationCw size={24} color="#75716B" strokeWidth={1} />
           <span className="items-center">Reset password</span>
         </button>
+        <button className="w-full text-body-1 text-base-brown-500 px-4 py-3 flex gap-3">
+          <SquareArrowOutUpRight size={24} color="#75716B" strokeWidth={1} />
+          <span className="items-center">Admin panel</span>
+        </button>
       </div>
       <hr />
       <button className="text-body-1 text-base-brown-500 px-4 py-3 flex gap-3">
@@ -115,7 +119,7 @@ function UserLoginProfileMobile() {
   )
 }
 
-function UserLoginProfileWindow({onToggle}) {
+function UserLoginProfileWindow({ onToggle }) {
   return (
     <div className="flex flex-row gap-4">
       <button className="bg-white border border-base-brown-200 p-3 rounded-full">
