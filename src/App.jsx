@@ -2,6 +2,8 @@ import './App.css'
 import HomePage from './pages/HomePage'
 import ViewPostPage from './pages/ViewPostPage';
 import NotFoundPage from './pages/NotFoundPage';
+import SignUpPage from './pages/SignUpPage';
+import LogInPage from './pages/LogInPage';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 
@@ -14,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/post/:postId" element={<ViewPostPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LogInPage/>}/>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>

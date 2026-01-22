@@ -83,7 +83,7 @@ export default function ViewPost() {
                     </div>
                     <Comments setAlertState={setIsAlertOpen} />
                 </div>
-                <div className="sticky top-25 hidden xl:block xl:max-w-[305px] self-start">
+                <div className="sticky top-30 hidden xl:block xl:max-w-[305px] self-start">
                     <AuthorProfile />
                 </div>
             </div>
