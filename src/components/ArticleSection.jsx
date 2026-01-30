@@ -4,13 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { BlogCard } from "./common/BlogCard.jsx";
 import { Button } from "./common/Button.jsx";
 import { Search } from "lucide-react";
-import { Input } from "./ui/input.jsx";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "./ui/input-group.jsx";
-
 import {
   Select,
   SelectContent,
@@ -79,30 +72,13 @@ function ArticleSection() {
   }, [page, category]);
 
   return (
-    <div className="w-full max-w-[1200px] flex flex-col mx-auto lg:gap-12">
+    <div className="w-full flex flex-col mx-auto lg:gap-12 lg:max-w-[1200px]">
       <div className="w-full flex flex-col lg:gap-8">
         <h3 className="text-headline-3 leading-8 text-base-brown-600 p-4 lg:p-0">
           Latest articles
         </h3>
         <div className="w-full p-4 flex flex-col items-center gap-4 bg-base-brown-200 lg:px-6 lg:py-4 lg:flex-row lg:justify-between lg:rounded-lg">
-          <nav aria-label="Category tabs" className="hidden lg:flex lg:gap-2">
-            {categories.map((cat) => {
-              return (
-                <Button
-                  key={cat}
-                  text={cat}
-                  variant="tab"
-                  onClick={() => setCategory(cat)}
-                  disabled={cat === category}
-                  className={
-                    cat === category
-                      ? "bg-base-brown-300 text-base-brown-500"
-                      : "hover:bg-base-brown-100/70"
-                  }
-                />
-              );
-            })}
-          </nav>
+
           <div className="relative w-full flex py-3 pl-4 pr-3 lg:max-w-[304px] bg-base-white border border-base-brown-300 rounded-lg transition-colors focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300">
             <input
               type="text"
@@ -133,6 +109,7 @@ function ArticleSection() {
                 </div>
               )}
           </div>
+          
           <div className="w-full flex flex-col gap-1 lg:hidden">
             <div className="text-body-1 text-base-brown-400">Category</div>
             <Select
@@ -159,6 +136,25 @@ function ArticleSection() {
               </SelectContent>
             </Select>
           </div>
+
+          <nav aria-label="Category tabs" className="hidden lg:flex lg:gap-2">
+            {categories.map((cat) => {
+              return (
+                <Button
+                  key={cat}
+                  text={cat}
+                  variant="tab"
+                  onClick={() => setCategory(cat)}
+                  disabled={cat === category}
+                  className={
+                    cat === category
+                      ? "bg-base-brown-300 text-base-brown-500"
+                      : "hover:bg-base-brown-100/70"
+                  }
+                />
+              );
+            })}
+          </nav>
         </div>
       </div>
       <div className="px-4 pt-6 pb-12 flex flex-col gap-12 lg:gap-20 lg:p-0">
