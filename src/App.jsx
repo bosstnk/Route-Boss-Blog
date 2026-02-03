@@ -6,7 +6,8 @@ import ViewPostPage from './pages/ViewPostPage';
 import NotFoundPage from './pages/NotFoundPage';
 import SignUpPage from './pages/SignUpPage';
 import LogInPage from './pages/LogInPage';
-import MemberManagementPage from './pages/MemberManagementPage';
+import MemberProfilePage from './pages/MemberProfilePage';
+import MemberResetPasswordPage from './pages/MemberResetPasswordPage';
 import AdminLogInPage from './pages/admin/AdminLogInPage';
 import ArticleManagmentPage from './pages/admin/ArticleManagementPage';
 import AdminCreateArticlePage from './pages/admin/AdminCreateArticlePage';
@@ -17,6 +18,7 @@ import AdminResetPasswordPage from './pages/admin/AdminResetPasswordPage';
 import AdminNotificationPage from './pages/admin/AdminNotificationPage';
 import AdminCreateCategoryPage from './pages/admin/AdminCreateCategoryPage';
 import AdminEditCategoryPage from './pages/admin/AdminEditCategoryPage';
+import SignUpSuccessPage from './pages/SignUpPageSuccess';
 
 function App() {
   return (
@@ -27,8 +29,10 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/post/:postId" element={<ViewPostPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/signup-success" element={<SignUpSuccessPage />} />
             <Route path="/login" element={<LogInPage />} />
-            <Route path="/member" element={<MemberManagementPage />} />
+            <Route path="/member-profile" element={<MemberProfilePage />} />
+            <Route path="/member-reset-password" element={<MemberResetPasswordPage />} />
             <Route path="/admin/login" element={<AdminLogInPage />} />
 
             {/* Admin Section */}

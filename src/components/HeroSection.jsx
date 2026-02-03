@@ -2,7 +2,7 @@ import imageProfile from "@/assets/images/picture-profile.jpg"
 
 function HeroSection() {
   return (
-    <div className="px-4 py-10 flex flex-col items-center gap-10 lg:max-w-[1200px] lg:flex-row lg:gap-[60px] lg:mx-auto lg:p-0">
+    <div className="px-4 py-10 flex flex-col items-center gap-10 lg:max-w-[1200px] lg:flex-row lg:gap-[60px] lg:mx-auto lg:p-0 lg:pt-[60px] lg:pb-[80px]">
       <div className="flex flex-col gap-4 lg:gap-6 lg:max-w-[347px]">
         <h2 className="text-headline-2 text-center leading-12 text-base-brown-600 lg:text-headline-1 lg:leading-[60px] lg:text-right">Stay Informed, Stay Inspired</h2>
         <p className="text-body-1 text-center text-base-brown-400 lg:text-right">

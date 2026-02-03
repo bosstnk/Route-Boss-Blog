@@ -26,7 +26,7 @@ function ArticleManagmentPage() {
                 </div>
                 <div className="pt-10 pb-[120px] px-[60px] space-y-4">
                     <div className="flex justify-between">
-                        <div className="relative w-full flex py-3 pl-4 pr-3 lg:max-w-[304px] bg-base-white border border-base-brown-300 rounded-lg transition-colors focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300">
+                        <div className="w-full flex py-3 pl-4 pr-3 lg:max-w-[304px] bg-base-white border border-base-brown-300 rounded-lg transition-colors focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300">
                             <input
                                 type="text"
                                 placeholder="Search..."

@@ -4,10 +4,8 @@ import usePasswordVisibility from '@/hooks/usePasswordVisibility';
 
 function AdminLogIn() {
     const baseInput =
-        "bg-white py-3 pr-3 pl-4 text-body-1 outline-none rounded-lg placeholder:text-base-brown-400 transition-colors ";
+    "bg-white p-3 pl-4 text-body-1 text-base-brown-400 outline-none border border-base-brown-300 rounded-lg placeholder:text-base-brown-400 transition-colors focus:border-base-brown-400 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300";
 
-    const normalInput =
-        "border border-base-brown-300 text-base-brown-400 focus:border-base-brown-500 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300";
 
     const errorInput =
         "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red";
