@@ -1,9 +1,5 @@
 import { useState } from "react";
-
-const userDemo = {
-  email: "thanakorn@gmail.com",
-  password: "12345678",
-};
+import { userDemo } from "@/data/constantData";
 
 export function useLogInForm() {
   const [hasError, setHasError] = useState(false);

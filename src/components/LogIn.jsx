@@ -9,30 +9,28 @@ function LogIn() {
         console.log("success")
     }
     const baseInput =
-        "bg-white py-3 pl-4 pr-3 text-body-1 outline-none rounded-lg placeholder:text-base-brown-400 transition-colors ";
-
-    const normalInput =
-        "border border-base-brown-300 text-base-brown-400 focus:border-base-brown-500 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300";
+    "bg-white p-3 pl-4 text-body-1 text-base-brown-400 outline-none border border-base-brown-300 rounded-lg placeholder:text-base-brown-400 transition-colors focus:border-base-brown-400 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300";
 
     const errorInput =
-        "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red";
+        "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red/70";
+
     return (
-        <div className="px-4 pt-10">
-            <div className="flex flex-col items-center gap-6 max-w-[798px] bg-base-brown-200 rounded-2xl px-4 py-10 mx-auto md:px-[120px] md:py-[60px] md:gap-10">
-                <h2 className="text-headline-2 text-base-brown-600">Log In</h2>
+        <div className="mx-4 mt-10 lg:mt-[60px]">
+            <div className="flex flex-col items-center gap-6 px-4 py-10 max-w-[798px] bg-base-brown-200 rounded-2xl mx-auto lg:px-[120px] lg:py-[60px] lg:gap-10">
+                <h2 className="text-headline-2 leading-12 text-base-brown-600">Log in</h2>
                 <form
                     className="w-full flex flex-col"
                     onSubmit={handleSubmit}>
-                    <label htmlFor="email" className="pb-1">Email</label>
+                    <label htmlFor="email" className="mb-1">Email</label>
                     <input
                         id="email"
                         name="email"
                         onChange={inputForm}
                         type="email"
                         placeholder="Email"
-                        className={`${baseInput} ${hasError ? errorInput : normalInput}`} />
-                    <label htmlFor="password" className="pb-1 pt-6">Password</label>
-                    <div className={`flex flex-row ${baseInput}  ${hasError ? errorInput : normalInput}`} >
+                        className={`${baseInput} ${hasError ? errorInput : ""}`} />
+                    <label htmlFor="password" className="mb-1 mt-6">Password</label>
+                    <div className={`flex flex-row ${baseInput}  ${hasError ? errorInput : ""}`} >
                         <input
                             id="password"
                             name="password"
@@ -42,11 +40,11 @@ function LogIn() {
                             className="grow outline-none placeholder:text-base-brown-400"
                         />
                         <button className="cursor-pointer">
-                            <EyeClosed />
+                            <EyeClosed size={20} />
                         </button>
                     </div>
 
-                    <Button type="submit" variant="primary" text="Log in" className="mt-6 self-center md:mt-10" />
+                    <Button type="submit" variant="primary" text="Log in" className="mt-6 self-center lg:mt-10" />
                 </form>
                 <div className="space-x-3">
                     <span>Don’t have any account?</span>

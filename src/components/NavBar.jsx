@@ -16,13 +16,13 @@ function NavBar() {
       className="
         flex items-center justify-between
         w-full
-        px-6 py-3 lg:px-[120px] lg:py-4
+        py-3 px-6 lg:py-4 lg:px-[120px]
         sticky top-0 z-50
         bg-base-brown-100
         border-b border-b-base-brown-300
       "
     >
-      <Link to={"/"} className="text-2xl font-bold">
+      <Link to={"/"} className="text-2xl font-bold lg:text-4xl">
         Boss<span className="text-green-400">.</span>
       </Link>
 
@@ -45,13 +45,13 @@ function NavBar() {
           <Menu size={24} color="#75716B" />
         </DropdownMenuTrigger>
 
-        {/*         <DropdownMenuContent
+        <DropdownMenuContent
           align="start"
           side="bottom"
           className="
             flex flex-col gap-6
             w-screen
-            px-6 py-10 mt-3
+            py-10 px-6 mt-3
             bg-base-brown-100
             rounded-none
           "
@@ -62,8 +62,8 @@ function NavBar() {
           <Link to={"/signup"}>
             <Button text="Sign up" variant="primary" className="w-full" />
           </Link>
-        </DropdownMenuContent> */}
-        <UserLoginProfileMobile />
+        </DropdownMenuContent>
+        {/* <DropdownMenuMemberAccount /> */}
       </DropdownMenu>
     </nav>
   );
@@ -71,7 +71,7 @@ function NavBar() {
 
 export default NavBar;
 
-function UserLoginProfileMobile() {
+function DropdownMenuAccount() {
   return (
     <DropdownMenuContent
       align="start"
