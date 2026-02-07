@@ -72,7 +72,7 @@ function ArticleSection() {
   }, [page, category]);
 
   return (
-    <div className="flex flex-col mx-auto lg:max-w-[1200px] lg:pb-[120px]">
+    <div className="flex flex-col justify-center mx-auto lg:max-w-[1440px] lg:px-[120px] lg:pb-[120px]">
       <h3 className="text-headline-3 leading-8 text-base-brown-600 p-4 lg:p-0">
         Latest articles
       </h3>

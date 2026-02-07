@@ -49,52 +49,50 @@ export default function ViewPost() {
         getPost()
     }, [])
 
-    if (isLoading) {return <LoadingScreen/>}
+    if (isLoading) { return <LoadingScreen /> }
 
     return (
-        <div className="max-w-[1440px] mx-auto pb-10 md:px-8 md:pt-8 xl:px-[120px] xl:pt-[60px] xl:pb-[120px]">
+        <div className="max-w-[1440px] mx-auto md:px-8 md:pt-8 xl:px-[120px] xl:pt-[60px] xl:pb-[120px]">
             <img
                 src={postInfo.image}
                 alt={postInfo.title}
-                className="md:rounded-lg object-cover w-full h-[200px] sm:h-[340px] md:h-[587px]"
+                className="object-cover w-full h-[200px] sm:h-[340px] lg:h-[587px] md:rounded-lg"
             />
             <div className="flex flex-col xl:flex-row xl:gap-20 xl:mt-12">
                 <div>
-                    <article className="px-4 py-6 xl:pt-0 xl:px-0">
-                        <div className="flex gap-4">
-                            <span className="bg-brand-green-soft rounded-full px-3 py-1 text-body-2 text-brand-green">
-                                {postInfo.category}
-                            </span>
-                            <span className="py-1 text-body-1 text-base-brown-400">
-                                {formatDate(postInfo.date)}
-                            </span>
+                    <article className="px-4 pt-6 pb-10 space-y-6 xl:pt-0 xl:px-0">
+                        <div>
+                            <div className="flex gap-4 items-center">
+                                <span className="bg-brand-green-soft rounded-full px-3 py-1 text-body-2 text-brand-green">
+                                    {postInfo.category}
+                                </span>
+                                <span className="text-body-1 text-base-brown-400">
+                                    {formatDate(postInfo.date)}
+                                </span>
+                            </div>
+                            <h1 className="text-headline-3 mt-4 leading-8">{postInfo.title}</h1>
                         </div>
-                        <h1 className="text-headline-3 mt-4 leading-8">{postInfo.title}</h1>
-                        <p className="mt-6 mb-10">{postInfo.description}</p>
-                        <div className="markdown">
-                            <ReactMarkdown>{postInfo.content}</ReactMarkdown>
+                        <div>
+                            <p className="mb-10">{postInfo.description}</p>
+                            <div className="markdown">
+                                <ReactMarkdown>{postInfo.content}</ReactMarkdown>
+                            </div>
                         </div>
+                        <AuthorProfile className="xl:hidden"/>
                     </article>
-                    <div className="xl:hidden px-4 pb-10">
-                        <AuthorProfile />
-                    </div>
-                    <div className="md:px-4 xl:p-0">
-                        <Share likeAmount={postInfo.likes} setAlertState={setIsAlertOpen} />
-                    </div>
+                    <LikeShare likeAmount={postInfo.likes} setAlertState={setIsAlertOpen} />
                     <Comments setAlertState={setIsAlertOpen} />
                 </div>
-                <div className="sticky top-30 hidden xl:block xl:max-w-[305px] self-start">
-                    <AuthorProfile />
-                </div>
+                <AuthorProfile className="sticky top-30 hidden xl:flex xl:max-w-[305px] self-start" />
             </div>
             <CreateAccountAlert alertState={isAlertOpen} setAlertState={setIsAlertOpen} />
         </div >
     )
 }
 
-function AuthorProfile() {
+function AuthorProfile({className=""}) {
     return (
-        <div className="bg-base-brown-200 rounded-2xl p-6 flex flex-col gap-5">
+        <div className={`bg-base-brown-200 rounded-2xl p-6 flex flex-col gap-5 ${className}`}>
             <div className="flex gap-3">
                 <div className="w-11 h-11 rounded-full overflow-hidden">
                     <img src={imageProfile} alt="image profile" className="object-cover w-full h-full" />
@@ -114,12 +112,12 @@ function AuthorProfile() {
     )
 }
 
-function Share({ likeAmount, setAlertState }) {
+function LikeShare({ likeAmount, setAlertState }) {
     const shareLink = encodeURI(window.location.href);
     return (
         <div className="bg-base-brown-200 flex flex-col gap-6 p-4 md:flex-row md:justify-between md:rounded-2xl xl:px-6">
             <button className="bg-white flex items-center justify-center gap-1.5 px-10 py-3 rounded-full border border-base-brown-400" onClick={() => setAlertState(true)}>
-                <Smile size={24} color="#43403B" />
+                <Smile size={24} color="#43403B" strokeWidth={1.5}/>
                 <span className="text-body-1 text-base-brown-600">{likeAmount}</span>
             </button>
             <div className="flex gap-2 md:gap-3">
@@ -144,17 +142,17 @@ function Share({ likeAmount, setAlertState }) {
                             </div>
                         ));
                     }}>
-                    <Copy size={24} color="#26231E" />
+                    <Copy size={24} color="#26231E" strokeWidth={1.5}/>
                     <span className="text-body-1 text-base-brown-600">Copy link</span>
                 </button>
                 <a href="#" className="bg-white p-3 rounded-full border border-base-brown-400">
-                    <Facebook />
+                    <Facebook strokeWidth={1.5}/>
                 </a>
                 <a href="#" className="bg-white p-3 rounded-full border border-base-brown-400">
-                    <Linkedin />
+                    <Linkedin strokeWidth={1.5}/>
                 </a>
                 <a href="#" className="bg-white p-3 rounded-full border border-base-brown-400">
-                    <Twitter />
+                    <Twitter strokeWidth={1.5}/>
                 </a>
             </div>
         </div>
@@ -163,19 +161,17 @@ function Share({ likeAmount, setAlertState }) {
 
 function Comments({ setAlertState }) {
     return (
-        <div className="px-4 pt-6">
+        <div className="px-4 pt-6 pb-10 space-y-11">
             <div className="flex flex-col gap-3">
                 <p className="text-body-1 text-base-brown-400">Comment</p>
                 <Textarea
                     onFocus={() => setAlertState(true)}
                     placeholder="What are your thoughts?"
-                    className="w-full h-24 rounded-lg border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-muted-foreground">
+                    className="w-full h-24 rounded-lg border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400">
                 </Textarea>
-                <div className="flex justify-end">
-                    <Button variant="primary" text="Send" />
-                </div>
+                <Button variant="primary" text="Send" className="self-end"/>
             </div>
-            <div className="flex flex-col gap-6 mt-11">
+            <div className="flex flex-col gap-6">
                 {comments.map((comment, index) => (
                     <div className="flex flex-col gap-4" key={index}>
                         <div className="flex gap-3">
@@ -200,7 +196,7 @@ function Comments({ setAlertState }) {
     )
 }
 
-
+// ยังไม่ตรวจ รอทำ Logic
 function CreateAccountAlert({ alertState, setAlertState }) {
     return (
         <AlertDialog open={alertState} onOpenChange={setAlertState}>
@@ -223,15 +219,15 @@ function CreateAccountAlert({ alertState, setAlertState }) {
         </AlertDialog>
     )
 }
-
+// ยังไม่ตรวจ รอทำ Logic
 function LoadingScreen() {
     return (
         <div className="h-screen inset-0 flex items-center justify-center">
-{/*             <div className="flex flex-col items-center">
+            {/*             <div className="flex flex-col items-center">
                 <Loader2 className="w-16 h-16 animate-spin text-foreground" />
                 <p className="mt-4 text-lg font-semibold">Loading...</p>
             </div> */}
-            <div class="loader"></div>
+            <div className="loader"></div>
         </div>
     );
 }
