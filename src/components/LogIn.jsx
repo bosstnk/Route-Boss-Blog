@@ -10,9 +10,9 @@ function LogIn() {
     }
     const baseInput =
     "bg-white p-3 pl-4 text-body-1 text-base-brown-400 outline-none border border-base-brown-300 rounded-lg placeholder:text-base-brown-400 transition-colors focus:border-base-brown-400 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300";
-
+    
     const errorInput =
-        "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red/70";
+    "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red/70";
 
     return (
         <div className="mx-4 mt-10 lg:mt-[60px]">

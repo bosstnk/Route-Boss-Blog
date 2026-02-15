@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BlogCard } from "./common/BlogCard.jsx";
 import { Button } from "./common/Button.jsx";
@@ -11,72 +10,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useSuggestions, useKeyword } from "@/hooks/useSearchPost.js";
+import { useSuggestions } from "@/hooks/useSearchPost.js";
 import { categories } from "@/data/constantData.js";
+import usePosts from "@/hooks/usePosts.js";
+import useDebounce from "@/hooks/useDebounce.js";
 
 function ArticleSection() {
-  const navigate = useNavigate();
-  const { keyword, setKeyword } = useKeyword()
-  const { suggestions, isLoading: isLoadingg } = useSuggestions(keyword);
-  const [showDropdown, setShowDropdown] = useState(false);
+
   const [category, setCategory] = useState("Highlight");
-  const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const debouncedKeyword = useDebounce(keyword, 100);
+  const {
+    posts,
+    isLoading,
+    isError,
+    hasMore,
+    loadMore,
+    reset
+  } = usePosts({ category, keyword });
 
-
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
-
-  async function getPosts() {
-    setIsLoading(true);
-    try {
-      const categoryParam = category === "Highlight" ? "" : category;
-      const response = await axios.get("https://blog-post-project-api.vercel.app/posts",
-        {
-          params: {
-            page: page,
-            limit: 6,
-            category: categoryParam,
-          },
-        }
-      );
-      console.log(response.data);
-
-      if (page === 1) {
-        setPosts(response.data.posts);
-      } else {
-        setPosts((prevPost) => [...prevPost, ...response.data.posts]);
-      }
-
-      if (response.data.currentPage >= response.data.totalPages) {
-        setHasMore(false);
-      }
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
   useEffect(() => {
-    setPosts([]);
-    setPage(1);
-    setHasMore(true);
+    reset();
   }, [category]);
 
-  useEffect(() => {
-    if (isLoading) return;
-    getPosts();
-  }, [page, category]);
+  const navigate = useNavigate();
+  const { suggestions, isLoading: isLoadingg } = useSuggestions(debouncedKeyword);
 
   return (
     <div className="flex flex-col justify-center mx-auto lg:max-w-[1440px] lg:px-[120px] lg:pb-[120px]">
       <h3 className="text-headline-3 leading-8 text-base-brown-600 p-4 lg:p-0">
         Latest articles
       </h3>
-      
+
       <div className="flex flex-col gap-4 p-4 bg-base-brown-200 
       lg:px-6 lg:py-4 lg:mt-8 lg:flex-row-reverse lg:justify-between lg:rounded-lg"
       >
@@ -94,21 +60,32 @@ function ArticleSection() {
             }}
           />
           <Search size={24} color="#75716b" />
-          {!isLoadingg &&
-            showDropdown &&
-            keyword && (
-              <div className="absolute z-10 w-full bg-background rounded-lg shadow-sm p-1 right-0 top-14">
-                {suggestions.map((suggestion, index) => (
+          {showDropdown && keyword.trim().length > 0 && (
+            <div className="absolute z-10 w-full bg-background rounded-lg shadow-sm p-1 right-0 top-14">
+              {isLoadingg && (
+                <div className="px-4 py-2 text-sm text-base-brown-600">
+                  Searching...
+                </div>
+              )}
+
+              {!isLoadingg && suggestions.length === 0 &&(
+                <div className="px-4 py-2 text-sm text-base-brown-600">
+                  No results found
+                </div>
+              )}
+
+              {!isLoadingg &&
+                suggestions.map((suggestion) => (
                   <button
-                    key={index}
-                    className="text-start px-4 py-2 block w-full text-sm text-foreground hover:bg-[#EFEEEB] hover:text-muted-foreground hover:rounded-sm cursor-pointer"
+                    key={suggestion.id}
+                    className="text-start px-4 py-2 block w-full text-sm hover:bg-[#EFEEEB]"
                     onClick={() => navigate(`/post/${suggestion.id}`)}
                   >
                     {suggestion.title}
                   </button>
                 ))}
-              </div>
-            )}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-1 lg:hidden">
@@ -170,10 +147,10 @@ function ArticleSection() {
           <Button
             variant="text"
             text={isLoading ? "Loading..." : "View more"}
-            onClick={handleLoadMore}
+            onClick={loadMore}
             disabled={isLoading}
           />
-      )}
+        )}
       </div>
     </div>
   );
