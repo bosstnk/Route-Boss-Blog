@@ -1,10 +1,9 @@
 import { Button } from "./common/Button";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLogInForm } from "@/hooks/useLogInForm";
 import { Eye, EyeClosed } from 'lucide-react';
 import usePasswordVisibility from "@/hooks/usePasswordVisibility";
+
 
 function LogIn() {
     const {
@@ -18,13 +17,6 @@ function LogIn() {
     } = useLogInForm();
     const { isVisible, inputType, toggleVisibility, } = usePasswordVisibility()
 
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (isSuccess) {
-            navigate("/");
-        }
-    }, [isSuccess, navigate]);
 
     const baseInput =
         "bg-white p-3 pl-4 text-body-1 text-base-brown-400 outline-none border border-base-brown-300 rounded-lg placeholder:text-base-brown-400 transition-colors focus:border-base-brown-400 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-500 focus-within:ring-1 focus-within:ring-base-brown-300";

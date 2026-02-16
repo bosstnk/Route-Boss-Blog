@@ -1,7 +1,7 @@
-import HeroSection from "../components/HeroSection";
-import ArticleSection from "../components/ArticleSection";
+import HeroSection from "@/components/HeroSection";
+import ArticleSection from "@/components/ArticleSection";
 import NavBar from "@/components/navbar/NavBar"
-import Footer from "../components/Footer";
+import Footer from "@/components/Footer";
 
 function LandingPage() {
   return (

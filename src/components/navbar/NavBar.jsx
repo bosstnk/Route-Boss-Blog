@@ -10,10 +10,17 @@ import { GuestActionMobile } from "./MobileAction";
 import { UserAction } from "./UserAction";
 import { useAuth } from "@/context/AuthContext";
 import { UserAccountMenu } from "./DropdownAction";
+import { useEffect } from "react";
 
 function NavBar() {
-  const { isShow, switchToggle } = useToggle();
+  const { isShow, switchToggle, reset } = useToggle();
   const { user, loading } = useAuth();
+
+
+  useEffect(() => {
+    if (!user) reset();
+  }, [user]);
+
   return (
     <nav
       className="
@@ -29,14 +36,16 @@ function NavBar() {
         Boss<span className="text-green-400">.</span>
       </Link>
 
-      {user ? <UserAction onToggle={switchToggle} /> : <GuestAction />}
-      {user && isShow && <UserAccountMenu />}
+      <div className="relative">
+        {user ? <UserAction onToggle={switchToggle} /> : <GuestAction />}
+        {user && isShow && <UserAccountMenu />}
+      </div>
 
       <DropdownMenu>
         <DropdownMenuTrigger className="lg:hidden ">
           <Menu size={24} color="#75716B" />
         </DropdownMenuTrigger>
-        <GuestActionMobile/>
+        <GuestActionMobile />
       </DropdownMenu>
     </nav>
   );

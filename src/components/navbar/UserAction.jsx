@@ -3,7 +3,7 @@ import imageUser from "@/assets/images/user-picture-demo.jpg"
 
 export function UserAction({ onToggle }) {
     return (
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row items-center gap-4 min-h-[50px]">
         <button className="bg-white border border-base-brown-200 p-3 rounded-full">
           <Bell size={22} color="#75716B" strokeWidth={1.5} />
         </button>
