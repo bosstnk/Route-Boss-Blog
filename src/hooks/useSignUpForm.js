@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { validateSignUpForm } from "@/utils/validateSignUpForm"
+import { validateSignUpForm } from "@/utils/validateForm"
 import axios from "axios"
 
 const initialSignUpForm = {
@@ -9,8 +9,8 @@ const initialSignUpForm = {
     password:""
 }
 
-export function useSingUpForm() {
-    const [singUpForm,setSignUpForm] = useState(initialSignUpForm)
+export function useSignUpForm() {
+    const [signUpForm,setSignUpForm] = useState(initialSignUpForm)
     const [errors,setErrors] = useState({})
     const [isSuccess,setIsSuccess] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +29,7 @@ export function useSingUpForm() {
         setServerError(null);
     
         try {
-          await axios.post(`${API_BASE_URL}/auth/register`, singUpForm);
+          await axios.post(`${API_BASE_URL}/auth/register`, signUpForm);
           setIsSuccess(true);
         } catch (error) {
           if (error.response) {
@@ -46,7 +46,7 @@ export function useSingUpForm() {
         return async (e) => {
           e.preventDefault();
     
-          const validateErrors = validateSignUpForm(singUpForm);
+          const validateErrors = validateSignUpForm(signUpForm);
           setErrors(validateErrors);
     
           if (Object.keys(validateErrors).length > 0) return;
@@ -55,7 +55,7 @@ export function useSingUpForm() {
         };
       }
       return {
-        singUpForm,
+        signUpForm,
         inputForm,
         handleSubmit,
         errors,

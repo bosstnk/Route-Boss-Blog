@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar"
+import NavBar from "@/components/navbar/NavBar"
 import { User, IterationCw } from "lucide-react";
 import imageUser from "@/assets/images/user-picture-demo.jpg"
 import { Button } from "@/components/common/Button";

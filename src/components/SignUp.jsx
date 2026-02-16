@@ -1,4 +1,4 @@
-import { useSingUpForm } from "@/hooks/useSignUpForm"
+import { useSignUpForm } from "@/hooks/useSignUpForm"
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "./common/Button"
@@ -12,7 +12,7 @@ function SignUp() {
     const errorInput =
         "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red/70";
 
-    const { singUpForm, inputForm, handleSubmit, errors, isSuccess, isLoading, serverError } = useSingUpForm()
+    const { signUpForm, inputForm, handleSubmit, errors, isSuccess, isLoading, serverError } = useSignUpForm()
 
     const navigate = useNavigate()
 
@@ -34,7 +34,7 @@ function SignUp() {
                         id="name"
                         name="name"
                         type="text"
-                        value={singUpForm.name}
+                        value={signUpForm.name}
                         onChange={inputForm}
                         placeholder="Full name"
                         className={`${baseInput} ${errors.name ? errorInput : ""}`} />
@@ -44,7 +44,7 @@ function SignUp() {
                         id="username"
                         name="username"
                         type="text"
-                        value={singUpForm.username}
+                        value={signUpForm.username}
                         onChange={inputForm}
                         placeholder="Username"
                         className={`${baseInput} ${errors.username ? errorInput : ""}`} />
@@ -54,7 +54,7 @@ function SignUp() {
                         id="email"
                         name="email"
                         type="email"
-                        value={singUpForm.email}
+                        value={signUpForm.email}
                         onChange={inputForm}
                         placeholder="Email"
                         className={`${baseInput} ${errors.email ? errorInput : ""}`} />
@@ -64,7 +64,7 @@ function SignUp() {
                         id="password"
                         name="password"
                         type="password"
-                        value={singUpForm.password}
+                        value={signUpForm.password}
                         onChange={inputForm}
                         placeholder="Password"
                         className={`${baseInput} ${errors.password ? errorInput : ""}`} />

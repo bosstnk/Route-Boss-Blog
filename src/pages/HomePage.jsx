@@ -1,6 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import ArticleSection from "../components/ArticleSection";
-import NavBar from "../components/NavBar";
+import NavBar from "@/components/navbar/NavBar"
 import Footer from "../components/Footer";
 
 function LandingPage() {
