@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 function NavBar() {
   const { isShow, switchToggle, reset } = useToggle();
-  const { user, loading } = useAuth();
+  const { user, loading, profile } = useAuth();
 
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function NavBar() {
       </Link>
 
       <div className="relative">
-        {user ? <UserAction onToggle={switchToggle} /> : <GuestAction />}
+        {user ? <UserAction onToggle={switchToggle} profile={profile}/> : <GuestAction />}
         {user && isShow && <UserAccountMenu />}
       </div>
 
