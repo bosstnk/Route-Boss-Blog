@@ -9,6 +9,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { articles } from "@/data/articles";
+import { Link } from "react-router-dom";
 
 function ArticleManagmentPage() {
     return (
@@ -80,7 +81,9 @@ function ListArticle({ article }) {
             <div className="w-[120px] grow py-5 px-6">{article.category}</div>
             <div className="w-[160px] grow py-5 px-6 text-brand-green">{article.status}</div>
             <div className="w-[120px] grow py-5 px-6 flex gap-4 justify-center">
-                <Pencil size={24} color="#75716B" strokeWidth={1.5} />
+                <Link to={`/admin/article/${article.id}`} className="cursor-pointer">
+                    <Pencil size={24} color="#75716B" strokeWidth={1.5} />
+                </Link>
                 <Trash2 size={24} color="#75716B" strokeWidth={1.5} />
             </div>
         </div>

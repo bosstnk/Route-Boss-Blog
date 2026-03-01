@@ -8,11 +8,14 @@ function Comments({ setAlertState }) {
             <div className="flex flex-col gap-3">
                 <p className="text-body-1 text-base-brown-400">Comment</p>
                 <Textarea
-                    onFocus={() => setAlertState(true)}
+                    onFocus={() => {
+                        const isGuest = onRequireAuth();
+                        if (isGuest) return;
+                    }}
                     placeholder="What are your thoughts?"
                     className="w-full h-24 rounded-lg border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400">
                 </Textarea>
-                <Button variant="primary" text="Send" className="self-end"/>
+                <Button variant="primary" text="Send" className="self-end" />
             </div>
             <div className="flex flex-col gap-6">
                 {comments.map((comment, index) => (
