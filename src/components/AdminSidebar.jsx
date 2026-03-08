@@ -22,7 +22,7 @@ function AdminSidebar() {
                 </Link>
                 <Link
                     to="/admin/category-management"
-                    className={`${menuBoxBaseStyle} ${isActive("admin/category-management") ? "bg-base-brown-300" : ""}`}
+                    className={`${menuBoxBaseStyle} ${isActive("/admin/category-management") ? "bg-base-brown-300" : ""}`}
                 >
                     <FolderOpen size={24} strokeWidth={1.5} absoluteStrokeWidth />
                     <span className="items-center">Category management</span>
