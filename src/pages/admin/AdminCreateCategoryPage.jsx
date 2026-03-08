@@ -1,38 +1,69 @@
 import { Button } from "@/components/common/Button";
 import { Input } from "@/components/ui/input";
 import AdminSidebar from "@/components/AdminSidebar";
+import useCreateCategory from "@/hooks/Category/useCreateCategory";
 
 function AdminCreateCategoryPage() {
+
+  const {
+    name,
+    inputChange,
+    handleSubmit,
+    isLoading,
+    error
+  } = useCreateCategory();
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-base-brown-100">
+
       <AdminSidebar />
-      {/* Main content */}
-      <main className="flex-1 p-8 bg-gray-50 overflow-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Create Category</h2>
-          <Button variant="primary" text="Save"/>
+
+      <main className="flex-1 overflow-auto">
+
+        <div className="flex justify-between items-center py-6 px-[60px] border-b border-b-base-brown-300">
+
+          <h2 className="text-2xl font-semibold">
+            Create Category
+          </h2>
+
+          <Button
+            variant="primary"
+            text={isLoading ? "Saving..." : "Save"}
+            onClick={handleSubmit}
+          />
+
         </div>
-        <div className="space-y-7 max-w-md">
-          <div className="relative">
-            <label
-              htmlFor="current-password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Category Name
-            </label>
-            <Input
-              id="current-password"
-              type="password"
-              placeholder="Category name"
-              className="mt-1 py-3 rounded-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-muted-foreground"
-            />
-          </div>
+
+        <div className="flex flex-col gap-1 max-w-[480px] ml-[60px] mt-[40px]">
+
+          <label
+            htmlFor="category"
+            className="block text-body-1 text-base-brown-400"
+          >
+            Category Name
+          </label>
+
+          <Input
+            id="category"
+            type="text"
+            value={name}
+            onChange={inputChange}
+            placeholder="Category name"
+            className="p-3 pl-4 rounded-lg text-body-1 text-base-brown-400 border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-base-brown-400"
+          />
+
+          {error && (
+            <p className="text-red-500 text-sm mt-2">
+              {error}
+            </p>
+          )}
+
         </div>
+
       </main>
+
     </div>
   );
 }
 
-
-export default AdminCreateCategoryPage
+export default AdminCreateCategoryPage;
