@@ -32,7 +32,7 @@ function ArticleSection() {
 
   useEffect(() => {
     reset();
-  }, [category]);
+  }, [category, keyword]);
 
   const navigate = useNavigate();
   const { suggestions, isLoading: isLoadingg } = useSuggestions(debouncedKeyword);

@@ -10,51 +10,64 @@ function usePosts({ category, keyword, limit = 6 }) {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getPosts = async () => {
+  const getPosts = async (targetPage = page) => {
+
     setIsLoading(true);
     setIsError(false);
 
     try {
+
       const categoryParam =
-        !category || category === "all" ? undefined : category;
+        !category || category === "Highlight" ? undefined : category;
 
       const response = await axios.get(`${API_BASE_URL}/posts`, {
         params: {
-          page,
+          page: targetPage,
           limit,
           category: categoryParam,
+          keyword: keyword || undefined
         },
       });
 
       const data = response.data;
 
-      setPosts((prev) =>
-        page === 1 ? data.posts : [...prev, ...data.posts]
+      setPosts(prev =>
+        targetPage === 1 ? data.posts : [...prev, ...data.posts]
       );
 
       setHasMore(data.currentPage < data.totalPages);
+
     } catch (error) {
+
       setIsError(true);
+
     } finally {
+
       setIsLoading(false);
+
     }
+
   };
 
-
   useEffect(() => {
-    getPosts();
-  }, [page, category, limit]);
+    getPosts(page);
+  }, [page, category, keyword]);
 
   const loadMore = () => {
+
     if (!isLoading && hasMore) {
-      setPage((prev) => prev + 1);
+      setPage(prev => prev + 1);
     }
+
   };
 
   const reset = () => {
+
     setPosts([]);
     setPage(1);
-    setHasMore(true);
+
+    getPosts(1);
+
   };
 
   return {
