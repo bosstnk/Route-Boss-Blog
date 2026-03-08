@@ -10,7 +10,8 @@ function AdminNotificationPage() {
             <main className="flex-1">
                 <h3 className="h-[97px] flex items-center px-[60px] border-b border-b-base-brown-300 text-headline-3">
                     Notification
-                </h3>                <div className="pt-10 px-[60px] pb-30 space-y-10">
+                </h3>                
+                <div className="pt-10 px-[60px] pb-30 space-y-10">
                     {notifications.map((notification) => (
                         <div key={notification.id}>
                             <div className="flex items-start gap-10">

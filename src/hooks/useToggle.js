@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-export function useToggleMenu() {
+export function useToggle() {
     const [isShow,setIsShow] = useState(false)
     const switchToggle = () => setIsShow((prev) => !prev)
+    const reset = () => setIsShow(false);
 
-    return {isShow,switchToggle}
+    return {isShow, switchToggle, reset}
 }

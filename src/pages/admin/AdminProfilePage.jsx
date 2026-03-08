@@ -28,7 +28,19 @@ function AdminProfilePage() {
                             />
                             <AvatarFallback>TP</AvatarFallback>
                         </Avatar>
-                        <UploadButton variant="outline">Upload profile picture</UploadButton>
+                        <label
+                            htmlFor="upload"
+                            className="text-body-1 leading-6 px-10 py-3 rounded-full text-base-brown-600 bg-white border border-base-brown-400 cursor-pointer"
+                        >
+                            Upload profile picture
+                        </label>
+
+                        <input
+                            id="upload"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                        />
                     </div>
 
                     <form className="space-y-7">
