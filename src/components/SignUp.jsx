@@ -1,7 +1,6 @@
 import { useSignUpForm } from "@/hooks/useSignUpForm"
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { Button } from "./common/Button"
 import { Link } from "react-router-dom";
 
 

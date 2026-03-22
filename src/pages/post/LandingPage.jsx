@@ -7,10 +7,10 @@ function LandingPage() {
   return (
     <>
       <NavBar />
-      <div className="bg-base-brown-100">
+      {/* <div className="bg-base-brown-100">
         <HeroSection />
         <ArticleSection />
-      </div>
+      </div> */}
       <Footer/>
     </>
   );

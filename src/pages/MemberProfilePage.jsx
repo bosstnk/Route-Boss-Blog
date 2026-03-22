@@ -1,9 +1,8 @@
 import NavBar from "@/components/navbar/NavBar";
 import { User, IterationCw } from "lucide-react";
-import { Button } from "@/components/common/Button";
 import { Link } from "react-router-dom";
 import useProfile from "@/hooks/useProfile";
-
+import { Plus, Pencil, Trash2, Search } from "lucide-react";
 function MemberProfilePage() {
   const {
     form,
@@ -26,9 +25,9 @@ function MemberProfilePage() {
           {/* Header */}
           <div className="py-6 px-4 flex items-center gap-3 lg:gap-4 lg:p-0">
             <img
-              src={form.image}
+              src={form.image || "/default-avatar.png"}
               alt="profile"
-              className="w-10 h-10 rounded-full lg:w-14 lg:h-14"
+              className="w-10 h-10 rounded-full lg:w-14 lg:h-14 object-cover"
             />
             <h4 className="text-headline-4 text-base-brown-400 lg:text-headline-3">
               {form.username}
@@ -50,14 +49,14 @@ function MemberProfilePage() {
               {/* Avatar */}
               <div className="flex flex-col items-center gap-6 lg:flex-row lg:gap-7">
                 <img
-                  src={form.image}
+                  src={form.image || "/default-avatar.png"}
                   alt="profile"
-                  className="w-28 h-28 rounded-full"
+                  className="w-28 h-28 rounded-full object-cover"
                 />
 
                 <label
                   htmlFor="upload"
-                  className="text-body-1 leading-6 px-10 py-3 rounded-full text-base-brown-600 bg-white border border-base-brown-400 cursor-pointer" 
+                  className="text-body-1 leading-6 px-10 py-3 rounded-full text-base-brown-600 bg-white border border-base-brown-400 cursor-pointer"
                 >
                   Upload profile picture
                 </label>
@@ -127,20 +126,20 @@ export default MemberProfilePage;
 
 
 function MenuMember({ className = "" }) {
-    return (
-      <div className="flex lg:flex-col">
-        <button className="px-4 py-3 flex gap-3 text-base-brown-500">
-          <User size={24} />
-          Profile
-        </button>
-  
-        <Link
-          to="/member-reset-password"
-          className={`px-4 py-3 flex gap-3 text-base-brown-400/70 ${className}`}
-        >
-          <IterationCw size={24} />
-          Reset password
-        </Link>
-      </div>
-    );
-  }
+  return (
+    <div className="flex lg:flex-col">
+      <button className="px-4 py-3 flex gap-3 text-base-brown-500">
+        <User size={24} />
+        Profile
+      </button>
+
+      <Link
+        to="/member-reset-password"
+        className={`px-4 py-3 flex gap-3 text-base-brown-400/70 ${className}`}
+      >
+        <IterationCw size={24} />
+        Reset password
+      </Link>
+    </div>
+  );
+}

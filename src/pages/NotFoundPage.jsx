@@ -1,7 +1,6 @@
 import NavBar from "@/components/navbar/NavBar"
 import Footer from "@/components/Footer";
 import { CircleAlert } from "lucide-react";
-import { Button } from "@/components/common/Button";
 import { Link } from "react-router-dom";
 
 function NotFoundPage() {

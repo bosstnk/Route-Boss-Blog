@@ -1,5 +1,4 @@
 import { Eye, EyeOff, EyeClosed } from 'lucide-react';
-import { Button } from './common/Button';
 import usePasswordVisibility from '@/hooks/usePasswordVisibility';
 
 function AdminLogIn() {
