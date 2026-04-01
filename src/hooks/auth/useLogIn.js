@@ -3,7 +3,7 @@ import axios from "axios";
 import { validateLoginForm } from "@/utils/validateForm";
 import { useAuth } from "@/context/AuthContext";
 
-export function useLogInForm() {
+export function useLogIn() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { login } = useAuth();
 

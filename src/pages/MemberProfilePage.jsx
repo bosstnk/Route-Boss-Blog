@@ -1,4 +1,5 @@
 import NavBar from "@/components/navbar/NavBar";
+import Button from "@/components/common/Button";
 import { User, IterationCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import useProfile from "@/hooks/useProfile";
@@ -105,14 +106,13 @@ function MemberProfilePage() {
                 {error && (
                   <p className="text-red-500 mt-4 text-sm">{error}</p>
                 )}
-
                 <Button
                   type="submit"
                   variant="primary"
-                  text={isSaving ? "Saving..." : "Save"}
                   className="mt-6"
-                  disabled={isSaving}
-                />
+                  disabled={isSaving}>
+                  {isSaving ? "Saving..." : "Save"}
+                </Button>
               </form>
             </div>
           </div>

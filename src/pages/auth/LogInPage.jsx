@@ -1,14 +1,14 @@
 import NavBar from "@/components/navbar/NavBar"
-import SignUp from "@/components/SignUp"
+import LogIn from "@/components/auth/LogIn";
 
-
-function SignUpPage() {
+function LogInPage() {
     return (
         <>
             <NavBar />
-            <SignUp />
+            <LogIn />
         </>
+
     )
 }
 
-export default SignUpPage
+export default LogInPage;

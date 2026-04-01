@@ -23,7 +23,12 @@ export default function Modal({
 
                 {/* Close */}
                 <div className="w-full flex justify-end">
-                    <Button iconOnly variant="text" leftIcon={<X strokeWidth={1.5} />}></Button>
+                    <Button
+                        iconOnly
+                        variant="text"
+                        leftIcon={<X strokeWidth={1.5} />}
+                        onClick={onClose}
+                    />
                 </div>
 
                 {/* Content */}

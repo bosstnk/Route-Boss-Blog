@@ -4,9 +4,10 @@ import imageUser from "@/assets/images/user-picture-demo.jpg";
 import { Link } from "react-router-dom";
 import useResetPassword from "@/hooks/useResetPassword";
 import { useAuth } from "@/context/AuthContext";
+import Button from "@/components/common/Button";
 
 function MemberResetPasswordPage() {
-    const {profile} = useAuth()
+  const { profile } = useAuth()
   const {
     form,
     handleChange,
@@ -29,7 +30,7 @@ function MemberResetPasswordPage() {
             <img
               src={profile.image}
               alt="profile"
-              className="w-10 h-10 rounded-full lg:w-14 lg:h-14"
+              className="w-10 h-10 rounded-full lg:w-14 lg:h-14 object-cover"
             />
             <h4 className="text-headline-4 text-base-brown-400 lg:text-headline-3">
               {profile.username}
@@ -97,14 +98,13 @@ function MemberResetPasswordPage() {
                     Password updated successfully
                   </p>
                 )}
-
                 <Button
                   type="submit"
                   variant="primary"
-                  text={isSubmitting ? "Saving..." : "Reset password"}
-                  className="mt-6 self-start"
                   disabled={isSubmitting}
-                />
+                  className="mt-6 self-start">
+                  {isSubmitting ? "Saving..." : "Reset password"}
+                </Button>
               </form>
             </div>
           </div>
@@ -117,22 +117,22 @@ function MemberResetPasswordPage() {
 export default MemberResetPasswordPage;
 
 
-function MenuMember({className=""}) {
-    return (
-        <div className="flex lg:flex-col">
-            <Link
-                to={"/member-profile"}
-                className={`text-body-1 text-base-brown-400/70 px-4 py-3 flex gap-3 cursor-pointer ${className}`}
-            >
-                <User size={24} color="#DAD6D1" strokeWidth={2} absoluteStrokeWidth />
-                <span className="items-center">Profile</span>
-            </Link>
-            <button
-                className={`text-body-1 text-base-brown-500 px-4 py-3 flex gap-3 cursor-pointe`}
-            >
-                <IterationCw size={24} color="#75716B" strokeWidth={2} absoluteStrokeWidth />
-                <span className="items-center">Reset password</span>
-            </button>
-        </div>
-    )
+function MenuMember({ className = "" }) {
+  return (
+    <div className="flex lg:flex-col">
+      <Link
+        to={"/member-profile"}
+        className={`text-body-1 text-base-brown-400/70 px-4 py-3 flex gap-3 cursor-pointer ${className}`}
+      >
+        <User size={24} color="#DAD6D1" strokeWidth={2} absoluteStrokeWidth />
+        <span className="items-center">Profile</span>
+      </Link>
+      <button
+        className={`text-body-1 text-base-brown-500 px-4 py-3 flex gap-3 cursor-pointe`}
+      >
+        <IterationCw size={24} color="#75716B" strokeWidth={2} absoluteStrokeWidth />
+        <span className="items-center">Reset password</span>
+      </button>
+    </div>
+  )
 }

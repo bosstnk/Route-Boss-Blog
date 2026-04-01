@@ -1,4 +1,5 @@
 import AdminSidebar from "@/components/AdminSidebar";
+import Button from "@/components/common/Button";
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import {
     Select,
@@ -39,9 +40,10 @@ function ArticleManagmentPage() {
                     <Link to="/admin/article-management/create">
                         <Button
                             variant="primary"
-                            text="+ Create article"
-                            icon={<Plus />}
-                        />
+                            leftIcon={<Plus />}
+                        >
+                            Create article
+                        </Button>
                     </Link>
                 </div>
 
@@ -145,13 +147,14 @@ function ListArticle({ article }) {
                 <Link to={`/admin/article-management/edit/${article.id}`}>
                     <Pencil size={24} />
                 </Link>
-                <button
+                <Button
                     onClick={handleDelete}
                     disabled={isDeleting}
-                    className="cursor-pointer"
+                    iconOnly
+                    variant="text"
+                    leftIcon={<Trash2 size={24} />}
                 >
-                    <Trash2 size={24} />
-                </button>
+                </Button>
             </div>
         </div>
     );

@@ -6,10 +6,10 @@ import LikeShare from "./post/LikeShare";
 import AuthorProfile from "./post/AuthorProfile";
 import usePost from "@/hooks/usePost";
 import useToggleLike from "@/hooks/useToggleLike";
-import CreateAccountAlert from "./auth/CreateAccountAlert";
 import LoadingScreen from "./common/LoadingScreen";
 import PostContent from "./post/PostContent";
 import useComments from "@/hooks/Comment/useComments";
+
 
 export default function ViewPost() {
 
@@ -43,6 +43,7 @@ export default function ViewPost() {
                         authorName={post.author}
                     />
                     <LikeShare
+                        liked={post.liked}
                         likeAmount={post.likes_count}
                         onRequireAuth={openAlertIfGuest}
                         onLike={toggleLike}
@@ -59,13 +60,13 @@ export default function ViewPost() {
                     authorName={post.author}
                 />
             </div>
-            {!isAuthenticated && (
+            {/* {!isAuthenticated && (
 
                 <CreateAccountAlert
                     alertState={isAlertOpen}
                     setAlertState={setIsAlertOpen}
                 />
-            )}
+            )} */}
         </div>
     );
 }
