@@ -1,5 +1,4 @@
 import NavBar from "@/components/navbar/NavBar"
-import { Button } from "@/components/common/Button";
 import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

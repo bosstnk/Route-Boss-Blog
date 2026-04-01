@@ -12,6 +12,7 @@ function useCreatePost() {
   });
 
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -26,16 +27,26 @@ function useCreatePost() {
 
   // select category
   const handleCategoryChange = (value) => {
+
     setForm((prev) => ({
       ...prev,
-      category_id: value,
+      category_id: Number(value)
     }));
+
   };
 
   // upload thumbnail
   const handleImageChange = (e) => {
+
     const file = e.target.files?.[0];
-    if (file) setImageFile(file);
+
+    if (!file) return;
+
+    setImageFile(file);
+
+    const preview = URL.createObjectURL(file);
+    setImagePreview(preview);
+
   };
 
   // submit (draft / publish)
@@ -52,15 +63,20 @@ function useCreatePost() {
       formData.append("status_id", publish ? 2 : 1); // 1=draft, 2=publish
 
       if (imageFile) {
-        formData.append("image", imageFile);
+        formData.append("imageFile", imageFile);
       }
-
+      // 👇 log ตรงนี้
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
       await axios.post(`${API_BASE_URL}/posts`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
     } catch (err) {
       console.error("CREATE POST ERROR:", err);
+      console.log(err.response?.data);
       setError(err.response?.data?.message || "Failed to create post");
+
     } finally {
       setIsSubmitting(false);
     }
@@ -68,12 +84,13 @@ function useCreatePost() {
 
   return {
     form,
+    imagePreview,
     isSubmitting,
     error,
     handleChange,
     handleCategoryChange,
     handleImageChange,
-    submitPost,
+    submitPost
   };
 }
 

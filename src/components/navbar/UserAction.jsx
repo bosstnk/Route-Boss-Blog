@@ -9,7 +9,7 @@ export function UserAction({ onToggle, profile }) {
           <Bell size={22} color="#75716B" strokeWidth={1.5} />
         </button>
         <div className="flex flex-row gap-2">
-          <img src={image} alt="dog" className="w-12 h-12 rounded-full" />
+          <img src={image} alt="dog" className="w-12 h-12 rounded-full object-cover" />
           <span className="text-body-1 text-base-brown-500 self-center">{username}</span>
           <button onClick={onToggle}>
             <ChevronDown size={16} color="#75716B" strokeWidth={1} />

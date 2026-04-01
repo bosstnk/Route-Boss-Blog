@@ -1,4 +1,3 @@
-import { Button } from "@/components/common/Button";
 import AdminSidebar from "@/components/AdminSidebar";
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import {
@@ -11,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import usePosts from "@/hooks/usePosts";
+import useDeletePost from "@/hooks/Post/useDeletePost";
 
 function ArticleManagmentPage() {
     const [category, setCategory] = useState("");
@@ -39,7 +39,7 @@ function ArticleManagmentPage() {
                     <Link to="/admin/article-management/create">
                         <Button
                             variant="primary"
-                            text="Create article"
+                            text="+ Create article"
                             icon={<Plus />}
                         />
                     </Link>
@@ -118,6 +118,18 @@ function ArticleManagmentPage() {
 export default ArticleManagmentPage;
 
 function ListArticle({ article }) {
+    const { deletePost, isDeleting } = useDeletePost();
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Delete this article?");
+        if (!confirmDelete) return;
+
+        const success = await deletePost(article.id);
+
+        if (success) {
+            window.location.reload(); // 👈 เอาง่ายก่อน
+        }
+    };
     return (
         <div className="flex text-body-1 text-base-brown-500 border-t border-base-brown-300">
             <div className="w-[60%] truncate py-5 px-6">
@@ -133,7 +145,13 @@ function ListArticle({ article }) {
                 <Link to={`/admin/article-management/edit/${article.id}`}>
                     <Pencil size={24} />
                 </Link>
-                <Trash2 size={24} />
+                <button
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="cursor-pointer"
+                >
+                    <Trash2 size={24} />
+                </button>
             </div>
         </div>
     );

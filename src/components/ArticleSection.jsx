@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BlogCard } from "./common/BlogCard.jsx";
-import { Button } from "./common/Button.jsx";
+import Button from "./common/Button.jsx";
 import { Search } from "lucide-react";
 import {
   Select,
@@ -32,7 +32,7 @@ function ArticleSection() {
 
   useEffect(() => {
     reset();
-  }, [category]);
+  }, [category, keyword]);
 
   const navigate = useNavigate();
   const { suggestions, isLoading: isLoadingg } = useSuggestions(debouncedKeyword);

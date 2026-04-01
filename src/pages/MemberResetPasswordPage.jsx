@@ -1,7 +1,6 @@
 import NavBar from "@/components/navbar/NavBar";
 import { User, IterationCw } from "lucide-react";
 import imageUser from "@/assets/images/user-picture-demo.jpg";
-import { Button } from "@/components/common/Button";
 import { Link } from "react-router-dom";
 import useResetPassword from "@/hooks/useResetPassword";
 import { useAuth } from "@/context/AuthContext";

@@ -4,7 +4,6 @@ import { useState } from "react";
 import useCategories from "@/hooks/Category/useCategories";
 import useDeleteCategory from "@/hooks/Category/useDeleteCategory";
 import { Link } from "react-router-dom";
-import Dialog from "@/components/common/Dialog";
 
 
 function AdminCategoryManagementPage() {

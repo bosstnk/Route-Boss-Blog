@@ -4,21 +4,21 @@ import { useAuth } from "@/context/AuthContext";
 
 function useProfile() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const { profile: authProfile, setProfile: setAuthProfile } = useAuth();
+  const { profile: authProfile, fetchProfile } = useAuth();
 
-  // 📝 form state
   const [form, setForm] = useState({
     image: "",
     name: "",
     username: "",
     email: "",
+    bio: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
-  // 🔁 sync context profile → form
+  // sync profile → form
   useEffect(() => {
     if (authProfile) {
       setForm({
@@ -26,29 +26,33 @@ function useProfile() {
         name: authProfile.name || "",
         username: authProfile.username || "",
         email: authProfile.email || "",
+        bio: authProfile.bio || "",
       });
     }
   }, [authProfile]);
 
-  // ✏️ handle text input
+  // input
   function inputProfile(e) {
     const { name, value } = e.target;
+
+    // 🔒 limit bio
+    if (name === "bio" && value.length > 120) return;
+
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  // 🖼️ handle image
+  // upload image
   function handleFileChange(e) {
     const file = e.target.files[0];
     if (!file) return;
 
     setImageFile(file);
 
-    // preview รูป
     const previewUrl = URL.createObjectURL(file);
     setForm((prev) => ({ ...prev, image: previewUrl }));
   }
 
-  // 💾 submit update
+  // submit
   async function handleSubmit(e) {
     e.preventDefault();
     setIsSaving(true);
@@ -58,16 +62,18 @@ function useProfile() {
       const formData = new FormData();
       formData.append("name", form.name);
       formData.append("username", form.username);
+      formData.append("bio", form.bio);
 
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }
 
-      await axios.put(`${API_BASE_URL}/user`, formData);
+      await axios.put(`${API_BASE_URL}/user`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      // 🔄 refetch profile หลัง update
-      const result = await axios.get(`${API_BASE_URL}/user`);
-      setAuthProfile(result.data);
+      await fetchProfile();
+
     } catch (err) {
       console.error("UPDATE PROFILE ERROR:", err);
       setError(err.response?.data?.message || "Failed to update profile");

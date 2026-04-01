@@ -11,10 +11,11 @@ import { UserAction } from "./UserAction";
 import { useAuth } from "@/context/AuthContext";
 import { UserAccountMenu } from "./DropdownAction";
 import { useEffect } from "react";
+import ModalGuest from "../common/ModalGuest";
 
 function NavBar() {
   const { isShow, switchToggle, reset } = useToggle();
-  const { user, loading, profile } = useAuth();
+  const { user, profile } = useAuth();
 
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function NavBar() {
         </DropdownMenuTrigger>
         <GuestActionMobile />
       </DropdownMenu>
+      <ModalGuest open={true}></ModalGuest>
     </nav>
   );
 }

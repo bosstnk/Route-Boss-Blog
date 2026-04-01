@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { DropdownMenuContent } from "@/components/ui/dropdown-menu";
-import { Button } from "../common/Button";
 import { Bell, User, IterationCw, LogOut, SquareArrowOutUpRight } from "lucide-react";
-
+import Button from "../common/Button";
 export function GuestActionMobile() {
     return (
         <DropdownMenuContent
@@ -16,10 +15,10 @@ export function GuestActionMobile() {
             rounded-none"
         >
             <Link to={"/login"}>
-                <Button text="Log in" variant="secondary" className="w-full" />
+                <Button variant="secondary">Log in</Button>
             </Link>
             <Link to={"/signup"}>
-                <Button text="Sign up" variant="primary" className="w-full" />
+                <Button variant="primary">Sign up</Button>
             </Link>
         </DropdownMenuContent>
     )

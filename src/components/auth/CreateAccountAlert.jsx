@@ -6,14 +6,17 @@ import {
     AlertDialogDescription,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Button } from "../common/Button";
+
+import { Link } from "react-router-dom";
 
 function CreateAccountAlert({ alertState, setAlertState }) {
     return (
         <AlertDialog open={alertState} onOpenChange={setAlertState}>
-            <AlertDialogContent className="flex flex-col items-center gap-0 bg-base-brown-100 px-4 pt-4 pb-10 lg:max-w-[621px] rounded-2xl">
-                <AlertDialogTitle className="text-headline-3 text-center pt-12 pb-4">Create an account to Continue</AlertDialogTitle>
-                <Button variant="primary" text="Create Account"></Button>
+            <AlertDialogContent className="flex flex-col items-center gap-10 bg-base-brown-100 px-4 pt-4 pb-10 lg:max-w-[621px] rounded-2xl">
+                <AlertDialogTitle className="text-headline-3 lg:text-headline-2 lg:leading-[48px] text-center pt-12">Create an account to Continue</AlertDialogTitle>
+                <Link to={`/signup`} >
+                    <Button variant="primary" text="Create Account" />
+                </Link>
                 <AlertDialogDescription className="flex flex-row gap-3 justify-center pt-4 text-body-1 text-base-brown-400">
                     Already have an account?
                     <a

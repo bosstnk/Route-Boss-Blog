@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
-import { Button } from "../common/Button";
+import Button from "../common/Button";
 
 export function GuestAction() {
     return (
         <div className="hidden lg:flex lg:gap-2">
             <Link to={"/login"}>
-                <Button text="Log in" variant="secondary" />
+                <Button variant="secondary">Log in</Button>
             </Link>
             <Link to={"/signup"}>
-                <Button text="Sign up" variant="primary" />
+                <Button variant="primary">Sign up</Button>
             </Link>
         </div>
     )
