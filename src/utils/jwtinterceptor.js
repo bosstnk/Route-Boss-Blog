@@ -22,9 +22,13 @@ function jwtInterceptor() {
         error.response?.data || error.message
       );
 
-      if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        window.location.replace("/login");
+      if (error.response.status === 401) {
+        const isAuthPage = window.location.pathname === "/login";
+
+        if (!isAuthPage) {
+          window.localStorage.removeItem("token");
+          window.location.replace("/login");
+        }
       }
 
       return Promise.reject(error);

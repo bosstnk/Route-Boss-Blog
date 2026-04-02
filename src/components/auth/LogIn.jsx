@@ -8,12 +8,10 @@ import Button from "../common/Button";
 function LogIn() {
     const {
         loginForm,
-        inputForm,
+        handleChange,
         handleSubmit,
         errors,
-        isSuccess,
         isLoading,
-        serverError,
     } = useLogIn();
     const { isVisible, inputType, toggleVisibility, } = usePasswordVisibility()
 
@@ -30,7 +28,7 @@ function LogIn() {
             <div className="flex flex-col items-center gap-6 px-4 py-10 max-w-[798px] bg-base-brown-200 rounded-2xl mx-auto lg:px-[120px] lg:py-[60px] lg:gap-10">
                 <h2 className="text-headline-2 leading-12 text-base-brown-600">Log in</h2>
                 <form
-                    className="w-full flex flex-col gap-7"
+                    className="w-full flex flex-col gap-6 lg:gap-7"
                     onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
                         <label htmlFor="email">Email</label>
@@ -38,12 +36,12 @@ function LogIn() {
                             id="email"
                             name="email"
                             value={loginForm.email}
-                            onChange={inputForm}
+                            onChange={handleChange}
                             type="email"
                             placeholder="Email"
                             className={`${baseInput} ${errors.email ? errorInput : ""}`} />
+                        {(errors.email) && <div className="text-body-3 text-brand-red">{errors.email}</div>}
                     </div>
-                    {(errors.email) && <div className="pt-1 text-body-3 text-brand-red">{errors.email}</div>}
                     <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
                         <label htmlFor="password">Password</label>
                         <div className={`flex flex-row ${baseInput}  ${errors.password ? errorInput : ""}`} >
@@ -51,7 +49,7 @@ function LogIn() {
                                 id="password"
                                 name="password"
                                 value={loginForm.password}
-                                onChange={inputForm}
+                                onChange={handleChange}
                                 type={inputType}
                                 placeholder="Password"
                                 className="grow outline-none placeholder:text-base-brown-400"
@@ -60,14 +58,9 @@ function LogIn() {
                                 {isVisible ? <Eye size={20} /> : <EyeClosed size={20} />}
                             </button>
                         </div>
+                        {(errors.password) && <div className="text-body-3 text-brand-red">{errors.password}</div>}
                     </div>
-                    {(errors.password) && <div className="pt-1 text-body-3 text-brand-red">{errors.password}</div>}
-                    {serverError && (
-                        <div className="mt-4 text-center text-body-3 text-brand-red">
-                            {serverError}
-                        </div>
-                    )}
-                    <Button type="submit" variant="primary" disabled={isLoading} className="mt-6 self-center lg:mt-10">{isLoading ? "Logging in..." : "Log in"}</Button>
+                    <Button type="submit" variant="primary" disabled={isLoading} className="self-center lg:mt-3">{isLoading ? "Logging in..." : "Log in"}</Button>
                 </form>
                 <div className="space-x-3">
                     <span>Don’t have any account?</span>

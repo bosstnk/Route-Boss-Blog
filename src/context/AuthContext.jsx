@@ -7,9 +7,11 @@ export function AuthProvider({ children }) {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [profile, setProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const fetchProfile = async () => {
+    setIsLoading(true)
     try {
       const token = localStorage.getItem("token");
 
@@ -42,8 +44,8 @@ export function AuthProvider({ children }) {
 
   function login(token) {
     console.log("🔐 Login success");
-
     localStorage.setItem("token", token);
+    setIsAuthenticated(true)
     fetchProfile();
   }
 
@@ -52,6 +54,7 @@ export function AuthProvider({ children }) {
 
     localStorage.removeItem("token");
     setProfile(null);
+    setIsAuthenticated(false)
   }
 
   return (
@@ -59,9 +62,10 @@ export function AuthProvider({ children }) {
       value={{
         profile,
         isLoading,
-        isAuthenticated: !!profile,
+        isAuthenticated,
         login,
         logout,
+        fetchProfile
       }}
     >
       {children}

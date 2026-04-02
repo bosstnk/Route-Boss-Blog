@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { User, IterationCw, LogOut, SquareArrowOutUpRight } from "lucide-react";
 
 export function UserAccountMenu() {
-    const { logout } = useAuth()
+    const { profile,logout } = useAuth()
     const navigat = useNavigate()
 
     return (
@@ -18,11 +18,14 @@ export function UserAccountMenu() {
                 <IterationCw size={24} color="#75716B" strokeWidth={1} />
                 <span className="items-center">Reset password</span>
             </button>
-            <button className="w-full text-body-1 text-base-brown-500 px-4 py-3 flex gap-3 cursor-pointer"
-                onClick={() => navigat("/admin/article-management")}>
-                <SquareArrowOutUpRight size={24} color="#75716B" strokeWidth={1} />
-                <span className="items-center">Admin panel</span>
-            </button>
+
+            {profile?.role === "admin" && (
+                <button className="w-full text-body-1 text-base-brown-500 px-4 py-3 flex gap-3 cursor-pointer"
+                    onClick={() => navigat("/admin/article-management")}>
+                    <SquareArrowOutUpRight size={24} color="#75716B" strokeWidth={1} />
+                    <span className="items-center">Admin panel</span>
+                </button>
+            )}
             <hr />
             <button className="text-body-1 text-base-brown-500 px-4 py-3 flex gap-3 cursor-pointer"
                 onClick={logout}>

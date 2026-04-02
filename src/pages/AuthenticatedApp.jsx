@@ -7,8 +7,8 @@ import SignUpSuccessPage from "./auth/SignUpPageSuccess";
 import LandingPage from "./post/LandingPage";
 import ViewPostPage from "./post/ViewPostPage";
 // member
-import MemberProfilePage from "./MemberProfilePage";
-import MemberResetPasswordPage from "./MemberResetPasswordPage";
+import MemberProfilePage from "./user/MemberProfilePage";
+import MemberResetPasswordPage from "./user/MemberResetPasswordPage";
 
 // admin
 import ArticleManagmentPage from "./admin/ArticleManagementPage";

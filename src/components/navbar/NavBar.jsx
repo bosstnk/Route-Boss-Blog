@@ -13,7 +13,11 @@ function NavBar() {
         border-b border-b-base-brown-300
       "
     >
-      <Link to="/" className="text-2xl font-bold lg:text-4xl">
+      <Link
+        to="/"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="text-2xl font-bold lg:text-4xl"
+      >
         Boss<span className="text-green-400">.</span>
       </Link>
 

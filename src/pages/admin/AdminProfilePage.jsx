@@ -3,8 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button as UploadButton } from "@/components/ui/button";
-import imageUser from "@/assets/images/user-picture-demo.jpg"
-import useProfile from "@/hooks/useProfile";
+
+import useUpdateProfile from "@/hooks/user/useUpdateProfile";
 
 function AdminProfilePage() {
     const {
@@ -13,7 +13,7 @@ function AdminProfilePage() {
         handleFileChange,
         handleSubmit,
         isSaving
-    } = useProfile();
+    } = useUpdateProfile();
 
     const inputStyle = "mt-1 pl-4 pr-3 py-3 rounded-lg bg-white border border-base-brown-300 text-base-brown-500 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400"
 

@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { User, IterationCw, LogOut, SquareArrowOutUpRight } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Bell } from "lucide-react";
-export function MobileMenuPanel({ open, user, profile, onClose }) {
-  const { logout } = useAuth();
+import { NotificationBell } from "../notification/NotificationBell";
+export function MobileMenuPanel({ open, onClose }) {
+  const { profile, logout } = useAuth();
   const navigate = useNavigate();
 
   if (!open) return null;
-
+  console.log(profile)
   return (
     <div className="
     fixed top-[57px] left-0
@@ -19,7 +20,7 @@ export function MobileMenuPanel({ open, user, profile, onClose }) {
     ">
       <div className="flex flex-col gap-4 p-6">
 
-        {user ? (
+        {profile ? (
           <>
             {/* USER HEADER */}
             <div className="flex justify-between">
@@ -27,10 +28,7 @@ export function MobileMenuPanel({ open, user, profile, onClose }) {
                 <img src={profile.image} className="w-12 h-12 rounded-full" />
                 <p className="self-center">{profile.username}</p>
               </div>
-
-              <button className="bg-white border p-3 rounded-full">
-                <Bell size={22} />
-              </button>
+              <NotificationBell />
             </div>
 
             {/* USER MENU */}
@@ -42,9 +40,16 @@ export function MobileMenuPanel({ open, user, profile, onClose }) {
               <IterationCw size={24} /> Reset password
             </button>
 
-            <button onClick={() => navigate("/admin/article-management")} className="flex gap-3 px-4 py-3">
-              <SquareArrowOutUpRight size={24} /> Admin panel
-            </button>
+            {profile?.role === "admin" && (
+              <button
+                onClick={() => navigate("/admin/article-management")}
+                className="flex gap-3 px-4 py-3"
+              >
+                <SquareArrowOutUpRight size={24} />
+                Admin panel
+              </button>
+            )}
+
 
             <hr />
 
