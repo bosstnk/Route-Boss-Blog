@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+FEATURES.md
+schema.md

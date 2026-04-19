@@ -6,18 +6,24 @@ import { UserAccountMenu } from "@/features/auth/UserAccountMenu";
 import { MobileMenuPanel } from "@/features/auth/MobileMenuPanel";
 import { useAuth } from "@/context/AuthContext";
 import { Skeleton } from "../ui/skeleton";
-
+import { NotificationBox } from "@/features/notification/NotificationBox";
+import useNotifications from "@/hooks/useNotifications";
 
 export default function NavbarRight() {
   const { isLoading, profile } = useAuth();
+  const { notifications, isLoading: notiLoading } = useNotifications();
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isOpenNoti, setIsOpenNoti] = useState(false);
+  const [seen, setSeen] = useState(false);
+  const hasUnread = notifications.length > 0 && !seen;
   const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsOpen(false);
+        setIsOpenNoti(false);
       }
     };
 
@@ -37,8 +43,14 @@ export default function NavbarRight() {
           <SkeletonDemo />
         ) : profile ? (
           <div ref={menuRef} className="relative">
-            <UserMenu onToggle={() => setIsOpen(prev => !prev)} profile={profile} />
+            <UserMenu
+              onToggle={() => { setIsOpen(prev => !prev); setIsOpenNoti(false); }}
+              onToggleNoti={() => { setIsOpenNoti(prev => !prev); setIsOpen(false); setSeen(true); }}
+              profile={profile}
+              hasUnread={hasUnread}
+            />
             {isOpen && <UserAccountMenu />}
+            {isOpenNoti && <NotificationBox notifications={notifications} isLoading={notiLoading} />}
           </div>
         ) : (
           <GuestActionsDesktop />

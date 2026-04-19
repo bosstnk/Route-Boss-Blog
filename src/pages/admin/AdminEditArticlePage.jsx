@@ -13,7 +13,7 @@ import {
 import AdminSidebar from "@/components/AdminSidebar";
 import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import usePost from "@/hooks/usePost";
 import useCategories from "@/hooks/Category/useCategories";
 import useUpdatePost from "@/hooks/Post/useUpdatePost";
@@ -21,6 +21,7 @@ import useDeletePost from "@/hooks/Post/useDeletePost";
 
 function AdminEditArticlePage() {
     const { postId } = useParams();
+    const navigate = useNavigate();
     const [openModal, setOpenModal] = useState(false);
     const { post, isLoading } = usePost(postId);
     const { categories } = useCategories();
@@ -28,7 +29,6 @@ function AdminEditArticlePage() {
     const [imagePreview, setImagePreview] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const { deletePost, isDeleting } = useDeletePost();
-    console.log("POST:", post);
     const [form, setForm] = useState({
         title: "",
         description: "",
@@ -46,7 +46,7 @@ function AdminEditArticlePage() {
                 category_id: String(post.category_id) || "",
             });
 
-            setImagePreview(post.image || null); // 👈 สำคัญ
+            setImagePreview(post.image || null);
         }
     }, [post]);
 
@@ -78,9 +78,7 @@ function AdminEditArticlePage() {
 
         if (success) {
             setOpenModal(false);
-
-            // 👉 optional: redirect
-            navigate("/admin/articles");
+            navigate("/admin/article-management");
         }
     };
 
@@ -206,8 +204,10 @@ function AdminEditArticlePage() {
                     </form>
                     <Button
                         variant="text"
-                        leftIcon={<Trash2 />}
+                        size="none"
+                        disabled={isDeleting}
                         onClick={() => setOpenModal(true)}>
+                        <Trash2 />
                         Delete article
                     </Button>
                     <Modal

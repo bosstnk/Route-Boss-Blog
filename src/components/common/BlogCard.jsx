@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export function BlogCard({ post }) {
   const navigate = useNavigate()
-  const { id, title, author, category, description, image, date } = post
+  const { id, title, author, author_pic, category, description, image, date } = post
   return (
     <div className="flex flex-col gap-4 sm:gap-6 ">
       <button className="h-[212px] sm:h-[360px]" onClick={() => navigate(`/post/${id}`)}>
@@ -30,7 +30,7 @@ export function BlogCard({ post }) {
         <div className="flex items-center text-body-2 mt-2">
           <img
             className="w-8 h-8 rounded-full object-cover mr-2"
-            src={imageProfile}
+            src={author_pic || imageProfile}
             alt={author}
           />
           <span className="text-base-brown-500">{author}</span>

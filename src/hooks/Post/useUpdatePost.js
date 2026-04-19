@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { showToast } from "@/components/common/showToast";
 
 function useUpdatePost(postId) {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -25,18 +26,15 @@ function useUpdatePost(postId) {
 
       await axios.put(`${API_BASE_URL}/posts/${postId}`, formData);
 
-      console.log("Update success");
       showToast({
         title: "Success",
         description: "Article updated successfully",
         type: "success",
       });
     } catch (err) {
-      console.error("UPDATE ERROR:", err);
-      console.log(err.response?.data);
       showToast({
-        title: "Success",
-        description: "Article updated successfully",
+        title: "Error",
+        description: err.response?.data?.message || "Failed to update article",
         type: "error",
       });
     } finally {

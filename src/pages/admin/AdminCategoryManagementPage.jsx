@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import useCategories from "@/hooks/Category/useCategories";
 import useDeleteCategory from "@/hooks/Category/useDeleteCategory";
+import Modal from "@/components/common/Modal";
 import { Link } from "react-router-dom";
 
 
@@ -112,6 +113,7 @@ function AdminCategoryManagementPage() {
                                         <button onClick={() => openDeleteDialog(category.id)}>
                                             <Trash2 size={24} color="#75716B" strokeWidth={1.5} />
                                         </button>
+                                        
                                     </div>
                                 </div>
                             ))}
@@ -119,12 +121,14 @@ function AdminCategoryManagementPage() {
                     </div>
                 </div>
             </main>
-            <Dialog
-                alertState={isDialogOpen}
-                setAlertState={setIsDialogOpen}
+
+            <Modal
+                open={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                title="Delete category"
+                description="Do you want to delete this category?"
                 onConfirm={confirmDelete}
             />
-
         </div>
     );
 }

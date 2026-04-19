@@ -41,6 +41,8 @@ export default function ViewPost() {
                     <AuthorProfile
                         className="xl:hidden"
                         authorName={post.author}
+                        authorPic={post.author_pic}
+                        authorBio={post.author_bio}
                     />
                     <LikeShare
                         liked={post.liked}
@@ -58,6 +60,8 @@ export default function ViewPost() {
                 <AuthorProfile
                     className="sticky top-30 hidden xl:flex xl:max-w-[305px] self-start"
                     authorName={post.author}
+                    authorPic={post.author_pic}
+                    authorBio={post.author_bio}
                 />
             </div>
             {/* {!isAuthenticated && (

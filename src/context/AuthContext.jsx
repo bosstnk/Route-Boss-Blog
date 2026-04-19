@@ -7,7 +7,7 @@ export function AuthProvider({ children }) {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [profile, setProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const fetchProfile = async () => {
@@ -26,6 +26,7 @@ export function AuthProvider({ children }) {
       console.log("✅ Fetch profile success:", result.data);
 
       setProfile(result.data);
+      setIsAuthenticated(true);
     } catch (error) {
       console.log(
         "❌ Fetch profile error:",
@@ -33,6 +34,7 @@ export function AuthProvider({ children }) {
       );
 
       setProfile(null);
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }

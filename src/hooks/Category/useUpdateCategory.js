@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { showToast } from "@/components/common/showToast";
 
 function useEditCategory() {
 
@@ -17,15 +18,11 @@ function useEditCategory() {
     setName(e.target.value);
   };
 
-  // โหลดข้อมูล category
   const getCategory = async () => {
 
     try {
 
-      const res = await axios.get(
-        `${API_BASE_URL}/categories/${categoryId}`
-      );
-
+      const res = await axios.get(`${API_BASE_URL}/categories/${categoryId}`);
       setName(res.data.name);
 
     } catch (err) {
@@ -36,7 +33,6 @@ function useEditCategory() {
 
   };
 
-  // update category
   const handleSubmit = async () => {
 
     if (!name.trim()) return;
@@ -45,16 +41,25 @@ function useEditCategory() {
 
     try {
 
-      await axios.put(
-        `${API_BASE_URL}/categories/${categoryId}`,
-        { name }
-      );
+      await axios.put(`${API_BASE_URL}/categories/${categoryId}`, { name });
+
+      showToast({
+        title: "Success",
+        description: "Category updated successfully",
+        type: "success",
+      });
 
       navigate("/admin/category-management");
 
     } catch (err) {
 
-      setError("Update category failed");
+      const message = err.response?.data?.message || "Update category failed";
+      setError(message);
+      showToast({
+        title: "Error",
+        description: message,
+        type: "error",
+      });
 
     } finally {
 

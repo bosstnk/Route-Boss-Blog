@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "@/components/common/showToast";
 
 function useCreateCategory() {
 
@@ -25,15 +26,25 @@ function useCreateCategory() {
 
         try {
 
-            await axios.post(`${API_BASE_URL}/categories`, {
-                name
+            await axios.post(`${API_BASE_URL}/categories`, { name });
+
+            showToast({
+                title: "Success",
+                description: "Category has been successfully created.",
+                type: "success",
             });
 
             navigate("/admin/category-management");
 
         } catch (err) {
 
-            setError(err.response?.data?.message || "Create category failed");
+            const message = err.response?.data?.message || "Create category failed";
+            setError(message);
+            showToast({
+                title: "Error",
+                description: message,
+                type: "error",
+            });
 
         } finally {
 

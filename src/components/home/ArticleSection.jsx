@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BlogCard } from "../common/BlogCard.jsx";
 import Button from "../common/Button.jsx";
-import { Search } from "lucide-react";
 import {
   Select,
   SelectContent,
