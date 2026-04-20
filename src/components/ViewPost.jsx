@@ -6,10 +6,10 @@ import LikeShare from "./post/LikeShare";
 import AuthorProfile from "./post/AuthorProfile";
 import usePost from "@/hooks/usePost";
 import useToggleLike from "@/hooks/useToggleLike";
-import CreateAccountAlert from "./auth/CreateAccountAlert";
 import LoadingScreen from "./common/LoadingScreen";
 import PostContent from "./post/PostContent";
 import useComments from "@/hooks/Comment/useComments";
+
 
 export default function ViewPost() {
 
@@ -41,8 +41,11 @@ export default function ViewPost() {
                     <AuthorProfile
                         className="xl:hidden"
                         authorName={post.author}
+                        authorPic={post.author_pic}
+                        authorBio={post.author_bio}
                     />
                     <LikeShare
+                        liked={post.liked}
                         likeAmount={post.likes_count}
                         onRequireAuth={openAlertIfGuest}
                         onLike={toggleLike}
@@ -57,15 +60,17 @@ export default function ViewPost() {
                 <AuthorProfile
                     className="sticky top-30 hidden xl:flex xl:max-w-[305px] self-start"
                     authorName={post.author}
+                    authorPic={post.author_pic}
+                    authorBio={post.author_bio}
                 />
             </div>
-            {!isAuthenticated && (
+            {/* {!isAuthenticated && (
 
                 <CreateAccountAlert
                     alertState={isAlertOpen}
                     setAlertState={setIsAlertOpen}
                 />
-            )}
+            )} */}
         </div>
     );
 }

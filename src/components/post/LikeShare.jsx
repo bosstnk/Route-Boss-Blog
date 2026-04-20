@@ -2,13 +2,14 @@ import {
     Facebook,
     Linkedin,
     Twitter,
-    Smile,
+    Heart,
     Copy,
     X,
 } from "lucide-react";
 import { showToast } from "../common/showToast";
+import Button from "../common/Button";
 
-function LikeShare({ likeAmount, onRequireAuth, onLike }) {
+function LikeShare({ likeAmount, liked, onRequireAuth, onLike }) {
 
     const shareLink = encodeURI(window.location.href);
     const handleLike = () => {
@@ -20,16 +21,18 @@ function LikeShare({ likeAmount, onRequireAuth, onLike }) {
     return (
 
         <div className="bg-base-brown-200 flex flex-col gap-6 p-4 md:flex-row md:justify-between md:rounded-2xl xl:px-6">
-            <button
-                className="bg-white flex items-center justify-center gap-1.5 px-10 py-3 rounded-full border border-base-brown-400"
+            <Button
+                variant="secondary"
                 onClick={handleLike}
             >
-                <Smile size={24} color="#43403B" strokeWidth={1.5} />
-                <span className="text-body-1 text-base-brown-600">
+                <span>
+                    {liked ? "❤️" : "🤍"}
+                </span>
+                <span>
                     {likeAmount}
                 </span>
-            </button>
-            <div className="flex gap-2 md:gap-3">
+            </Button>
+            <div className="flex items-center gap-2 md:gap-3">
                 <button
                     className="bg-white flex items-center justify-center grow gap-1.5 px-7 py-3 rounded-full border border-base-brown-400"
                     onClick={() => {

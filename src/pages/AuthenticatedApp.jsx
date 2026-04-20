@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Navigate } from "react-router-dom";
+
+import SignUpSuccessPage from "./auth/SignUpPageSuccess";
 // post
 import LandingPage from "./post/LandingPage";
 import ViewPostPage from "./post/ViewPostPage";
 // member
-import MemberProfilePage from "./MemberProfilePage";
-import MemberResetPasswordPage from "./MemberResetPasswordPage";
+import MemberProfilePage from "./user/MemberProfilePage";
+import MemberResetPasswordPage from "./user/MemberResetPasswordPage";
 
 // admin
 import ArticleManagmentPage from "./admin/ArticleManagementPage";
@@ -28,12 +30,15 @@ function AuthenticatedApp() {
     return (
         <div>
             <Routes>
+
                 <Route path="/login" element={<Navigate to="/" replace />} />
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/post/:postId" element={<ViewPostPage />} />
                 <Route path="/member-profile" element={<MemberProfilePage />} />
                 <Route path="/member-reset-password" element={<MemberResetPasswordPage />} />
                 <Route path="/admin/login" element={<AdminLogInPage />} />
+                <Route path="/signup" element={<Navigate to="/signup-success" replace />} />
+                <Route path="/signup-success" element={<SignUpSuccessPage />} />
 
                 {/* Admin Section */}
                 <Route path="/admin/article-management" element={<ArticleManagmentPage />} />

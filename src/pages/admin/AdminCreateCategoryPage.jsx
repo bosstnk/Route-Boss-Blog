@@ -1,6 +1,6 @@
-
 import { Input } from "@/components/ui/input";
 import AdminSidebar from "@/components/AdminSidebar";
+import Button from "@/components/common/Button";
 import useCreateCategory from "@/hooks/Category/useCreateCategory";
 
 function AdminCreateCategoryPage() {
@@ -28,9 +28,11 @@ function AdminCreateCategoryPage() {
 
           <Button
             variant="primary"
-            text={isLoading ? "Saving..." : "Save"}
             onClick={handleSubmit}
-          />
+            disabled={isLoading}
+          >
+            {isLoading ? "Saving..." : "Save"}
+          </Button>
 
         </div>
 

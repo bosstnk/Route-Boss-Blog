@@ -12,7 +12,7 @@ function useDeletePost() {
     try {
       await axios.delete(`${API_BASE_URL}/posts/${postId}`);
       console.log("Delete success");
-      return true; // 👈 เอาไว้ refresh
+      return true;
     } catch (err) {
       console.error("DELETE ERROR:", err);
       console.log(err.response?.data);

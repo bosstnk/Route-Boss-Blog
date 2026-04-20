@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { showToast } from "@/components/common/showToast";
 
 function useCreatePost() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     title: "",
@@ -65,17 +68,25 @@ function useCreatePost() {
       if (imageFile) {
         formData.append("imageFile", imageFile);
       }
-      // 👇 log ตรงนี้
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
+
       await axios.post(`${API_BASE_URL}/posts`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
+      showToast({
+        title: "Success",
+        description: "Article created successfully",
+        type: "success",
+      });
+
+      navigate("/admin/article-management");
     } catch (err) {
-      console.error("CREATE POST ERROR:", err);
-      console.log(err.response?.data);
       setError(err.response?.data?.message || "Failed to create post");
+      showToast({
+        title: "Error",
+        description: err.response?.data?.message || "Failed to create article",
+        type: "error",
+      });
 
     } finally {
       setIsSubmitting(false);

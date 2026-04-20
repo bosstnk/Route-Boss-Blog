@@ -2,18 +2,18 @@ import AdminSidebar from "@/components/AdminSidebar"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button as UploadButton } from "@/components/ui/button";
-import imageUser from "@/assets/images/user-picture-demo.jpg"
-import useProfile from "@/hooks/useProfile";
+import Button from "@/components/common/Button";
+
+import useUpdateProfile from "@/hooks/user/useUpdateProfile";
 
 function AdminProfilePage() {
     const {
         form,
-        inputProfile,
+        handleChange,
         handleFileChange,
         handleSubmit,
-        isSaving
-    } = useProfile();
+        isLoading
+    } = useUpdateProfile();
 
     const inputStyle = "mt-1 pl-4 pr-3 py-3 rounded-lg bg-white border border-base-brown-300 text-base-brown-500 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400"
 
@@ -24,8 +24,9 @@ function AdminProfilePage() {
             <main className="flex-1">
                 <div className="flex justify-between items-center py-6 px-[60px] border-b border-b-base-brown-300">
                     <h3 className="text-headline-3 text-base-brown-600">Profile</h3>
-                    <Button variant="primary" text="Save" onClick={handleSubmit}
-                        disabled={isSaving} />
+                    <Button variant="primary" onClick={handleSubmit} disabled={isLoading}>
+                        Save
+                    </Button>
                 </div>
 
                 <div className="flex flex-col gap-10 pt-10 px-[60px] pb-[120px]">
@@ -61,7 +62,7 @@ function AdminProfilePage() {
                                 name="name"
                                 type="text"
                                 value={form.name}
-                                onChange={inputProfile}
+                                onChange={handleChange}
                                 className={inputStyle}
                             />
                         </div>
@@ -72,7 +73,7 @@ function AdminProfilePage() {
                                 name="username"
                                 type="text"
                                 value={form.username}
-                                onChange={inputProfile}
+                                onChange={handleChange}
                                 className={inputStyle}
                             />
                         </div>
@@ -92,7 +93,7 @@ function AdminProfilePage() {
                                 id="bio"
                                 name="bio"
                                 value={form.bio}
-                                onChange={inputProfile}
+                                onChange={handleChange}
                                 maxLength={120}
                                 rows={10}
                                 className="mt-1 pt-3 pr-1 pb-1 pl-4 rounded-lg bg-white border border-base-brown-300 text-base-brown-500 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400"

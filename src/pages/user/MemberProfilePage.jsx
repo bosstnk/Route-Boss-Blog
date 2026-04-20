@@ -1,17 +1,22 @@
 import NavBar from "@/components/navbar/NavBar";
+import Button from "@/components/common/Button";
 import { User, IterationCw } from "lucide-react";
 import { Link } from "react-router-dom";
-import useProfile from "@/hooks/useProfile";
-import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import useUpdateProfile from "@/hooks/user/useUpdateProfile";
+import avatarProfile from "@/assets/images/user-profile.png"
+import FileUploadButton from "@/components/common/FileUploadButton";
+import { useAuth } from "@/context/AuthContext";
 function MemberProfilePage() {
   const {
     form,
-    inputProfile,
+    handleChange,
     handleFileChange,
     handleSubmit,
-    isSaving,
-    error,
-  } = useProfile();
+    isLoading,
+    fieldErrors,
+  } = useUpdateProfile();
+  const { profile } = useAuth()
+
 
   const inputStyle =
     "w-full bg-white p-3 pl-4 text-body-1 outline-none rounded-lg transition-colors";
@@ -25,12 +30,12 @@ function MemberProfilePage() {
           {/* Header */}
           <div className="py-6 px-4 flex items-center gap-3 lg:gap-4 lg:p-0">
             <img
-              src={form.image || "/default-avatar.png"}
+              src={profile.image || avatarProfile}
               alt="profile"
               className="w-10 h-10 rounded-full lg:w-14 lg:h-14 object-cover"
             />
             <h4 className="text-headline-4 text-base-brown-400 lg:text-headline-3">
-              {form.username}
+              {profile.username}
             </h4>
             <span className="text-base-brown-300 mx-2">|</span>
             <h4 className="text-headline-4 text-base-brown-600 lg:text-headline-3">
@@ -49,75 +54,71 @@ function MemberProfilePage() {
               {/* Avatar */}
               <div className="flex flex-col items-center gap-6 lg:flex-row lg:gap-7">
                 <img
-                  src={form.image || "/default-avatar.png"}
+                  src={form.image || avatarProfile}
                   alt="profile"
                   className="w-28 h-28 rounded-full object-cover"
                 />
-
-                <label
-                  htmlFor="upload"
-                  className="text-body-1 leading-6 px-10 py-3 rounded-full text-base-brown-600 bg-white border border-base-brown-400 cursor-pointer"
-                >
-                  Upload profile picture
-                </label>
-
-                <input
-                  id="upload"
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
+                <div className="flex flex-col gap-1">
+                  <FileUploadButton
+                    variant="secondary"
+                    size="lg"
+                    onChange={handleFileChange}
+                  >
+                    Upload profile picture
+                  </FileUploadButton>
+                  {(fieldErrors.image) && <div className="text-body-3 text-center text-brand-red">{fieldErrors.image}</div>}
+                </div>
               </div>
 
               <hr />
 
               {/* Form */}
               <form
-                className="flex flex-col items-start"
+                className="flex flex-col gap-6 lg:gap-7"
                 onSubmit={handleSubmit}
               >
-                <label className="pb-1 text-body-1 text-base-brown-400">
-                  Name
-                </label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={inputProfile}
-                  className={inputStyle}
-                />
-
-                <label className="pb-1 mt-6 text-body-1 text-base-brown-400">
-                  Username
-                </label>
-                <input
-                  name="username"
-                  value={form.username}
-                  onChange={inputProfile}
-                  className={inputStyle}
-                />
+                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={form.name}
+                    onChange={handleChange}
+                    className={inputStyle}
+                  />
+                  {(fieldErrors.name) && <div className="text-body-3 text-brand-red">{fieldErrors.name}</div>}
+                </div>
+                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
+                  <label htmlFor="username">Username</label>
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    value={form.username}
+                    onChange={handleChange}
+                    className={inputStyle}
+                  />
+                  {(fieldErrors.username) && <div className="text-body-3 text-brand-red">{fieldErrors.username}</div>}
+                </div>
 
                 <div className="mt-6 text-body-1 text-base-brown-400/60">
                   <p>Email</p>
                   <p className="p-3 pl-4">{form.email}</p>
                 </div>
 
-                {error && (
-                  <p className="text-red-500 mt-4 text-sm">{error}</p>
-                )}
-
                 <Button
                   type="submit"
                   variant="primary"
-                  text={isSaving ? "Saving..." : "Save"}
-                  className="mt-6"
-                  disabled={isSaving}
-                />
+                  className="mt-3 self-start"
+                  disabled={isLoading}>
+                  {isLoading ? "Saving..." : "Save"}
+                </Button>
               </form>
             </div>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 }

@@ -1,4 +1,4 @@
-import imageProfile from "@/assets/images/picture-profile.jpg";
+import imageProfile from "@/assets/images/heroPicture.jpg";
 
 function HeroSection() {
   return (
@@ -61,7 +61,7 @@ function HeroSection() {
         </p>
 
         <p className="text-headline-3 text-base-brown-500 leading-8">
-          Thompson P.
+          Thanakorn S.
         </p>
 
         <p className="mt-2 text-body-1 text-base-brown-400">

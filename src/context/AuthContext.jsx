@@ -1,106 +1,73 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // ⭐ function กลางสำหรับ fetch profile
   const fetchProfile = async () => {
+    setIsLoading(true)
     try {
-      const result = await axios.get(`${API_BASE_URL}/user`);
-      setProfile(result.data);
-    } catch (error) {
-      console.error("FETCH PROFILE ERROR:", error);
-    }
-  };
-
-  // 🔁 restore auth ตอน refresh
-  useEffect(() => {
-
-    const restoreAuth = async () => {
-
       const token = localStorage.getItem("token");
 
       if (!token) {
-        setLoading(false);
+        console.log("❌ No token found");
+        setProfile(null);
         return;
       }
 
-      try {
+      const result = await axios.get(`${API_BASE_URL}/user`);
 
-        const decoded = jwtDecode(token);
+      console.log("✅ Fetch profile success:", result.data);
 
-        setUser({
-          id: decoded.id,
-          name: decoded.name,
-          role: decoded.role,
-        });
+      setProfile(result.data);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.log(
+        "❌ Fetch profile error:",
+        error.response?.data || error.message
+      );
 
-        await fetchProfile();
+      setProfile(null);
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      } catch (error) {
-
-        console.error("RESTORE AUTH ERROR:", error);
-
-        localStorage.removeItem("token");
-        setUser(null);
-        setProfile({});
-
-      } finally {
-
-        setLoading(false);
-
-      }
-    };
-
-    restoreAuth();
-
+  useEffect(() => {
+    fetchProfile();
   }, []);
 
-  // 🔐 login
-  const login = async (token) => {
-
+  function login(token) {
+    console.log("🔐 Login success");
     localStorage.setItem("token", token);
+    setIsAuthenticated(true)
+    fetchProfile();
+  }
 
-    const decoded = jwtDecode(token);
-
-    setUser({
-      id: decoded.id,
-      name: decoded.name,
-      role: decoded.role,
-    });
-
-    await fetchProfile();
-  };
-
-  // 🚪 logout
-  const logout = () => {
+  function logout() {
+    console.log("🚪 Logout");
 
     localStorage.removeItem("token");
-
-    setUser(null);
-    setProfile({});
-
-  };
+    setProfile(null);
+    setIsAuthenticated(false)
+  }
 
   return (
     <AuthContext.Provider
       value={{
-        user,
         profile,
-        isAuthenticated: !!user,
+        isLoading,
+        isAuthenticated,
         login,
         logout,
-        fetchProfile, // ⭐ สำคัญ
-        loading,
+        fetchProfile
       }}
     >
       {children}
@@ -108,5 +75,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-// hook
 export const useAuth = () => useContext(AuthContext);

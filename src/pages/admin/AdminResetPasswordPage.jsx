@@ -1,7 +1,9 @@
 import AdminSidebar from "@/components/AdminSidebar"
 import { Input } from "@/components/ui/input";
+import Button from "@/components/common/Button";
 import { useState } from "react";
 import { X } from "lucide-react";
+import axios from "axios";
 import {
     AlertDialog,
     AlertDialogContent,
@@ -9,9 +11,10 @@ import {
     AlertDialogDescription,
     AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+import { showToast } from "@/components/common/showToast";
 
 export default function AdminResetPasswordPage() {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -40,26 +43,31 @@ export default function AdminResetPasswordPage() {
         }
     };
 
-    const handleResetPassword = () => {
-        // Add PUT API to reset password
-        toast.custom((t) => (
-            <div className="bg-green-500 text-white p-4 rounded-sm flex justify-between items-start">
-                <div>
-                    <h2 className="font-bold text-lg mb-1">Reset!</h2>
-                    <p className="text-sm">
-                        Password reset successful. You can now log in with your new
-                        password.
-                    </p>
-                </div>
-                <button
-                    onClick={() => toast.dismiss(t)}
-                    className="text-white hover:text-gray-200"
-                >
-                    <X size={20} />
-                </button>
-            </div>
-        ));
-        setIsDialogOpen(false);
+    const handleResetPassword = async () => {
+        try {
+            await axios.put(`${API_BASE_URL}/user/reset-password`, {
+                currentPassword: password,
+                newPassword,
+            });
+
+            showToast({
+                title: "Reset!",
+                description: "Password reset successful. You can now log in with your new password.",
+                type: "success",
+            });
+
+            setPassword("");
+            setNewPassword("");
+            setConfirmNewPassword("");
+        } catch (err) {
+            showToast({
+                title: "Error",
+                description: err.response?.data?.message || "Failed to reset password",
+                type: "error",
+            });
+        } finally {
+            setIsDialogOpen(false);
+        }
     };
     return (
         <div className="flex bg-base-brown-100">
@@ -68,7 +76,9 @@ export default function AdminResetPasswordPage() {
             <main className="flex-1">
                 <div className="flex justify-between items-center py-6 px-[60px] border-b border-b-base-brown-300">
                     <h3 className="text-headline-3 text-base-brown-600">Reset Password</h3>
-                    <Button variant="primary" text="Reset password" onClick={handleSubmit}/>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Reset password
+                    </Button>
                 </div>
 
                 <div className="mt-10 ml-[60px] space-y-7 max-w-[480px]">

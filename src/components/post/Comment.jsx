@@ -1,5 +1,6 @@
 import { Textarea } from "../ui/textarea";
 import useCreateComment from "@/hooks/Comment/useCreateComment";
+import Button from "../common/Button";
 
 function Comments({ comments, postId, refetch, onRequireAuth }) {
 
@@ -30,11 +31,12 @@ function Comments({ comments, postId, refetch, onRequireAuth }) {
 
         <Button
           variant="primary"
-          text={isSubmitting ? "Sending..." : "Send"}
           className="self-end"
           onClick={handleSubmit}
           disabled={isSubmitting}
-        />
+        >
+          {isSubmitting ? "Sending..." : "Send"}
+        </Button>
 
       </div>
 

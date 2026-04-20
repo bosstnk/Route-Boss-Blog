@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { showToast } from "@/components/common/showToast";
 
 function useDeleteCategory(refetch) {
 
@@ -15,11 +16,21 @@ function useDeleteCategory(refetch) {
 
             await axios.delete(`${API_BASE_URL}/categories/${id}`);
 
+            showToast({
+                title: "Success",
+                description: "Category deleted successfully",
+                type: "success",
+            });
+
             refetch();
 
         } catch (error) {
 
-            console.error("Delete category failed", error);
+            showToast({
+                title: "Error",
+                description: error.response?.data?.message || "Delete category failed",
+                type: "error",
+            });
 
         } finally {
 

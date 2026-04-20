@@ -1,4 +1,5 @@
 import AdminSidebar from "@/components/AdminSidebar"
+import Button from "@/components/common/Button";
 import { ImageIcon } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -42,17 +43,19 @@ function AdminCreateArticlePage() {
 
                         <Button
                             variant="secondary"
-                            text="Save as draft"
                             onClick={() => submitPost({ publish: false })}
                             disabled={isSubmitting}
-                        />
+                        >
+                            Save as draft
+                        </Button>
 
                         <Button
                             variant="primary"
-                            text="Save and publish"
                             onClick={() => submitPost({ publish: true })}
                             disabled={isSubmitting}
-                        />
+                        >
+                            Save and publish
+                        </Button>
 
                     </div>
 

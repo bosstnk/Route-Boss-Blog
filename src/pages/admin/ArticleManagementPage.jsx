@@ -1,4 +1,5 @@
 import AdminSidebar from "@/components/AdminSidebar";
+import Button from "@/components/common/Button";
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import {
     Select,
@@ -9,8 +10,9 @@ import {
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import usePosts from "@/hooks/usePosts";
+import useAdminPosts from "@/hooks/useAdminPosts";
 import useDeletePost from "@/hooks/Post/useDeletePost";
+import Modal from "@/components/common/Modal";
 
 function ArticleManagmentPage() {
     const [category, setCategory] = useState("");
@@ -20,10 +22,10 @@ function ArticleManagmentPage() {
         posts,
         isLoading,
         isError,
-    } = usePosts({
+    } = useAdminPosts({
         category,
         keyword,
-        limit: 20, // admin page เอาเยอะหน่อย
+        limit: 20,
     });
 
     return (
@@ -39,9 +41,9 @@ function ArticleManagmentPage() {
                     <Link to="/admin/article-management/create">
                         <Button
                             variant="primary"
-                            text="+ Create article"
-                            icon={<Plus />}
-                        />
+                        >
+                            <Plus /> Create article
+                        </Button>
                     </Link>
                 </div>
 
@@ -119,40 +121,50 @@ export default ArticleManagmentPage;
 
 function ListArticle({ article }) {
     const { deletePost, isDeleting } = useDeletePost();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleDelete = async () => {
-        const confirmDelete = window.confirm("Delete this article?");
-        if (!confirmDelete) return;
-
+    const handleConfirmDelete = async () => {
         const success = await deletePost(article.id);
-
         if (success) {
-            window.location.reload(); // 👈 เอาง่ายก่อน
+            window.location.reload();
         }
     };
+
     return (
-        <div className="flex text-body-1 text-base-brown-500 border-t border-base-brown-300">
-            <div className="w-[60%] truncate py-5 px-6">
-                {article.title}
+        <>
+            <div className="flex text-body-1 text-base-brown-500 border-t border-base-brown-300">
+                <div className="w-[60%] truncate py-5 px-6">
+                    {article.title}
+                </div>
+                <div className="w-[120px] grow py-5 px-6">
+                    {article.category}
+                </div>
+                <div className="w-[160px] grow py-5 px-6 text-brand-green">
+                    {article.status}
+                </div>
+                <div className="w-[120px] grow py-5 px-6 flex gap-4 items-center justify-evenly">
+                    <Link to={`/admin/article-management/edit/${article.id}`}>
+                        <Pencil size={24} />
+                    </Link>
+
+                    <Button
+                        onClick={() => setIsModalOpen(true)}
+                        disabled={isDeleting}
+                        variant="text"
+                        size="none"
+                    >
+                        <Trash2 />
+                    </Button>
+                </div>
             </div>
-            <div className="w-[120px] grow py-5 px-6">
-                {article.category}
-            </div>
-            <div className="w-[160px] grow py-5 px-6 text-brand-green">
-                {article.status}
-            </div>
-            <div className="w-[120px] grow py-5 px-6 flex gap-4 justify-center">
-                <Link to={`/admin/article-management/edit/${article.id}`}>
-                    <Pencil size={24} />
-                </Link>
-                <button
-                    onClick={handleDelete}
-                    disabled={isDeleting}
-                    className="cursor-pointer"
-                >
-                    <Trash2 size={24} />
-                </button>
-            </div>
-        </div>
+
+            <Modal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Delete Article"
+                description="Do you want to delete this article?"
+                onConfirm={handleConfirmDelete}
+            />
+        </>
     );
 }
