@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavbarRight from "./NavBarRight";
+import NavBarRight from "./NavBarRight";
 
 function NavBar() {
   return (
@@ -21,7 +21,7 @@ function NavBar() {
         Boss<span className="text-green-400">.</span>
       </Link>
 
-      <NavbarRight />
+      <NavBarRight />
     </nav>
   );
 }

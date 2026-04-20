@@ -9,7 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 import { NotificationBox } from "@/features/notification/NotificationBox";
 import useNotifications from "@/hooks/useNotifications";
 
-export default function NavbarRight() {
+export default function NavBarRight() {
   const { isLoading, profile } = useAuth();
   const { notifications, isLoading: notiLoading } = useNotifications();
   const [isOpen, setIsOpen] = useState(false);
