@@ -10,13 +10,19 @@ function useNotifications() {
 
   const fetchNotifications = async () => {
 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
 
       const res = await axios.get(
         `${API_BASE_URL}/admin/notifications`
       );
 
-      setNotifications(res.data);
+      setNotifications(Array.isArray(res.data) ? res.data : []);
 
     } catch (error) {
 
