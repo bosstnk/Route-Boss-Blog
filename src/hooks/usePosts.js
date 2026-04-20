@@ -32,7 +32,7 @@ function usePosts({ category, keyword, limit = 6 }) {
       const data = response.data;
 
       setPosts(prev =>
-        targetPage === 1 ? data.posts : [...prev, ...data.posts]
+        targetPage === 1 ? (data.posts ?? []) : [...prev, ...(data.posts ?? [])]
       );
 
       setHasMore(data.currentPage < data.totalPages);

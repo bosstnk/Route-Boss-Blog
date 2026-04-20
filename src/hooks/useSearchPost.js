@@ -15,7 +15,7 @@ export function useSuggestions (keyword) {
                 setState((prev) => ({...prev, isLoading: true, isError: false}))
                 try {
                     const responsive = await axios.get(`${API_BASE_URL}/posts?keyword=${keyword}`)
-                    setState({suggestions: responsive.data.posts, isLoading: false, isError: false})
+                    setState({suggestions: responsive.data.posts ?? [], isLoading: false, isError: false})
                     console.log(state)
                 } catch (error) {
                     setState({suggestions:[] ,isLoading:false, isError:false})
