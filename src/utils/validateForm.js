@@ -44,6 +44,69 @@ export function validateLoginForm(form) {
   return errors
 }
 
+export function validateCategoryForm(form) {
+  const { name } = form
+  const errors = {}
+
+  if (!name.trim()) {
+    errors.name = "Please enter a category name";
+  }
+
+  return errors
+}
+
+export function validateUpdatePostForm(form) {
+  const errors = {}
+
+  if (!form.title?.trim()) {
+    errors.title = "Please enter article title";
+  }
+
+  if (!form.category_id) {
+    errors.category_id = "Please select a category";
+  }
+
+  if (!form.description?.trim()) {
+    errors.description = "Please enter article introduction";
+  } else if (form.description.length > 120) {
+    errors.description = "Introduction must be less than 120 characters";
+  }
+
+  if (!form.content?.trim()) {
+    errors.content = "Please enter article content";
+  }
+
+  return errors
+}
+
+export function validateCreatePostForm(form, imageFile) {
+  const errors = {}
+
+  if (!form.title?.trim()) {
+    errors.title = "Please enter article title";
+  }
+
+  if (!form.category_id) {
+    errors.category_id = "Please select a category";
+  }
+
+  if (!form.description?.trim()) {
+    errors.description = "Please enter article introduction";
+  } else if (form.description.length > 120) {
+    errors.description = "Introduction must be less than 120 characters";
+  }
+
+  if (!form.content?.trim()) {
+    errors.content = "Please enter article content";
+  }
+
+  if (!imageFile) {
+    errors.image = "Please upload a thumbnail image";
+  }
+
+  return errors
+}
+
 export function validateUpdateProfileForm(form) {
   const errors = {};
 

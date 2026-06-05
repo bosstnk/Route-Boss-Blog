@@ -59,11 +59,10 @@ function useResetPassword() {
         confirmPassword: "",
       })
     } catch (err) {
-      const status = err.response?.status;
-      if (status === 400 && err.response?.data?.errors) {
-        // 🔥 map backend errors
-        setFieldErrors(err.response.data.errors);
+      const data = err.response?.data;
 
+      if (data?.errors) {
+        setFieldErrors(data.errors);
       } else {
         showToast({
           title: "Something went wrong",

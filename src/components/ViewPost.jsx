@@ -64,13 +64,13 @@ export default function ViewPost() {
                     authorBio={post.author_bio}
                 />
             </div>
-            {/* {!isAuthenticated && (
+            {!isAuthenticated && (
 
                 <CreateAccountAlert
                     alertState={isAlertOpen}
                     setAlertState={setIsAlertOpen}
                 />
-            )} */}
+            )}
         </div>
     );
 }

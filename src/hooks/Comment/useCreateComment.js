@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import { showToast } from "@/components/common/showToast";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function useCreateComment(postId, refetch) {
-
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -13,15 +13,13 @@ function useCreateComment(postId, refetch) {
   };
 
   const handleSubmit = async () => {
-
     if (!comment.trim()) return;
 
     setIsSubmitting(true);
 
     try {
-
       await axios.post(`${API_BASE_URL}/posts/${postId}/comments`, {
-        comment_text: comment
+        comment_text: comment,
       });
 
       setComment("");
@@ -29,24 +27,22 @@ function useCreateComment(postId, refetch) {
       if (refetch) {
         refetch();
       }
-
     } catch (error) {
-
-      console.error("CREATE COMMENT ERROR:", error);
-
+      const msg = error.response?.data?.message;
+      showToast({
+        title: msg || "Failed to post comment",
+        type: "error",
+      });
     } finally {
-
       setIsSubmitting(false);
-
     }
-
   };
 
   return {
     comment,
     handleChange,
     handleSubmit,
-    isSubmitting
+    isSubmitting,
   };
 }
 

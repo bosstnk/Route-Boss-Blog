@@ -12,7 +12,7 @@ export default function Button({
     "inline-flex items-center justify-center font-medium cursor-pointer",
     "transition-all duration-200",
     "disabled:opacity-40 disabled:cursor-not-allowed",
-    "focus:outline-none focus:ring-2 focus:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
 
     // 👇 คุม icon ทุกตัวใน button
     "[&_svg]:w-6 [&_svg]:h-6 [&_svg]:shrink-0"
@@ -28,24 +28,24 @@ export default function Button({
   const variants = {
     primary: clsx(
       "bg-base-brown-600 text-white rounded-full",
-      "hover:bg-base-brown-400",
-      "active:bg-base-brown-500",
-      "focus:ring-base-brown-300"
+      "not-disabled:hover:bg-base-brown-400",
+      "not-disabled:active:bg-base-brown-500",
+      "focus-visible:ring-base-brown-300"
     ),
 
     secondary: clsx(
       "bg-white border border-base-brown-400 text-base-brown-600 rounded-full",
-      "hover:text-base-brown-400",
-      "active:text-base-brown-500",
-      "focus:ring-base-brown-300"
+      "not-disabled:hover:text-base-brown-400",
+      "not-disabled:active:text-base-brown-500",
+      "focus-visible:ring-base-brown-300"
     ),
 
     text: clsx(
       "bg-transparent underline text-base-brown-600",
-      "hover:text-base-brown-400",
-      "active:text-base-brown-500",
+      "not-disabled:hover:text-base-brown-400",
+      "not-disabled:active:text-base-brown-500",
       "px-0 py-0",
-      "focus:ring-0"
+      "focus-visible:ring-0"
     ),
   };
 

@@ -2,14 +2,30 @@ import Button from "@/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { User, IterationCw, LogOut, SquareArrowOutUpRight } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { Bell } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { NotificationBell } from "../notification/NotificationBell";
+import { NotificationBox } from "../notification/NotificationBox";
+import useNotifications from "@/hooks/useNotifications";
+
 export function MobileMenuPanel({ open, onClose }) {
   const { profile, logout } = useAuth();
   const navigate = useNavigate();
+  const { notifications, isLoading: notiLoading, unreadCount, markAllAsRead } = useNotifications();
+  const [isOpenNoti, setIsOpenNoti] = useState(false);
+  const hasUnread = unreadCount > 0;
+  const notiWasOpenRef = useRef(false);
+
+  useEffect(() => {
+    if (isOpenNoti) {
+      notiWasOpenRef.current = true;
+    } else if (notiWasOpenRef.current) {
+      markAllAsRead();
+      notiWasOpenRef.current = false;
+    }
+  }, [isOpenNoti, markAllAsRead]);
 
   if (!open) return null;
-  console.log(profile)
+
   return (
     <div className="
     fixed top-[57px] left-0
@@ -28,28 +44,38 @@ export function MobileMenuPanel({ open, onClose }) {
                 <img src={profile.image} className="w-12 h-12 rounded-full" />
                 <p className="self-center">{profile.username}</p>
               </div>
-              <NotificationBell />
+              <div className="relative">
+                <NotificationBell
+                  hasUnread={hasUnread}
+                  onToggleNoti={() => setIsOpenNoti((prev) => !prev)}
+                />
+                {isOpenNoti && (
+                  <NotificationBox
+                    notifications={notifications}
+                    isLoading={notiLoading}
+                  />
+                )}
+              </div>
             </div>
 
             {/* USER MENU */}
-            <button onClick={() => navigate("/member-profile")} className="flex gap-3 px-4 py-3">
+            <button onClick={() => { navigate("/member-profile"); onClose(); }} className="flex gap-3 px-4 py-3">
               <User size={24} /> Profile
             </button>
 
-            <button onClick={() => navigate("/member-reset-password")} className="flex gap-3 px-4 py-3">
+            <button onClick={() => { navigate("/member-reset-password"); onClose(); }} className="flex gap-3 px-4 py-3">
               <IterationCw size={24} /> Reset password
             </button>
 
             {profile?.role === "admin" && (
               <button
-                onClick={() => navigate("/admin/article-management")}
+                onClick={() => { navigate("/admin/article-management"); onClose(); }}
                 className="flex gap-3 px-4 py-3"
               >
                 <SquareArrowOutUpRight size={24} />
                 Admin panel
               </button>
             )}
-
 
             <hr />
 

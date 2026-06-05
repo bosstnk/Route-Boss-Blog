@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import AdminSidebar from "@/components/AdminSidebar";
 import Button from "@/components/common/Button";
 import useCreateCategory from "@/hooks/Category/useCreateCategory";
@@ -7,11 +6,18 @@ function AdminCreateCategoryPage() {
 
   const {
     name,
-    inputChange,
+    handleChange,
     handleSubmit,
     isLoading,
-    error
+    errors
   } = useCreateCategory();
+
+
+  const baseInput =
+    "bg-white p-3 pl-4 text-body-1 text-base-brown-400 outline-none border border-base-brown-300 rounded-lg placeholder:text-base-brown-400 transition-colors focus:border-base-brown-400 focus:ring-1 focus:ring-base-brown-300 focus-within:border-base-brown-400 focus-within:ring-1 focus-within:ring-base-brown-300";
+
+  const errorInput =
+    "border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red/70";
 
   return (
     <div className="flex h-screen bg-base-brown-100">
@@ -36,30 +42,20 @@ function AdminCreateCategoryPage() {
 
         </div>
 
-        <div className="flex flex-col gap-1 max-w-[480px] ml-[60px] mt-[40px]">
-
-          <label
-            htmlFor="category"
-            className="block text-body-1 text-base-brown-400"
-          >
+        <div className="flex flex-col gap-1 text-body-1 text-base-brown-400 max-w-[480px] ml-[60px] mt-[40px]">
+          <label htmlFor="name">
             Category Name
           </label>
-
-          <Input
-            id="category"
+          <input
+            id="name"
+            name="name"
             type="text"
             value={name}
-            onChange={inputChange}
+            onChange={handleChange}
             placeholder="Category name"
-            className="p-3 pl-4 rounded-lg text-body-1 text-base-brown-400 border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-base-brown-400"
+            className={`${baseInput} ${errors.name ? errorInput : ""}`}
           />
-
-          {error && (
-            <p className="text-red-500 text-sm mt-2">
-              {error}
-            </p>
-          )}
-
+          {(errors.name) && <div className="text-body-3 text-brand-red">{errors.name}</div>}
         </div>
 
       </main>

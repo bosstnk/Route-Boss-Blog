@@ -2,40 +2,30 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showToast } from "@/components/common/showToast";
+import { validateCategoryForm } from "@/utils/validateForm";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function useEditCategory() {
-
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { categoryId } = useParams();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({});
 
-  const inputChange = (e) => {
+  const handleChange = (e) => {
     setName(e.target.value);
-  };
-
-  const getCategory = async () => {
-
-    try {
-
-      const res = await axios.get(`${API_BASE_URL}/categories/${categoryId}`);
-      setName(res.data.name);
-
-    } catch (err) {
-
-      console.error("Failed to fetch category", err);
-
-    }
-
+    setErrors((prev) => ({ ...prev, name: "" }));
   };
 
   const handleSubmit = async () => {
 
-    if (!name.trim()) return;
+    const validateErrors = validateCategoryForm({ name });
+    setErrors(validateErrors);
+
+    if (Object.keys(validateErrors).length > 0) return;
 
     setIsLoading(true);
 
@@ -51,15 +41,19 @@ function useEditCategory() {
 
       navigate("/admin/category-management");
 
-    } catch (err) {
+    } catch (error) {
 
-      const message = err.response?.data?.message || "Update category failed";
-      setError(message);
-      showToast({
-        title: "Error",
-        description: message,
-        type: "error",
-      });
+      const data = error.response?.data;
+
+      if (data?.errors) {
+        setErrors(data.errors);
+      } else {
+        showToast({
+          title: "Something went wrong",
+          description: "Please try again later",
+          type: "error",
+        });
+      }
 
     } finally {
 
@@ -70,15 +64,47 @@ function useEditCategory() {
   };
 
   useEffect(() => {
+
+    let ignore = false;
+
+    const getCategory = async () => {
+
+      try {
+
+        const res = await axios.get(`${API_BASE_URL}/categories/${categoryId}`);
+
+        if (!ignore) setName(res.data.name);
+
+      } catch (error) {
+
+        if (ignore) return;
+
+        showToast({
+          title: error.response?.data?.message || "Something went wrong",
+          description: "Returning to category management",
+          type: "error",
+        });
+
+        navigate("/admin/category-management");
+
+      }
+
+    };
+
     getCategory();
-  }, []);
+
+    return () => {
+      ignore = true;
+    };
+
+  }, [categoryId, navigate]);
 
   return {
     name,
-    inputChange,
+    handleChange,
     handleSubmit,
     isLoading,
-    error
+    errors
   };
 }
 

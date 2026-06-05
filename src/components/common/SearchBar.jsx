@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import SearchInput from "./SearchInput";
 
 export default function SearchBar({
   keyword,
@@ -10,23 +10,17 @@ export default function SearchBar({
   onSelect,
 }) {
   return (
-    <div className="relative flex p-3 pl-4 lg:w-[360px] bg-base-white border border-base-brown-300 rounded-lg focus-within:border-base-brown-400 focus-within:ring-1 focus-within:ring-base-brown-300">
-      
-      <input
-        type="text"
-        placeholder="Search"
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
+    <div className="relative lg:w-[360px]">
+      <SearchInput
+        keyword={keyword}
+        setKeyword={setKeyword}
         onFocus={() => setShowDropdown(true)}
         onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-        className="w-full text-body-1 text-base-brown-400 placeholder:text-base-brown-400 focus:outline-none"
       />
-
-      <Search size={24} className="text-base-brown-400" />
 
       {showDropdown && keyword.trim() && (
         <div className="absolute z-10 w-full bg-base-white rounded-lg shadow-sm p-1 right-0 top-14">
-          
+
           {isLoading && (
             <div className="px-4 py-2 text-sm text-base-brown-600">
               Searching...

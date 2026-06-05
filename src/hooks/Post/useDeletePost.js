@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { showToast } from "@/components/common/showToast";
 
 function useDeletePost() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -11,11 +12,20 @@ function useDeletePost() {
 
     try {
       await axios.delete(`${API_BASE_URL}/posts/${postId}`);
-      console.log("Delete success");
+
+      showToast({
+        title: "Success",
+        description: "Article deleted successfully",
+        type: "success",
+      });
+
       return true;
     } catch (err) {
-      console.error("DELETE ERROR:", err);
-      console.log(err.response?.data);
+      showToast({
+        title: err.response?.data?.message || "Something went wrong",
+        description: "Please try again later",
+        type: "error",
+      });
       return false;
     } finally {
       setIsDeleting(false);

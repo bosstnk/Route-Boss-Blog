@@ -1,27 +1,39 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showToast } from "@/components/common/showToast";
+import { validateUpdatePostForm } from "@/utils/validateForm";
 
 function useUpdatePost(postId) {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
 
-  const updatePost = async (data) => {
+  const updatePost = async ({ form, imageFile, status_id }) => {
+    const frontendErrors = {
+      ...validateUpdatePostForm(form),
+      ...(fieldErrors.image ? { image: fieldErrors.image } : {}),
+    };
+
+    if (Object.keys(frontendErrors).length > 0) {
+      setFieldErrors(frontendErrors);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
       const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("description", form.description);
+      formData.append("content", form.content);
+      formData.append("category_id", form.category_id);
+      formData.append("status_id", status_id);
 
-      formData.append("title", data.title);
-      formData.append("description", data.description);
-      formData.append("content", data.content);
-      formData.append("category_id", data.category_id);
-      formData.append("status_id", data.status_id);
-
-
-      if (data.imageFile) {
-        formData.append("imageFile", data.imageFile);
+      if (imageFile) {
+        formData.append("imageFile", imageFile);
       }
 
       await axios.put(`${API_BASE_URL}/posts/${postId}`, formData);
@@ -31,17 +43,26 @@ function useUpdatePost(postId) {
         description: "Article updated successfully",
         type: "success",
       });
+
+      navigate("/admin/article-management");
     } catch (err) {
-      showToast({
-        title: "Error",
-        description: err.response?.data?.message || "Failed to update article",
-        type: "error",
-      });
+      const data = err.response?.data;
+
+      if (data?.errors) {
+        setFieldErrors(data.errors);
+      } else {
+        showToast({
+          title: data?.message || "Something went wrong",
+          description: "Please try again later",
+          type: "error",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
-  return { updatePost, isSubmitting };
+
+  return { updatePost, isSubmitting, fieldErrors, setFieldErrors };
 }
 
 export default useUpdatePost;

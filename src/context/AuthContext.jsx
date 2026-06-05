@@ -44,11 +44,11 @@ export function AuthProvider({ children }) {
     fetchProfile();
   }, []);
 
-  function login(token) {
+  async function login(token) {
     console.log("🔐 Login success");
     localStorage.setItem("token", token);
     setIsAuthenticated(true)
-    fetchProfile();
+    await fetchProfile();
   }
 
   function logout() {

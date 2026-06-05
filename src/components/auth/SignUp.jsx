@@ -1,6 +1,4 @@
 import { useSignUp } from "@/hooks/auth/useSignUp";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../common/Button";
 import usePasswordVisibility from "@/hooks/usePasswordVisibility";
@@ -15,7 +13,7 @@ function SignUp() {
     const errorInput =
         "text-brand-red border border-brand-red focus:border-brand-red focus:ring-1 focus:ring-brand-red/70  focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red/70";
 
-    const { signUpForm, handleInputChange, handleSubmit, errors, isSuccess, isLoading, serverError } = useSignUp()
+    const { signUpForm, handleInputChange, handleSubmit, errors, isLoading, serverError } = useSignUp()
     const { isVisible, inputType, toggleVisibility, } = usePasswordVisibility()
 
 
@@ -24,7 +22,7 @@ function SignUp() {
             <div className="flex flex-col items-center gap-6 px-4 py-10 w-[798px] mx-4 bg-base-brown-200 rounded-2xl lg:px-[120px] lg:py-[60px] md:mx-auto">
                 <h2 className="text-headline-2 leading-12 text-base-brown-600">Sign up</h2>
                 <form
-                    onSubmit={handleSubmit()}
+                    onSubmit={handleSubmit}
                     className="w-full flex flex-col gap-6 lg:gap-7">
                     <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
                         <label htmlFor="name">Name</label>

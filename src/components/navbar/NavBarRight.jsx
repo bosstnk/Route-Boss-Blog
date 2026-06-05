@@ -11,13 +11,13 @@ import useNotifications from "@/hooks/useNotifications";
 
 export default function NavBarRight() {
   const { isLoading, profile } = useAuth();
-  const { notifications, isLoading: notiLoading } = useNotifications();
+  const { notifications, isLoading: notiLoading, unreadCount, markAllAsRead } = useNotifications();
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isOpenNoti, setIsOpenNoti] = useState(false);
-  const [seen, setSeen] = useState(false);
-  const hasUnread = notifications.length > 0 && !seen;
+  const hasUnread = unreadCount > 0;
   const menuRef = useRef(null);
+  const notiWasOpenRef = useRef(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34,6 +34,15 @@ export default function NavBarRight() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isOpenNoti) {
+      notiWasOpenRef.current = true;
+    } else if (notiWasOpenRef.current) {
+      markAllAsRead();
+      notiWasOpenRef.current = false;
+    }
+  }, [isOpenNoti, markAllAsRead]);
+
   return (
     <div className="relative flex items-center">
 
@@ -45,7 +54,10 @@ export default function NavBarRight() {
           <div ref={menuRef} className="relative">
             <UserMenu
               onToggle={() => { setIsOpen(prev => !prev); setIsOpenNoti(false); }}
-              onToggleNoti={() => { setIsOpenNoti(prev => !prev); setIsOpen(false); setSeen(true); }}
+              onToggleNoti={() => {
+                setIsOpenNoti((prev) => !prev);
+                setIsOpen(false);
+              }}
               profile={profile}
               hasUnread={hasUnread}
             />
