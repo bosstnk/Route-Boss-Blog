@@ -27,7 +27,7 @@ function useNotifications() {
       setIsError(false);
 
       try {
-        const res = await axios.get(`${API_BASE_URL}/admin/notifications`);
+        const res = await axios.get(`${API_BASE_URL}/notifications`);
         if (!ignore) setNotifications(Array.isArray(res.data) ? res.data : []);
       } catch {
         if (!ignore) setIsError(true);
@@ -44,6 +44,27 @@ function useNotifications() {
 
   }, [refetchIndex]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const interval = setInterval(() => {
+      setRefetchIndex((n) => n + 1);
+    }, 20_000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        setRefetchIndex((n) => n + 1);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
   const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   const markAllAsRead = async () => {
@@ -53,7 +74,7 @@ function useNotifications() {
     setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
 
     try {
-      await axios.patch(`${API_BASE_URL}/admin/notifications/read-all`);
+      await axios.patch(`${API_BASE_URL}/notifications/read-all`);
     } catch {
       // ถ้าพัง refetch มา reconcile state กับ DB
       refetch();
