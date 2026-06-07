@@ -1,192 +1,117 @@
-import AdminSidebar from "@/components/AdminSidebar"
-import { Input } from "@/components/ui/input";
+import AdminSidebar from "@/components/AdminSidebar";
 import Button from "@/components/common/Button";
+import Modal from "@/components/common/Modal";
 import { useState } from "react";
-import { X } from "lucide-react";
-import axios from "axios";
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogTitle,
-    AlertDialogDescription,
-    AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
-import { showToast } from "@/components/common/showToast";
+import useResetPassword from "@/hooks/user/useResetPassword";
 
 export default function AdminResetPasswordPage() {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-    const [password, setPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmNewPassword, setConfirmNewPassword] = useState("");
-    const [valid, setValid] = useState({
-        password: true,
-        newPassword: true,
-        confirmNewPassword: true,
-    });
+    const { form, handleChange, handleSubmit, isLoading, fieldErrors } = useResetPassword();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isValidPassword = password.trim() !== "";
-        const isValidNewPassword = newPassword.trim() !== "";
-        const isValidConfirmPassword =
-            confirmNewPassword.trim() !== "" && confirmNewPassword === newPassword;
+    const inputClass = (hasError) =>
+        `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${hasError
+            ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
+            : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
+        }`;
 
-        setValid({
-            password: isValidPassword,
-            newPassword: isValidNewPassword,
-            confirmNewPassword: isValidConfirmPassword,
-        });
-
-        if (isValidPassword && isValidNewPassword && isValidConfirmPassword) {
-            setIsDialogOpen(true);
-        }
-    };
-
-    const handleResetPassword = async () => {
-        try {
-            await axios.put(`${API_BASE_URL}/user/reset-password`, {
-                currentPassword: password,
-                newPassword,
-            });
-
-            showToast({
-                title: "Reset!",
-                description: "Password reset successful. You can now log in with your new password.",
-                type: "success",
-            });
-
-            setPassword("");
-            setNewPassword("");
-            setConfirmNewPassword("");
-        } catch (err) {
-            showToast({
-                title: "Error",
-                description: err.response?.data?.message || "Failed to reset password",
-                type: "error",
-            });
-        } finally {
-            setIsDialogOpen(false);
-        }
-    };
     return (
         <div className="flex bg-base-brown-100">
             <AdminSidebar />
-            {/* Main content */}
+
             <main className="flex-1">
                 <div className="flex justify-between items-center py-6 px-[60px] border-b border-b-base-brown-300">
                     <h3 className="text-headline-3 text-base-brown-600">Reset Password</h3>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        Reset password
+                    <Button
+                        variant="primary"
+                        disabled={isLoading}
+                        onClick={() => setIsDialogOpen(true)}
+                    >
+                        {isLoading ? "Resetting..." : "Reset password"}
                     </Button>
                 </div>
 
                 <div className="mt-10 ml-[60px] space-y-7 max-w-[480px]">
-                    <div className="relative">
+                    <div>
                         <label
-                            htmlFor="current-password"
+                            htmlFor="currentPassword"
                             className="block text-body-1 text-base-brown-400 mb-1"
                         >
                             Current password
                         </label>
-                        <Input
-                            id="current-password"
+                        <input
+                            id="currentPassword"
+                            name="currentPassword"
                             type="password"
                             placeholder="Current password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className={`pl-4 py-3 rounded-lg bg-white border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400 ${!valid.password ? "border-red-500" : ""
-                                }`}
+                            value={form.currentPassword}
+                            onChange={handleChange}
+                            className={inputClass(fieldErrors.currentPassword)}
                         />
-                        {!valid.password && (
-                            <p className="text-red-500 text-xs absolute mt-1">
-                                This field is required
+                        {fieldErrors.currentPassword && (
+                            <p className="text-body-3 text-brand-red mt-1">
+                                {fieldErrors.currentPassword}
                             </p>
                         )}
                     </div>
-                    <div className="relative">
+
+                    <div>
                         <label
-                            htmlFor="new-password"
+                            htmlFor="newPassword"
                             className="block text-body-1 text-base-brown-400 mb-1"
                         >
                             New password
                         </label>
-                        <Input
-                            id="new-password"
+                        <input
+                            id="newPassword"
+                            name="newPassword"
                             type="password"
                             placeholder="New password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            className={`pl-4 py-3 rounded-lg bg-white border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400 ${!valid.password ? "border-red-500" : ""
-                            }`}
+                            value={form.newPassword}
+                            onChange={handleChange}
+                            className={inputClass(fieldErrors.newPassword)}
                         />
-                        {!valid.newPassword && (
-                            <p className="text-red-500 text-xs absolute mt-1">
-                                Password must be at least 8 characters
+                        {fieldErrors.newPassword && (
+                            <p className="text-body-3 text-brand-red mt-1">
+                                {fieldErrors.newPassword}
                             </p>
                         )}
                     </div>
-                    <div className="relative">
+
+                    <div>
                         <label
-                            htmlFor="confirm-new-password"
+                            htmlFor="confirmPassword"
                             className="block text-body-1 text-base-brown-400 mb-1"
                         >
                             Confirm new password
                         </label>
-                        <Input
-                            id="confirm-new-password"
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
                             type="password"
                             placeholder="Confirm new password"
-                            value={confirmNewPassword}
-                            onChange={(e) => setConfirmNewPassword(e.target.value)}
-                            className={`pl-4 py-3 rounded-lg bg-white border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400 ${!valid.password ? "border-red-500" : ""
-                            }`}
+                            value={form.confirmPassword}
+                            onChange={handleChange}
+                            className={inputClass(fieldErrors.confirmPassword)}
                         />
-                        {!valid.confirmNewPassword && (
-                            <p className="text-red-500 text-xs absolute mt-1">
-                                Passwords do not match
+                        {fieldErrors.confirmPassword && (
+                            <p className="text-body-3 text-brand-red mt-1">
+                                {fieldErrors.confirmPassword}
                             </p>
                         )}
                     </div>
                 </div>
             </main>
-            <ResetPasswordModal
-                dialogState={isDialogOpen}
-                setDialogState={setIsDialogOpen}
-                resetFunction={handleResetPassword}
+
+            <Modal
+                open={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                title="Reset password"
+                description="Do you want to reset your password?"
+                onConfirm={() => {
+                    setIsDialogOpen(false);
+                    handleSubmit();
+                }}
             />
         </div>
-    );
-}
-
-function ResetPasswordModal({ dialogState, setDialogState, resetFunction }) {
-    return (
-        <AlertDialog open={dialogState} onOpenChange={setDialogState}>
-            <AlertDialogContent className="bg-white rounded-md pt-16 pb-6 max-w-[352px] sm:max-w-md flex flex-col items-center">
-                <AlertDialogTitle className="text-3xl font-semibold pb-2 text-center">
-                    Reset password
-                </AlertDialogTitle>
-                <AlertDialogDescription className="flex flex-row mb-2 justify-center font-medium text-center text-muted-foreground">
-                    Do you want to reset your password?
-                </AlertDialogDescription>
-                <div className="flex flex-row gap-4">
-                    <button
-                        onClick={() => setDialogState(false)}
-                        className="bg-background px-10 py-4 rounded-full text-foreground border border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={resetFunction}
-                        className="rounded-full text-white bg-foreground hover:bg-muted-foreground transition-colors py-4 text-lg px-10 "
-                    >
-                        Reset
-                    </button>
-                </div>
-                <AlertDialogCancel className="absolute right-4 top-2 sm:top-4 p-1 border-none">
-                    <X className="h-6 w-6" />
-                </AlertDialogCancel>
-            </AlertDialogContent>
-        </AlertDialog>
     );
 }

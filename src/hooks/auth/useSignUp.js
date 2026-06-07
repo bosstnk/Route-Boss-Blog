@@ -4,6 +4,8 @@ import { useAuth } from "@/context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const initialSignUpForm = {
   name: "",
   username: "",
@@ -14,13 +16,11 @@ const initialSignUpForm = {
 export function useSignUp() {
   const navigate = useNavigate()
   const [signUpForm, setSignUpForm] = useState(initialSignUpForm)
-  const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({})
   const [serverError, setServerError] = useState(null);
 
   const { login } = useAuth()
-
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   function handleInputChange(e) {
     const { name, value } = e.target
@@ -29,7 +29,6 @@ export function useSignUp() {
       ...prev,
       [name]: ""
     }))
-
     setServerError(null);
   }
 
@@ -38,40 +37,35 @@ export function useSignUp() {
     setServerError(null);
 
     try {
-      await axios.post(`${API_BASE_URL}/auth/register`, payload);
-
-      const loginRes = await axios.post(`${API_BASE_URL}/auth/login`, {
-        email: payload.email,
-        password: payload.password,
-      });
-
-      await login(loginRes.data.token);
+      const res = await axios.post(`${API_BASE_URL}/auth/register`, payload);
+      await login(res.data.token);
       navigate("/signup-success");
     } catch (error) {
-      setServerError(
-        error.response?.data?.message || "Something went wrong"
-      );
+      const data = error.response?.data;
+      if (data?.errors) {
+        setErrors(data.errors);
+      } else {
+        setServerError(data?.message || "Unable to connect to the server. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
   }
 
-  function handleSubmit() {
-    return async (e) => {
-      e.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-      const normalizedForm = {
-        ...signUpForm,
-        email: signUpForm.email.toLowerCase().trim(),
-      };
-
-      const validateErrors = validateSignUpForm(normalizedForm);
-      setErrors(validateErrors);
-
-      if (Object.keys(validateErrors).length > 0) return;
-
-      await Register(normalizedForm);
+    const normalizedForm = {
+      ...signUpForm,
+      email: signUpForm.email.toLowerCase().trim(),
     };
+
+    const validateErrors = validateSignUpForm(normalizedForm);
+    setErrors(validateErrors);
+
+    if (Object.keys(validateErrors).length > 0) return;
+
+    await Register(normalizedForm);
   }
 
   return {

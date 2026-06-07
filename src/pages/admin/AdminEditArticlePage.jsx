@@ -1,8 +1,8 @@
-import { ImageIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Trash2 } from 'lucide-react';
+import { ImageIcon, Trash2 } from "lucide-react";
 import Button from "@/components/common/Button";
+import FileUploadButton from "@/components/common/FileUploadButton";
 import Modal from "@/components/common/Modal";
+import LoadingScreen from "@/components/common/LoadingScreen";
 import {
     Select,
     SelectContent,
@@ -11,71 +11,115 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import AdminSidebar from "@/components/AdminSidebar";
-import { Textarea } from "@/components/ui/textarea";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import usePost from "@/hooks/usePost";
 import useCategories from "@/hooks/Category/useCategories";
 import useUpdatePost from "@/hooks/Post/useUpdatePost";
 import useDeletePost from "@/hooks/Post/useDeletePost";
+import { showToast } from "@/components/common/showToast";
 
 function AdminEditArticlePage() {
     const { postId } = useParams();
     const navigate = useNavigate();
-    const [openModal, setOpenModal] = useState(false);
-    const { post, isLoading } = usePost(postId);
-    const { categories } = useCategories();
-    const { updatePost, isSubmitting } = useUpdatePost(postId);
-    const [imagePreview, setImagePreview] = useState(null);
-    const [imageFile, setImageFile] = useState(null);
-    const { deletePost, isDeleting } = useDeletePost();
-    const [form, setForm] = useState({
-        title: "",
-        description: "",
-        content: "",
-        category_id: "",
-    });
+    const { post, isLoading, isError } = usePost(postId);
 
-    // sync data จาก post → form
     useEffect(() => {
-        if (post) {
-            setForm({
-                title: post.title || "",
-                description: post.description || "",
-                content: post.content || "",
-                category_id: String(post.category_id) || "",
+        if (isError) {
+            showToast({
+                title: "Article not found",
+                description: "Returning to article management",
+                type: "error",
             });
-
-            setImagePreview(post.image || null);
+            navigate("/admin/article-management");
         }
-    }, [post]);
+    }, [isError, navigate]);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingScreen />;
+    if (!post) return null;
+
+    return <EditArticleForm key={postId} post={post} />;
+}
+
+function EditArticleForm({ post }) {
+    const { postId } = useParams();
+    const navigate = useNavigate();
+    const { categories } = useCategories();
+    const { updatePost, isSubmitting, fieldErrors, setFieldErrors } = useUpdatePost(postId);
+    const { deletePost, isDeleting } = useDeletePost();
+
+    const [form, setForm] = useState({
+        title: post.title || "",
+        description: post.description || "",
+        content: post.content || "",
+        category_id: post.category_id ? String(post.category_id) : "",
+    });
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(post.image || null);
+    const [openModal, setOpenModal] = useState(false);
+
+    const inputClass = (hasError) =>
+        `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${hasError
+            ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
+            : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
+        }`;
+
+    const selectTriggerClass = (hasError) =>
+        `w-full p-3 pl-4 bg-white rounded-lg font-medium text-base-brown-400 data-[placeholder]:text-base-brown-400 focus:ring-1 ${hasError
+            ? "border border-brand-red focus:border-brand-red focus:ring-brand-red/70"
+            : "border border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
+        }`;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        setForm((prev) => ({ ...prev, [name]: value }));
+        setFieldErrors((prev) => ({ ...prev, [name]: null }));
     };
+
+    const handleCategoryChange = (value) => {
+        setForm((prev) => ({ ...prev, category_id: value }));
+        setFieldErrors((prev) => ({ ...prev, category_id: null }));
+    };
+
     const handleImageChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+        const maxSize = 2 * 1024 * 1024;
+
+        setFieldErrors((prev) => ({ ...prev, image: null }));
+
+        if (!allowedTypes.includes(file.type)) {
+            setFieldErrors((prev) => ({
+                ...prev,
+                image: "Only JPG, PNG, WEBP are allowed",
+            }));
+            return;
+        }
+
+        if (file.size > maxSize) {
+            setFieldErrors((prev) => ({
+                ...prev,
+                image: "Image must be less than 2MB",
+            }));
+            return;
+        }
+
         setImageFile(file);
         setImagePreview(URL.createObjectURL(file));
     };
 
     const handleSubmit = (publish) => {
         updatePost({
-            ...form,
+            form,
+            imageFile,
             status_id: publish ? 2 : 1,
-            imageFile
         });
     };
+
     const handleDelete = async () => {
         const success = await deletePost(postId);
-
         if (success) {
             setOpenModal(false);
             navigate("/admin/article-management");
@@ -108,11 +152,11 @@ function AdminEditArticlePage() {
                         >
                             Save
                         </Button>
-
                     </div>
                 </div>
+
                 <div className="space-y-7 px-[60px] pt-10 pb-[120px]">
-                    <form className="space-y-7">
+                    <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
                         {/* Thumbnail */}
                         <div>
                             <label className="block text-base-brown-400 text-body-1 mb-4">
@@ -120,7 +164,10 @@ function AdminEditArticlePage() {
                             </label>
 
                             <div className="flex items-end space-x-7">
-                                <div className="flex justify-center items-center w-full max-w-lg h-64 border border-dashed rounded-md bg-base-brown-200">
+                                <div
+                                    className={`flex justify-center items-center w-full max-w-lg h-64 border border-dashed rounded-md bg-base-brown-200 ${fieldErrors.image ? "border-brand-red" : "border-base-brown-300"
+                                        }`}
+                                >
                                     {imagePreview ? (
                                         <img
                                             src={imagePreview}
@@ -131,10 +178,20 @@ function AdminEditArticlePage() {
                                     )}
                                 </div>
 
-                                <label className="px-8 py-2 bg-background rounded-full border cursor-pointer">
-                                    Upload thumbnail image
-                                    <input type="file" className="sr-only" onChange={handleImageChange} />
-                                </label>
+                                <div className="flex flex-col gap-2">
+                                    <FileUploadButton
+                                        variant="secondary"
+                                        size="lg"
+                                        onChange={handleImageChange}
+                                    >
+                                        Upload thumbnail image
+                                    </FileUploadButton>
+                                    {fieldErrors.image && (
+                                        <p className="text-body-3 text-brand-red">
+                                            {fieldErrors.image}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </div>
 
@@ -146,81 +203,112 @@ function AdminEditArticlePage() {
 
                             <Select
                                 value={form.category_id}
-                                onValueChange={(value) =>
-                                    setForm((prev) => ({
-                                        ...prev,
-                                        category_id: value,
-                                    }))
-                                }
+                                onValueChange={handleCategoryChange}
                             >
-                                <SelectTrigger className="w-full p-3 bg-white border rounded-lg">
+                                <SelectTrigger className={selectTriggerClass(fieldErrors.category_id)}>
                                     <SelectValue placeholder="Select category" />
                                 </SelectTrigger>
 
-                                <SelectContent>
+                                <SelectContent position="popper" sideOffset={4}>
                                     {categories.map((cat) => (
-                                        <SelectItem key={cat.id} value={String(cat.id)}>
+                                        <SelectItem
+                                            key={cat.id}
+                                            value={String(cat.id)}
+                                            className="transition-colors data-highlighted:bg-base-brown-300/50"
+                                        >
                                             {cat.name}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
+
+                            {fieldErrors.category_id && (
+                                <p className="text-body-3 text-brand-red">
+                                    {fieldErrors.category_id}
+                                </p>
+                            )}
                         </div>
 
                         {/* Title */}
-                        <div>
-                            <label className="text-base-brown-400">Title</label>
-                            <Input
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="title" className="text-base-brown-400 text-body-1">Title</label>
+                            <input
+                                id="title"
+                                type="text"
                                 name="title"
                                 value={form.title}
                                 onChange={handleChange}
-                                className="bg-white"
+                                placeholder="Article title"
+                                className={inputClass(fieldErrors.title)}
                             />
+                            {fieldErrors.title && (
+                                <p className="text-body-3 text-brand-red">
+                                    {fieldErrors.title}
+                                </p>
+                            )}
                         </div>
 
                         {/* Description */}
-                        <div>
-                            <label className="text-base-brown-400">Introduction</label>
-                            <Textarea
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="description" className="text-base-brown-400 text-body-1">
+                                Introduction (max 120 letters)
+                            </label>
+                            <textarea
+                                id="description"
                                 name="description"
                                 value={form.description}
                                 onChange={handleChange}
+                                placeholder="Introduction"
                                 rows={3}
-                                className="bg-white"
+                                className={`${inputClass(fieldErrors.description)} resize-y`}
                             />
+                            {fieldErrors.description && (
+                                <p className="text-body-3 text-brand-red">
+                                    {fieldErrors.description}
+                                </p>
+                            )}
                         </div>
 
                         {/* Content */}
-                        <div>
-                            <label className="text-base-brown-400">Content</label>
-                            <Textarea
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="content" className="text-base-brown-400 text-body-1">Content</label>
+                            <textarea
+                                id="content"
                                 name="content"
                                 value={form.content}
                                 onChange={handleChange}
+                                placeholder="Content"
                                 rows={10}
-                                className="bg-white"
+                                className={`${inputClass(fieldErrors.content)} resize-y`}
                             />
+                            {fieldErrors.content && (
+                                <p className="text-body-3 text-brand-red">
+                                    {fieldErrors.content}
+                                </p>
+                            )}
                         </div>
                     </form>
+
                     <Button
                         variant="text"
                         size="none"
                         disabled={isDeleting}
-                        onClick={() => setOpenModal(true)}>
+                        onClick={() => setOpenModal(true)}
+                    >
                         <Trash2 />
                         Delete article
                     </Button>
+
                     <Modal
                         title="Delete article"
                         description="Do you want to delete this article?"
                         open={openModal}
                         onClose={() => setOpenModal(false)}
                         onConfirm={handleDelete}
-                    >
-                    </Modal>
+                    />
                 </div>
-            </main >
-        </div >
+            </main>
+        </div>
     );
 }
 

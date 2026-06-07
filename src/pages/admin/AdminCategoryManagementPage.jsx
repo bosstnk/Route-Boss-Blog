@@ -3,17 +3,20 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import useCategories from "@/hooks/Category/useCategories";
 import useDeleteCategory from "@/hooks/Category/useDeleteCategory";
+import useDebounce from "@/hooks/useDebounce";
 import Modal from "@/components/common/Modal";
+import SearchInput from "@/components/common/SearchInput";
 import { Link } from "react-router-dom";
 
 
 function AdminCategoryManagementPage() {
 
     const [keyword, setKeyword] = useState("");
+    const debouncedKeyword = useDebounce(keyword, 200);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
-    const { categories, isLoading, isError, refetch } = useCategories(keyword);
+    const { categories, isLoading, isError, refetch } = useCategories(debouncedKeyword);
 
     const { handleDelete } = useDeleteCategory(refetch);
 
@@ -54,70 +57,62 @@ function AdminCategoryManagementPage() {
                 <div className="pt-10 pb-[120px] px-[60px] space-y-4">
 
                     {/* search */}
-                    <div className="relative w-full flex py-3 pl-4 pr-3 max-w-[304px] bg-base-white border border-base-brown-300 rounded-lg">
-
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            value={keyword}
-                            onChange={(e) => setKeyword(e.target.value)}
-                            className="w-full text-body-1 bg-base-white text-base-brown-400 placeholder:text-base-brown-400 focus:outline-none"
-                        />
-
-                    </div>
+                    <SearchInput
+                        keyword={keyword}
+                        setKeyword={setKeyword}
+                        placeholder="Search..."
+                        className="w-full max-w-[304px]"
+                    />
 
                     {/* table */}
-                    <div className="border border-base-brown-300 rounded-lg overflow-hidden">
+                    <div className="border border-base-brown-300 rounded-lg overflow-auto">
 
                         {/* header */}
-                        <div className="grid grid-cols-[1fr_auto] text-body-1 text-base-brown-400 bg-base-brown-100 shadow-[0_12px_12px_-6px_rgba(0,0,0,0.1)]">
-
+                        <div className="grid grid-cols-[1fr_auto] text-body-1 text-base-brown-400 shadow-[0px_2px_12px_0px_#0000001A]">
                             <div className="py-3 px-6">Category</div>
                             <div className="py-3 px-6"></div>
-
                         </div>
 
                         {isLoading && (
-                            <div className="py-6 text-center text-base-brown-400">
+                            <div className="py-6 text-center text-body-1 text-base-brown-400">
                                 Loading...
                             </div>
                         )}
 
                         {isError && (
-                            <div className="py-6 text-center text-red-500">
+                            <div className="py-6 text-center text-body-1 text-red-500">
                                 Failed to load categories
                             </div>
                         )}
 
                         {/* body */}
-                        <div className="flex flex-col text-body-1 text-base-brown-500 border-t border-base-brown-300">
-
-                            {categories.map((category, index) => (
-
-                                <div
-                                    key={category.id}
-                                    className={`grid grid-cols-[minmax(0,1fr)_116px] items-center py-5 px-6 ${index % 2 === 0 ? "" : "bg-base-brown-200"
-                                        }`}
-                                >
-
-                                    <div>{category.name}</div>
-
-                                    <div className="flex items-center justify-center gap-5">
-
-                                        <Link
-                                            to={`/admin/category-management/edit/${category.id}`}
-                                        >
-                                            <Pencil size={24} color="#75716B" strokeWidth={1.5} />
-                                        </Link>
-
-                                        <button onClick={() => openDeleteDialog(category.id)}>
-                                            <Trash2 size={24} color="#75716B" strokeWidth={1.5} />
-                                        </button>
-                                        
+                        {!isLoading && !isError && categories.length > 0 && (
+                            <div className="flex flex-col text-body-1 text-base-brown-500">
+                                {categories.map((category, index) => (
+                                    <div
+                                        key={category.id}
+                                        className={`grid grid-cols-[minmax(0,1fr)_116px] items-center py-5 px-6 ${index % 2 === 0 ? "" : "bg-base-brown-200"
+                                            }`}
+                                    >
+                                        <div>{category.name}</div>
+                                        <div className="flex items-center justify-center gap-5">
+                                            <Link to={`/admin/category-management/edit/${category.id}`}>
+                                                <Pencil size={24} color="#75716B" strokeWidth={1.5} />
+                                            </Link>
+                                            <button onClick={() => openDeleteDialog(category.id)} className="cursor-pointer">
+                                                <Trash2 size={24} color="#75716B" strokeWidth={1.5} />
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {!isLoading && !isError && categories.length === 0 && (
+                            <div className="py-6 text-center text-body-1 text-base-brown-500">
+                                No categories found
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>

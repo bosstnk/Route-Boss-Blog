@@ -7,7 +7,7 @@ function LandingPage() {
   return (
     <>
       <NavBar />
-      <div className="bg-base-brown-100">
+      <div className="bg-base-brown-100 overflow-hidden">
         <HeroSection />
         <ArticleSection />
       </div>

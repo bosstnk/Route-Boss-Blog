@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showToast } from "@/components/common/showToast";
+import { validateCreatePostForm } from "@/utils/validateForm";
 
 function useCreatePost() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -17,7 +18,7 @@ function useCreatePost() {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   // input text
   const handleChange = (e) => {
@@ -26,36 +27,62 @@ function useCreatePost() {
       ...prev,
       [name]: value,
     }));
+    setFieldErrors((prev) => ({ ...prev, [name]: null }));
   };
 
   // select category
   const handleCategoryChange = (value) => {
-
     setForm((prev) => ({
       ...prev,
-      category_id: Number(value)
+      category_id: Number(value),
     }));
-
+    setFieldErrors((prev) => ({ ...prev, category_id: null }));
   };
 
-  // upload thumbnail
+  // upload thumbnail (client-side validation + ไม่ stage ไฟล์เสีย)
   const handleImageChange = (e) => {
-
     const file = e.target.files?.[0];
-
     if (!file) return;
 
-    setImageFile(file);
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    const maxSize = 2 * 1024 * 1024;
 
+    setFieldErrors((prev) => ({ ...prev, image: null }));
+
+    if (!allowedTypes.includes(file.type)) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        image: "Only JPG, PNG, WEBP are allowed",
+      }));
+      return;
+    }
+
+    if (file.size > maxSize) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        image: "Image must be less than 2MB",
+      }));
+      return;
+    }
+
+    setImageFile(file);
     const preview = URL.createObjectURL(file);
     setImagePreview(preview);
-
   };
 
   // submit (draft / publish)
   const submitPost = async ({ publish }) => {
+    const frontendErrors = {
+      ...validateCreatePostForm(form, imageFile),
+      ...(fieldErrors.image ? { image: fieldErrors.image } : {}),
+    };
+
+    if (Object.keys(frontendErrors).length > 0) {
+      setFieldErrors(frontendErrors);
+      return;
+    }
+
     setIsSubmitting(true);
-    setError(null);
 
     try {
       const formData = new FormData();
@@ -63,11 +90,8 @@ function useCreatePost() {
       formData.append("description", form.description);
       formData.append("content", form.content);
       formData.append("category_id", form.category_id);
-      formData.append("status_id", publish ? 2 : 1); // 1=draft, 2=publish
-
-      if (imageFile) {
-        formData.append("imageFile", imageFile);
-      }
+      formData.append("status_id", publish ? 2 : 1); // 1=Draft, 2=Published
+      formData.append("imageFile", imageFile);
 
       await axios.post(`${API_BASE_URL}/posts`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -81,13 +105,17 @@ function useCreatePost() {
 
       navigate("/admin/article-management");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to create post");
-      showToast({
-        title: "Error",
-        description: err.response?.data?.message || "Failed to create article",
-        type: "error",
-      });
+      const data = err.response?.data;
 
+      if (data?.errors) {
+        setFieldErrors(data.errors);
+      } else {
+        showToast({
+          title: "Something went wrong",
+          description: "Please try again later",
+          type: "error",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -97,11 +125,11 @@ function useCreatePost() {
     form,
     imagePreview,
     isSubmitting,
-    error,
+    fieldErrors,
     handleChange,
     handleCategoryChange,
     handleImageChange,
-    submitPost
+    submitPost,
   };
 }
 

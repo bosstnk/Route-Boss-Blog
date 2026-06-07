@@ -1,52 +1,38 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function useComments(postId) {
-
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [refetchIndex, setRefetchIndex] = useState(0);
 
-  const fetchComments = async () => {
-
-    setIsLoading(true);
-    setIsError(false);
-
-    try {
-
-      const response = await axios.get(
-        `${API_BASE_URL}/posts/${postId}/comments`
-      );
-
-      setComments(response.data);
-
-    } catch (error) {
-
-      setIsError(true);
-
-    } finally {
-
-      setIsLoading(false);
-
-    }
-  };
+  const refetch = () => setRefetchIndex((n) => n + 1);
 
   useEffect(() => {
+    if (!postId) return;
+    let ignore = false;
 
-    if (postId) {
-      fetchComments();
-    }
+    const fetch = async () => {
+      setIsLoading(true);
+      setIsError(false);
+      try {
+        const response = await axios.get(`${API_BASE_URL}/posts/${postId}/comments`);
+        if (!ignore) setComments(response.data);
+      } catch {
+        if (!ignore) setIsError(true);
+      } finally {
+        if (!ignore) setIsLoading(false);
+      }
+    };
 
-  }, [postId]);
+    fetch();
+    return () => { ignore = true; };
+  }, [postId, refetchIndex]);
 
-  return {
-    comments,
-    isLoading,
-    isError,
-    refetch: fetchComments
-  };
+  return { comments, isLoading, isError, refetch };
 }
 
 export default useComments;

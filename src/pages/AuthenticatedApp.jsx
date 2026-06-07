@@ -30,7 +30,6 @@ function AuthenticatedApp() {
     return (
         <div>
             <Routes>
-
                 <Route path="/login" element={<Navigate to="/" replace />} />
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/post/:postId" element={<ViewPostPage />} />

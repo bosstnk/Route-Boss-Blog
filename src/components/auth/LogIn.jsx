@@ -63,7 +63,7 @@ function LogIn() {
                     <Button type="submit" variant="primary" disabled={isLoading} className="self-center lg:mt-3">{isLoading ? "Logging in..." : "Log in"}</Button>
                 </form>
                 <div className="space-x-3">
-                    <span>Don’t have any account?</span>
+                    <span>Don't have any account?</span>
                     <Link to={"/signup"}>
                         <Button variant="text" size="none">Sign up</Button>
                     </Link>

@@ -14,12 +14,15 @@ export function useLogIn() {
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
 
 
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   }
 
   async function requestLogin() {
@@ -31,24 +34,17 @@ export function useLogIn() {
         loginForm
       );
 
-      // ⭐ ส่ง token ให้ AuthContext
-      login(res.data.token);
-
-      setIsSuccess(true);
+      await login(res.data.token);
     } catch (error) {
-
+      const data = error.response?.data;
       const status = error.response?.status;
-      const message = error.response?.data?.message;
 
-      console.log("🔥 LOGIN ERROR:", {
-        status,
-        message,
-      });
-
-      if (status === 400) {
+      if (data?.errors) {
+        setErrors(data.errors);
+      } else if (status === 401) {
         showToast({
-          title: "Your password is incorrect or this email doesn’t exist",
-          description: "Please try another password or email",
+          title: data?.message || "Invalid email or password",
+          description: "Please check your credentials and try again.",
           type: "error",
         });
       } else {
@@ -65,7 +61,6 @@ export function useLogIn() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("🔥 SUBMIT TRIGGER");
     const validateErrors = validateLoginForm(loginForm);
     setErrors(validateErrors);
 
@@ -80,6 +75,5 @@ export function useLogIn() {
     handleSubmit,
     errors,
     isLoading,
-    isSuccess,
   };
 }

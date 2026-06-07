@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "@/components/common/showToast";
+import { validateCategoryForm } from "@/utils/validateForm";
 
 function useCreateCategory() {
 
@@ -11,18 +12,21 @@ function useCreateCategory() {
 
     const [name, setName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState({});
 
-    const inputChange = (e) => {
+    const handleChange = (e) => {
         setName(e.target.value);
+        setErrors((prev) => ({ ...prev, name: "" }));
     };
 
     const handleSubmit = async () => {
 
-        if (!name.trim()) return;
+        const validateErrors = validateCategoryForm({ name });
+        setErrors(validateErrors);
+
+        if (Object.keys(validateErrors).length > 0) return;
 
         setIsLoading(true);
-        setError(null);
 
         try {
 
@@ -36,15 +40,19 @@ function useCreateCategory() {
 
             navigate("/admin/category-management");
 
-        } catch (err) {
+        } catch (error) {
 
-            const message = err.response?.data?.message || "Create category failed";
-            setError(message);
-            showToast({
-                title: "Error",
-                description: message,
-                type: "error",
-            });
+            const data = error.response?.data;
+
+            if (data?.errors) {
+                setErrors(data.errors);
+            } else {
+                showToast({
+                    title: "Something went wrong",
+                    description: "Please try again later",
+                    type: "error",
+                });
+            }
 
         } finally {
 
@@ -56,10 +64,10 @@ function useCreateCategory() {
 
     return {
         name,
-        inputChange,
+        handleChange,
         handleSubmit,
         isLoading,
-        error
+        errors
     };
 }
 
