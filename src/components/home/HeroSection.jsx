@@ -25,7 +25,7 @@ function HeroSection() {
             lg:text-headline-1 lg:leading-[60px]
           "
         >
-          Stay Informed, Stay Inspired
+          Let’s Journey Together
         </h2>
 
         <p className="text-body-1 text-base-brown-400">
@@ -33,20 +33,116 @@ function HeroSection() {
           Your Daily Dose of Inspiration and Information.
         </p>
       </div>
-
+      
       {/* CENTER : Image */}
-      <div
-        className="
-          w-[343px] h-[470px]
-          overflow-hidden rounded-2xl
-          lg:w-[386px] lg:h-[529px]
-        "
-      >
-        <img
-          src={imageProfile}
-          alt="Author profile"
-          className="w-full h-full object-cover"
+      <div className="relative w-[343px] h-[470px] lg:w-[386px] lg:h-[529px]">
+
+        {/* === Blob Background === z-0 */}
+        <div
+          className="absolute"
+          style={{
+            width: '80%', height: '80%',
+            top: '-10%', left: '-15%',
+            borderRadius: '60% 40% 70% 30% / 50% 60% 40% 50%',
+            background: 'rgba(147,197,253,0.18)',
+            // animation: 'blobmove1 6s ease-in-out infinite',
+            zIndex: 0,
+          }}
         />
+        <div
+          className="absolute"
+          style={{
+            width: '60%', height: '60%',
+            bottom: '-8%', right: '-12%',
+            borderRadius: '40% 60% 30% 70% / 60% 40% 60% 40%',
+            background: 'rgba(167,139,250,0.15)',
+            // animation: 'blobmove2 7s ease-in-out infinite',
+            zIndex: 0,
+          }}
+        />
+
+        {/* === Image ===  */}
+        <div
+          className="absolute inset-0 overflow-hidden rounded-2xl border border-white/15"
+        >
+          <img
+            src={imageProfile}
+            alt="Author profile"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* === Orb === z-10 */}
+        <div
+          className="absolute rounded-full border-2 border-white/20"
+          style={{
+            width: 40, height: 40,
+            top: '5%', right: '-4%',
+            background: 'radial-gradient(circle at 35% 35%, #c4b5fd, #7c3aed)',
+            animation: 'float2 4s ease-in-out infinite',
+            zIndex: 10,
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 24, height: 24,
+            bottom: '18%', left: '-3%',
+            background: 'radial-gradient(circle at 35% 35%, #bfdbfe, #60a5fa)',
+            animation: 'float3 5s ease-in-out infinite',
+            zIndex: 10,
+          }}
+        />
+
+        <div
+          className="absolute rounded-full border-2 border-white/30"
+          style={{
+            width: 56, height: 56,
+            top: '8%', left: '-8%',
+            background: 'radial-gradient(circle at 35% 35%, #93c5fd, #3b82f6)',
+            animation: 'float1 3.5s ease-in-out infinite',
+            zIndex: 10,
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: 14, height: 14,
+            bottom: '8%', right: '-2%',
+            background: 'radial-gradient(circle at 35% 35%, #ddd6fe, #8b5cf6)',
+            animation: 'float1 4.5s ease-in-out infinite reverse',
+            zIndex: 10,
+          }}
+        />
+
+        {/* === Keyframes === */}
+        <style>{`
+  @keyframes blobmove1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%       { transform: translate(8px, -10px) scale(1.05); }
+  }
+  @keyframes blobmove2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%       { transform: translate(-6px, 8px) scale(1.04); }
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-14px); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+  @keyframes floatImg {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+  }
+`}</style>
+
       </div>
 
       {/* RIGHT : Author Info */}

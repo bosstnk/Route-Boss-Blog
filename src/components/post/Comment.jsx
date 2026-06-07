@@ -1,4 +1,3 @@
-import { Textarea } from "../ui/textarea";
 import useCreateComment from "@/hooks/Comment/useCreateComment";
 import Button from "../common/Button";
 
@@ -18,7 +17,7 @@ function Comments({ comments, postId, refetch, onRequireAuth }) {
 
         <p className="text-body-1 text-base-brown-400">Comment</p>
 
-        <Textarea
+        <textarea
           value={comment}
           onChange={handleChange}
           onFocus={() => {
@@ -26,7 +25,7 @@ function Comments({ comments, postId, refetch, onRequireAuth }) {
             if (isGuest) return;
           }}
           placeholder="What are your thoughts?"
-          className="w-full h-24 rounded-lg border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-1 focus-visible:ring-base-brown-300 focus-visible:border-base-brown-400"
+          className="w-full h-24 p-3 pl-4 bg-white rounded-lg border border-base-brown-300 outline-none resize-none text-body-1 text-base-brown-500 placeholder:text-base-brown-400 transition-colors focus:ring-1 focus:border-base-brown-400 focus:ring-base-brown-300"
         />
 
         <Button

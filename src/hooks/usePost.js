@@ -1,48 +1,60 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function usePost(postId) {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+function usePost(postId) {
 
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [refetchIndex, setRefetchIndex] = useState(0);
 
-  const fetchPost = async () => {
-
-    setIsLoading(true);
-
-    try {
-
-      const res = await axios.get(`${API_BASE_URL}/posts/${postId}`);
-
-      setPost(res.data);
-
-    } catch (error) {
-
-      console.error("FETCH POST ERROR:", error);
-
-    } finally {
-
-      setIsLoading(false);
-
-    }
-
-  };
+  const refetch = () => setRefetchIndex((n) => n + 1);
 
   useEffect(() => {
 
-    if (postId) {
-      fetchPost();
-    }
+    if (!postId) return;
 
-  }, [postId]);
+    let ignore = false;
+
+    const fetchPost = async () => {
+
+      setIsLoading(true);
+      setIsError(false);
+
+      try {
+
+        const res = await axios.get(`${API_BASE_URL}/posts/${postId}`);
+
+        if (!ignore) setPost(res.data);
+
+      } catch {
+
+        if (!ignore) setIsError(true);
+
+      } finally {
+
+        if (!ignore) setIsLoading(false);
+
+      }
+
+    };
+
+    fetchPost();
+
+    return () => {
+      ignore = true;
+    };
+
+  }, [postId, refetchIndex]);
 
   return {
     post,
     setPost,
     isLoading,
-    refetch: fetchPost
+    isError,
+    refetch
   };
 }
 

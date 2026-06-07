@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import AdminSidebar from "@/components/AdminSidebar";
 import Button from "@/components/common/Button";
 import useEditCategory from "@/hooks/Category/useUpdateCategory";
@@ -7,11 +6,17 @@ function AdminEditCategoryPage() {
 
   const {
     name,
-    inputChange,
+    handleChange,
     handleSubmit,
     isLoading,
-    error
+    errors
   } = useEditCategory();
+
+  const inputClass = (hasError) =>
+    `mt-1 w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${hasError
+      ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
+      : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
+    }`;
 
   return (
     <div className="flex h-screen bg-base-brown-100">
@@ -39,24 +44,24 @@ function AdminEditCategoryPage() {
         <div className="flex flex-col gap-1 max-w-[480px] ml-[60px] mt-[40px]">
 
           <label
-            htmlFor="category"
+            htmlFor="name"
             className="block text-body-1 text-base-brown-400"
           >
             Category Name
           </label>
 
-          <Input
-            id="category"
+          <input
+            id="name"
             type="text"
             value={name}
-            onChange={inputChange}
+            onChange={handleChange}
             placeholder="Category name"
-            className="p-3 pl-4 rounded-lg text-body-1 text-base-brown-400 border-base-brown-300 placeholder:text-base-brown-400 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-base-brown-400"
+            className={inputClass(errors.name)}
           />
 
-          {error && (
-            <p className="text-red-500 mt-2 text-sm">
-              {error}
+          {errors.name && (
+            <p className="text-body-3 text-brand-red mt-1">
+              {errors.name}
             </p>
           )}
 

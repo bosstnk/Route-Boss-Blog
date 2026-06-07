@@ -133,12 +133,10 @@ export default function useUpdateProfile() {
       await fetchProfile();
 
     } catch (err) {
-      const status = err.response?.status;
+      const data = err.response?.data;
 
-      if (status === 400 && err.response?.data?.errors) {
-        // 🔥 map backend errors
-        setFieldErrors(err.response.data.errors);
-
+      if (data?.errors) {
+        setFieldErrors(data.errors);
       } else {
         showToast({
           title: "Something went wrong",

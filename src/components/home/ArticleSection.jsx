@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BlogCard } from "../common/BlogCard.jsx";
+import { BlogCard, BlogCardSkeleton } from "../common/BlogCard.jsx";
 import Button from "../common/Button.jsx";
 import {
   Select,
@@ -13,7 +13,7 @@ import { useSuggestions } from "@/hooks/useSearchPost.js";
 import { categories } from "@/data/constantData.js";
 import usePosts from "@/hooks/usePosts.js";
 import useDebounce from "@/hooks/useDebounce.js";
-import SearchBar from "./SearchBar.jsx";
+import SearchBar from "@/components/common/SearchBar.jsx";
 
 function ArticleSection() {
 
@@ -103,9 +103,16 @@ function ArticleSection() {
 
       <div className="px-4 pt-6 pb-13 flex flex-col gap-12 lg:gap-20 lg:p-0 lg:mt-12">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
+          {isLoading && posts.length === 0 ? (
+            <>
+              <BlogCardSkeleton />
+              <BlogCardSkeleton />
+            </>
+          ) : (
+            posts.map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))
+          )}
         </div>
 
         {hasMore && (

@@ -18,8 +18,12 @@ function MemberProfilePage() {
   const { profile } = useAuth()
 
 
-  const inputStyle =
-    "w-full bg-white p-3 pl-4 text-body-1 outline-none rounded-lg transition-colors";
+  const inputClass = (hasError) =>
+    `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${
+      hasError
+        ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
+        : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
+    }`;
 
   return (
     <>
@@ -85,7 +89,7 @@ function MemberProfilePage() {
                     type="text"
                     value={form.name}
                     onChange={handleChange}
-                    className={inputStyle}
+                    className={inputClass(!!fieldErrors.name)}
                   />
                   {(fieldErrors.name) && <div className="text-body-3 text-brand-red">{fieldErrors.name}</div>}
                 </div>
@@ -97,7 +101,7 @@ function MemberProfilePage() {
                     type="text"
                     value={form.username}
                     onChange={handleChange}
-                    className={inputStyle}
+                    className={inputClass(!!fieldErrors.username)}
                   />
                   {(fieldErrors.username) && <div className="text-body-3 text-brand-red">{fieldErrors.username}</div>}
                 </div>

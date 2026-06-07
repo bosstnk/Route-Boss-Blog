@@ -39,7 +39,7 @@ export function NotificationBox({ notifications, isLoading }) {
         <p className="text-body-2 text-base-brown-500">No notifications</p>
       ) : (
         notifications.map((notification) => (
-          <div key={notification.id} className="flex flex-row gap-3">
+          <div key={notification.id} className={`flex flex-row gap-3 rounded-lg p-1 -mx-1 ${!notification.is_read ? "bg-base-brown-200" : ""}`}>
             <Avatar className="w-12 h-12">
               <AvatarImage
                 src={notification.actor?.profile_pic}

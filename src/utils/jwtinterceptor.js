@@ -22,7 +22,7 @@ function jwtInterceptor() {
         error.response?.data || error.message
       );
 
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         const isAuthPage = window.location.pathname === "/login";
 
         if (!isAuthPage) {

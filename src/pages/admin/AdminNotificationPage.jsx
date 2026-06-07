@@ -2,6 +2,7 @@ import AdminSidebar from "@/components/AdminSidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useNotifications from "@/hooks/useNotifications";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 function formatNotificationTime(createdAt) {
     const now = new Date();
@@ -40,7 +41,13 @@ function getNotificationText(type) {
 }
 
 function AdminNotificationPage() {
-    const { notifications, isLoading } = useNotifications();
+    const { notifications, isLoading, unreadCount, markAllAsRead } = useNotifications();
+
+    useEffect(() => {
+        if (!isLoading && unreadCount > 0) {
+            markAllAsRead();
+        }
+    }, [isLoading, unreadCount, markAllAsRead]);
 
     return (
         <div className="flex bg-base-brown-100">
