@@ -5,12 +5,14 @@ import App from "./App.jsx";
 import { AuthProvider } from "@/context/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import jwtInterceptor from "./utils/jwtinterceptor";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 jwtInterceptor()
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
         <App />
       </AuthProvider>

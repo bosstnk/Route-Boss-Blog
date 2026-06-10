@@ -9,7 +9,7 @@ function usePosts({ category, keyword, limit = 6 }) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [refetchIndex, setRefetchIndex] = useState(0);
 
   // reset page เมื่อ filter เปลี่ยน
