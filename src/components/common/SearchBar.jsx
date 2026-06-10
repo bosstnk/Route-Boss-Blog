@@ -18,14 +18,8 @@ export default function SearchBar({
         onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
       />
 
-      {showDropdown && keyword.trim() && (
+      {showDropdown && keyword.trim() && !isLoading && (
         <div className="absolute z-10 w-full bg-base-white rounded-lg shadow-sm p-1 right-0 top-14">
-
-          {isLoading && (
-            <div className="px-4 py-2 text-sm text-base-brown-600">
-              Searching...
-            </div>
-          )}
 
           {!isLoading && suggestions.length === 0 && (
             <div className="px-4 py-2 text-sm text-base-brown-600">

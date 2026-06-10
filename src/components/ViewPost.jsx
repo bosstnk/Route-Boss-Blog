@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import Comments from "./post/Comment";
 import LikeShare from "./post/LikeShare";
@@ -9,11 +9,13 @@ import useToggleLike from "@/hooks/useToggleLike";
 import LoadingScreen from "./common/LoadingScreen";
 import PostContent from "./post/PostContent";
 import useComments from "@/hooks/Comment/useComments";
+import ModalGuest from "./common/ModalGuest";
 
 
 export default function ViewPost() {
 
     const { postId } = useParams();
+    const navigate = useNavigate();
     const { post, setPost, isLoading } = usePost(postId);
     const { toggleLike } = useToggleLike(postId, setPost);
     const { isAuthenticated } = useAuth();
@@ -66,9 +68,11 @@ export default function ViewPost() {
             </div>
             {!isAuthenticated && (
 
-                <CreateAccountAlert
-                    alertState={isAlertOpen}
-                    setAlertState={setIsAlertOpen}
+                <ModalGuest
+                    open={isAlertOpen}
+                    onClose={() => setIsAlertOpen(false)}
+                    onConfirm={() => navigate("/signup")}
+                    onLogin={() => navigate("/login")}
                 />
             )}
         </div>
