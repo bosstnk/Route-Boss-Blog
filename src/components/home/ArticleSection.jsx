@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { BlogCard, BlogCardSkeleton } from "../common/BlogCard.jsx";
-import Button from "../common/Button.jsx";
 import {
   Select,
   SelectContent,
@@ -21,21 +20,24 @@ function ArticleSection() {
   const [keyword, setKeyword] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const debouncedKeyword = useDebounce(keyword, 100);
-  const {
-    posts,
-    isLoading,
-    isError,
-    hasMore,
-    loadMore,
-    reset
-  } = usePosts({ category, keyword });
-
-  useEffect(() => {
-    reset();
-  }, [category, keyword]);
+  const { posts, isLoading, hasMore, loadMore } = usePosts({ category });
 
   const navigate = useNavigate();
   const { suggestions, isLoading: SuggestIsLoading } = useSuggestions(debouncedKeyword);
+  const isSearchPending = keyword.trim() !== debouncedKeyword.trim();
+
+  const [sentinelEl, setSentinelEl] = useState(null);
+  const loadMoreRef = useRef(loadMore);
+  useEffect(() => { loadMoreRef.current = loadMore; });
+
+  useEffect(() => {
+    if (!sentinelEl || !hasMore) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) loadMoreRef.current();
+    });
+    observer.observe(sentinelEl);
+    return () => observer.disconnect();
+  }, [sentinelEl, hasMore]);
 
   return (
     <div className="flex flex-col justify-center mx-auto lg:max-w-[1440px] lg:px-[120px] lg:pb-[120px]">
@@ -52,7 +54,7 @@ function ArticleSection() {
           showDropdown={showDropdown}
           setShowDropdown={setShowDropdown}
           suggestions={suggestions}
-          isLoading={SuggestIsLoading}
+          isLoading={SuggestIsLoading || isSearchPending}
           onSelect={(id) => navigate(`/post/${id}`)}
         />
 
@@ -115,13 +117,12 @@ function ArticleSection() {
           )}
         </div>
 
-        {hasMore && (
-          <Button
-            variant="text"
-            onClick={loadMore}
-            disabled={isLoading}>
-            {isLoading ? "Loading..." : "View more"}
-          </Button>
+        {posts.length > 0 && <div ref={setSentinelEl} className="h-1" />}
+        {isLoading && posts.length > 0 && (
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+            <BlogCardSkeleton />
+            <BlogCardSkeleton />
+          </div>
         )}
       </div>
     </div>

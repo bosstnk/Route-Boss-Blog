@@ -5,6 +5,7 @@ export default function ModalGuest({
     open,
     onClose,
     onConfirm,
+    onLogin,
 }) {
     if (!open) return null;
 
@@ -17,15 +18,17 @@ export default function ModalGuest({
             />
 
             {/* Modal */}
-            <div className="relative z-10 bg-base-brown-100 rounded-2xl px-6 pt-4 pb-10 flex flex-col items-center gap-6 lg:w-[621px]">
+            <div className="relative z-10 bg-base-brown-100 rounded-2xl px-4 pt-4 pb-10 flex flex-col items-center gap-6 lg:w-[621px]">
 
                 {/* Close */}
                 <div className="w-full flex justify-end">
-                    <Button iconOnly variant="text" leftIcon={<X strokeWidth={1.5} />}></Button>
+                    <Button size="none" variant="text" onClick={onClose}>
+                        <X strokeWidth={1.5} />
+                    </Button>
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col items-center gap-10 text-center">
+                <div className="flex flex-col items-center gap-4 text-center lg:gap-10">
                     <h3 className="text-headline-3 lg:text-headline-2 text-base-brown-600">
                         Create an account to continue
                     </h3>
@@ -37,7 +40,7 @@ export default function ModalGuest({
                         <span className="text-body-1 text-base-brown-400">
                             Already have an account?
                         </span>
-                        <Button variant="text">Log in</Button>
+                        <Button size="none" variant="text" onClick={onLogin}>Log in</Button>
                     </div>
 
                 </div>
