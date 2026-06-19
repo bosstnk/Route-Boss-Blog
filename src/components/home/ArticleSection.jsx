@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { BlogCard, BlogCardSkeleton } from "../common/BlogCard.jsx";
+import { BlogCard } from "@/components/common/BlogCard.jsx";
+import { BlogCardSkeleton } from "@/components/common/BlogCardSkeleton.jsx";
 import {
   Select,
   SelectContent,
@@ -26,18 +27,20 @@ function ArticleSection() {
   const { suggestions, isLoading: SuggestIsLoading } = useSuggestions(debouncedKeyword);
   const isSearchPending = keyword.trim() !== debouncedKeyword.trim();
 
-  const [sentinelEl, setSentinelEl] = useState(null);
+  // เก็บ loadMore ล่าสุดไว้ใน ref เพื่อให้ callback ref คงที่ (deps = [])
   const loadMoreRef = useRef(loadMore);
   useEffect(() => { loadMoreRef.current = loadMore; });
 
-  useEffect(() => {
-    if (!sentinelEl || !hasMore) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) loadMoreRef.current();
+  // callback ref: ตั้ง/ถอด observer ตอน sentinel mount/unmount พอดี
+  const observerRef = useRef(null);
+  const sentinelRef = useCallback((node) => {
+    observerRef.current?.disconnect();
+    if (!node) return;
+    observerRef.current = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) loadMoreRef.current();
     });
-    observer.observe(sentinelEl);
-    return () => observer.disconnect();
-  }, [sentinelEl, hasMore]);
+    observerRef.current.observe(node);
+  }, []);
 
   return (
     <div className="flex flex-col justify-center mx-auto lg:max-w-[1440px] lg:px-[120px] lg:pb-[120px]">
@@ -103,7 +106,7 @@ function ArticleSection() {
         </nav>
       </div>
 
-      <div className="px-4 pt-6 pb-13 flex flex-col gap-12 lg:gap-20 lg:p-0 lg:mt-12">
+      <div className="px-4 pt-6 pb-13 flex flex-col lg:p-0 lg:mt-12">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           {isLoading && posts.length === 0 ? (
             <>
@@ -117,9 +120,9 @@ function ArticleSection() {
           )}
         </div>
 
-        {posts.length > 0 && <div ref={setSentinelEl} className="h-1" />}
+        {posts.length > 0 && hasMore && <div ref={sentinelRef} className="h-1" />}
         {isLoading && posts.length > 0 && (
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 pt-12">
             <BlogCardSkeleton />
             <BlogCardSkeleton />
           </div>

@@ -1,7 +1,7 @@
 import NavBar from "@/components/navbar/NavBar";
 import Button from "@/components/common/Button";
-import { User, IterationCw } from "lucide-react";
-import { Link } from "react-router-dom";
+import MenuMember from "@/components/common/MenuMember";
+import FormInput from "@/components/common/FormInput";
 import useUpdateProfile from "@/hooks/user/useUpdateProfile";
 import avatarProfile from "@/assets/images/user-profile.png"
 import FileUploadButton from "@/components/common/FileUploadButton";
@@ -16,14 +16,6 @@ function MemberProfilePage() {
     fieldErrors,
   } = useUpdateProfile();
   const { profile } = useAuth()
-
-
-  const inputClass = (hasError) =>
-    `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${
-      hasError
-        ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
-        : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
-    }`;
 
   return (
     <>
@@ -50,7 +42,7 @@ function MemberProfilePage() {
           <div className="lg:flex lg:gap-12 lg:mt-8">
             {/* Sidebar */}
             <div className="hidden lg:block">
-              <MenuMember />
+              <MenuMember active="profile" />
             </div>
 
             {/* Content */}
@@ -81,30 +73,22 @@ function MemberProfilePage() {
                 className="flex flex-col gap-6 lg:gap-7"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={form.name}
-                    onChange={handleChange}
-                    className={inputClass(!!fieldErrors.name)}
-                  />
-                  {(fieldErrors.name) && <div className="text-body-3 text-brand-red">{fieldErrors.name}</div>}
-                </div>
-                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
-                  <label htmlFor="username">Username</label>
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    value={form.username}
-                    onChange={handleChange}
-                    className={inputClass(!!fieldErrors.username)}
-                  />
-                  {(fieldErrors.username) && <div className="text-body-3 text-brand-red">{fieldErrors.username}</div>}
-                </div>
+                <FormInput
+                  label="Name"
+                  name="name"
+                  type="text"
+                  value={form.name}
+                  onChange={handleChange}
+                  error={fieldErrors.name}
+                />
+                <FormInput
+                  label="Username"
+                  name="username"
+                  type="text"
+                  value={form.username}
+                  onChange={handleChange}
+                  error={fieldErrors.username}
+                />
 
                 <div className="mt-6 text-body-1 text-base-brown-400/60">
                   <p>Email</p>
@@ -128,23 +112,3 @@ function MemberProfilePage() {
 }
 
 export default MemberProfilePage;
-
-
-function MenuMember({ className = "" }) {
-  return (
-    <div className="flex lg:flex-col">
-      <button className="px-4 py-3 flex gap-3 text-base-brown-500">
-        <User size={24} />
-        Profile
-      </button>
-
-      <Link
-        to="/member-reset-password"
-        className={`px-4 py-3 flex gap-3 text-base-brown-400/70 ${className}`}
-      >
-        <IterationCw size={24} />
-        Reset password
-      </Link>
-    </div>
-  );
-}

@@ -6,8 +6,8 @@ import {
     Copy,
     X,
 } from "lucide-react";
-import { showToast } from "../common/showToast";
-import Button from "../common/Button";
+import { showToast } from "@/components/common/showToast";
+import Button from "@/components/common/Button";
 
 function LikeShare({ likeAmount, liked, onRequireAuth, onLike }) {
 

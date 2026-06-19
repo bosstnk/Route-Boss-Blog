@@ -1,6 +1,8 @@
 import { ImageIcon, Trash2 } from "lucide-react";
 import Button from "@/components/common/Button";
 import FileUploadButton from "@/components/common/FileUploadButton";
+import FormInput from "@/components/common/FormInput";
+import { inputClassName, selectTriggerClassName } from "@/components/common/formInputStyles";
 import Modal from "@/components/common/Modal";
 import LoadingScreen from "@/components/common/LoadingScreen";
 import {
@@ -57,18 +59,6 @@ function EditArticleForm({ post }) {
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(post.image || null);
     const [openModal, setOpenModal] = useState(false);
-
-    const inputClass = (hasError) =>
-        `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${hasError
-            ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
-            : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
-        }`;
-
-    const selectTriggerClass = (hasError) =>
-        `w-full p-3 pl-4 bg-white rounded-lg font-medium text-base-brown-400 data-[placeholder]:text-base-brown-400 focus:ring-1 ${hasError
-            ? "border border-brand-red focus:border-brand-red focus:ring-brand-red/70"
-            : "border border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
-        }`;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -205,7 +195,7 @@ function EditArticleForm({ post }) {
                                 value={form.category_id}
                                 onValueChange={handleCategoryChange}
                             >
-                                <SelectTrigger className={selectTriggerClass(fieldErrors.category_id)}>
+                                <SelectTrigger className={selectTriggerClassName(fieldErrors.category_id)}>
                                     <SelectValue placeholder="Select category" />
                                 </SelectTrigger>
 
@@ -230,23 +220,15 @@ function EditArticleForm({ post }) {
                         </div>
 
                         {/* Title */}
-                        <div className="flex flex-col gap-1">
-                            <label htmlFor="title" className="text-base-brown-400 text-body-1">Title</label>
-                            <input
-                                id="title"
-                                type="text"
-                                name="title"
-                                value={form.title}
-                                onChange={handleChange}
-                                placeholder="Article title"
-                                className={inputClass(fieldErrors.title)}
-                            />
-                            {fieldErrors.title && (
-                                <p className="text-body-3 text-brand-red">
-                                    {fieldErrors.title}
-                                </p>
-                            )}
-                        </div>
+                        <FormInput
+                            label="Title"
+                            name="title"
+                            type="text"
+                            value={form.title}
+                            onChange={handleChange}
+                            placeholder="Article title"
+                            error={fieldErrors.title}
+                        />
 
                         {/* Description */}
                         <div className="flex flex-col gap-1">
@@ -260,7 +242,7 @@ function EditArticleForm({ post }) {
                                 onChange={handleChange}
                                 placeholder="Introduction"
                                 rows={3}
-                                className={`${inputClass(fieldErrors.description)} resize-y`}
+                                className={inputClassName(!!fieldErrors.description, "resize-y")}
                             />
                             {fieldErrors.description && (
                                 <p className="text-body-3 text-brand-red">
@@ -279,7 +261,7 @@ function EditArticleForm({ post }) {
                                 onChange={handleChange}
                                 placeholder="Content"
                                 rows={10}
-                                className={`${inputClass(fieldErrors.content)} resize-y`}
+                                className={inputClassName(!!fieldErrors.content, "resize-y")}
                             />
                             {fieldErrors.content && (
                                 <p className="text-body-3 text-brand-red">

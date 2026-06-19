@@ -1,11 +1,11 @@
 import NavBar from "@/components/navbar/NavBar";
-import { User, IterationCw } from "lucide-react";
 import avatarProfile from "@/assets/images/user-profile.png"
-import { Link } from "react-router-dom";
 import useResetPassword from "@/hooks/user/useResetPassword";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
+import MenuMember from "@/components/common/MenuMember";
+import FormInput from "@/components/common/FormInput";
 import { useState } from "react";
 
 function MemberResetPasswordPage() {
@@ -18,13 +18,6 @@ function MemberResetPasswordPage() {
     fieldErrors
   } = useResetPassword();
   const [modalOpen, setModalOpen] = useState(false)
-
-  const inputClass = (hasError) =>
-    `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 ${
-      hasError
-        ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
-        : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
-    }`;
 
   return (
     <>
@@ -49,7 +42,7 @@ function MemberResetPasswordPage() {
 
           <div className="lg:flex lg:gap-12 lg:mt-8">
             <div className="hidden lg:block">
-              <MenuMember />
+              <MenuMember active="reset" />
             </div>
 
             <div className="bg-base-brown-200 px-4 pt-6 pb-10 space-y-6 lg:p-10 lg:rounded-2xl lg:grow">
@@ -57,48 +50,33 @@ function MemberResetPasswordPage() {
                 className="flex flex-col gap-6 lg:gap-7"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
-                  <label htmlFor="currentPassword">
-                    Current password
-                  </label>
-                  <input
-                    type="password"
-                    name="currentPassword"
-                    value={form.currentPassword}
-                    onChange={handleChange}
-                    placeholder="Current password"
-                    className={inputClass(!!fieldErrors.currentPassword)}
-                  />
-                  {(fieldErrors.currentPassword) && <div className="text-body-3 text-brand-red">{fieldErrors.currentPassword}</div>}
-                </div>
-                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
-                  <label htmlFor="newPassword">
-                    New password
-                  </label>
-                  <input
-                    type="password"
-                    name="newPassword"
-                    value={form.newPassword}
-                    onChange={handleChange}
-                    placeholder="New password"
-                    className={inputClass(!!fieldErrors.newPassword)}
-                  />
-                  {(fieldErrors.newPassword) && <div className="text-body-3 text-brand-red">{fieldErrors.newPassword}</div>}
-                </div>
-                <div className="flex flex-col gap-1 text-body-1 text-base-brown-400">
-                  <label htmlFor="confirmPassword">
-                    Confirm new password
-                  </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={form.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Confirm new password"
-                    className={inputClass(!!fieldErrors.confirmPassword)}
-                  />
-                  {(fieldErrors.confirmPassword) && <div className="text-body-3 text-brand-red">{fieldErrors.confirmPassword}</div>}
-                </div>
+                <FormInput
+                  label="Current password"
+                  name="currentPassword"
+                  type="password"
+                  value={form.currentPassword}
+                  onChange={handleChange}
+                  placeholder="Current password"
+                  error={fieldErrors.currentPassword}
+                />
+                <FormInput
+                  label="New password"
+                  name="newPassword"
+                  type="password"
+                  value={form.newPassword}
+                  onChange={handleChange}
+                  placeholder="New password"
+                  error={fieldErrors.newPassword}
+                />
+                <FormInput
+                  label="Confirm new password"
+                  name="confirmPassword"
+                  type="password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm new password"
+                  error={fieldErrors.confirmPassword}
+                />
                 <Button
                   type="button"
                   variant="primary"
@@ -128,24 +106,3 @@ function MemberResetPasswordPage() {
 }
 
 export default MemberResetPasswordPage;
-
-
-function MenuMember({ className = "" }) {
-  return (
-    <div className="flex lg:flex-col">
-      <Link
-        to={"/member-profile"}
-        className={`text-body-1 text-base-brown-400/70 px-4 py-3 flex gap-3 cursor-pointer ${className}`}
-      >
-        <User size={24} color="#DAD6D1" strokeWidth={2} absoluteStrokeWidth />
-        <span className="items-center">Profile</span>
-      </Link>
-      <button
-        className={`text-body-1 text-base-brown-500 px-4 py-3 flex gap-3 cursor-pointe`}
-      >
-        <IterationCw size={24} color="#75716B" strokeWidth={2} absoluteStrokeWidth />
-        <span className="items-center">Reset password</span>
-      </button>
-    </div>
-  )
-}

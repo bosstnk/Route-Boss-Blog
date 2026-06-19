@@ -1,6 +1,8 @@
 import AdminSidebar from "@/components/AdminSidebar"
 import Button from "@/components/common/Button";
 import FileUploadButton from "@/components/common/FileUploadButton";
+import FormInput from "@/components/common/FormInput";
+import { inputClassName, selectTriggerClassName } from "@/components/common/formInputStyles";
 import { ImageIcon } from "lucide-react";
 import {
     Select,
@@ -27,18 +29,6 @@ function AdminCreateArticlePage() {
     } = useCreatePost();
     const { categories, isLoading } = useCategories();
     const { profile } = useAuth();
-
-    const inputClass = (hasError) =>
-        `w-full bg-white p-3 pl-4 text-body-1 text-base-brown-500 outline-none rounded-lg placeholder:text-base-brown-400 border transition-colors focus:ring-1 disabled:opacity-50 disabled:cursor-not-allowed ${hasError
-            ? "border-brand-red focus:border-brand-red focus:ring-brand-red/70"
-            : "border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
-        }`;
-
-    const selectTriggerClass = (hasError) =>
-        `w-full p-3 pl-4 bg-white rounded-lg font-medium text-base-brown-400 data-[placeholder]:text-base-brown-400 focus:ring-1 ${hasError
-            ? "border border-brand-red focus:border-brand-red focus:ring-brand-red/70"
-            : "border border-base-brown-300 focus:border-base-brown-400 focus:ring-base-brown-300"
-        }`;
 
     return (
         <div className="flex flex-row bg-base-brown-100">
@@ -123,7 +113,7 @@ function AdminCreateArticlePage() {
                             value={form.category_id ? String(form.category_id) : ""}
                             onValueChange={handleCategoryChange}
                         >
-                            <SelectTrigger className={selectTriggerClass(fieldErrors.category_id)}>
+                            <SelectTrigger className={selectTriggerClassName(fieldErrors.category_id)}>
                                 <SelectValue placeholder="Select category" />
                             </SelectTrigger>
 
@@ -154,39 +144,26 @@ function AdminCreateArticlePage() {
                     </div>
 
                     {/* Author */}
-                    <div className="flex flex-col gap-1 w-[480px]">
-                        <label htmlFor="author" className="text-base-brown-400 text-body-1">
-                            Author name
-                        </label>
-                        <input
-                            id="author"
+                    <div className="w-[480px]">
+                        <FormInput
+                            label="Author name"
+                            name="author"
                             type="text"
                             value={profile?.name || ""}
                             disabled
-                            className={inputClass(false)}
                         />
                     </div>
 
                     {/* Title */}
-                    <div className="flex flex-col gap-1">
-                        <label htmlFor="title" className="text-base-brown-400 text-body-1">
-                            Title
-                        </label>
-                        <input
-                            id="title"
-                            type="text"
-                            name="title"
-                            value={form.title}
-                            onChange={handleChange}
-                            placeholder="Article title"
-                            className={inputClass(fieldErrors.title)}
-                        />
-                        {fieldErrors.title && (
-                            <p className="text-body-3 text-brand-red">
-                                {fieldErrors.title}
-                            </p>
-                        )}
-                    </div>
+                    <FormInput
+                        label="Title"
+                        name="title"
+                        type="text"
+                        value={form.title}
+                        onChange={handleChange}
+                        placeholder="Article title"
+                        error={fieldErrors.title}
+                    />
 
                     {/* Description */}
                     <div className="flex flex-col gap-1">
@@ -201,7 +178,7 @@ function AdminCreateArticlePage() {
                             placeholder="Introduction"
                             rows={3}
                             maxLength={120}
-                            className={`${inputClass(fieldErrors.description)} resize-y`}
+                            className={inputClassName(!!fieldErrors.description, "resize-y")}
                         />
                         {fieldErrors.description && (
                             <p className="text-body-3 text-brand-red">
@@ -222,7 +199,7 @@ function AdminCreateArticlePage() {
                             onChange={handleChange}
                             placeholder="Content"
                             rows={10}
-                            className={`${inputClass(fieldErrors.content)} resize-y`}
+                            className={inputClassName(!!fieldErrors.content, "resize-y")}
                         />
                         {fieldErrors.content && (
                             <p className="text-body-3 text-brand-red">

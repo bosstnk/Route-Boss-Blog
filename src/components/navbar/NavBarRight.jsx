@@ -5,7 +5,8 @@ import { UserMenu } from "./UserMenu";
 import { UserAccountMenu } from "@/features/auth/UserAccountMenu";
 import { MobileMenuPanel } from "@/features/auth/MobileMenuPanel";
 import { useAuth } from "@/context/AuthContext";
-import { Skeleton } from "../ui/skeleton";
+import { NavBarSkeleton } from "@/components/navbar/NavBarSkeleton";
+import { NavBarSkeletonMobile } from "@/components/navbar/NavBarSkeletonMobile";
 import { NotificationBox } from "@/features/notification/NotificationBox";
 import useNotifications from "@/hooks/useNotifications";
 
@@ -49,7 +50,7 @@ export default function NavBarRight() {
       {/* 🖥️ Desktop */}
       <div className="hidden lg:flex">
         {isLoading ? (
-          <SkeletonDemo />
+          <NavBarSkeleton />
         ) : profile ? (
           <div ref={menuRef} className="relative">
             <UserMenu
@@ -72,7 +73,7 @@ export default function NavBarRight() {
       {/* 📱 Mobile */}
       <div className="lg:hidden flex items-center">
         {isLoading ? (
-          <SkeletonDemoMobile />
+          <NavBarSkeletonMobile />
         ) : (
           <button onClick={() => setOpen(!open)}>
             <Menu size={24} color="#75716B" />
@@ -86,24 +87,4 @@ export default function NavBarRight() {
       </div>
     </div>
   );
-}
-
-
-export function SkeletonDemo() {
-  return (
-    <div className="flex items-center gap-2">
-      <Skeleton className="h-12 w-12 rounded-full bg-[#dad6d1]" />
-      <Skeleton className="h-6 w-[120px] bg-[#dad6d1]" />
-    </div>
-  )
-}
-
-export function SkeletonDemoMobile() {
-  return (
-    <div className="flex flex-col items-center gap-1">
-      <Skeleton className="h-[4px] w-[24px] bg-[#dad6d1]" />
-      <Skeleton className="h-[4px] w-[24px] bg-[#dad6d1]" />
-      <Skeleton className="h-[4px] w-[24px] bg-[#dad6d1]" />
-    </div>
-  )
 }
