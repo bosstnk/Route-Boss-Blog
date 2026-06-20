@@ -2,19 +2,19 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Navigate } from "react-router-dom";
 
-import SignUpSuccessPage from "./auth/SignUpPageSuccess";
+import SignUpSuccessPage from "@/features/auth/pages/SignUpPageSuccess";
 // post
-import LandingPage from "./post/LandingPage";
-import ViewPostPage from "./post/ViewPostPage";
+import LandingPage from "@/features/post/pages/LandingPage";
+import ViewPostPage from "@/features/post/pages/ViewPostPage";
 // member
 import MemberProfilePage from "@/features/user/pages/MemberProfilePage";
 import MemberResetPasswordPage from "@/features/user/pages/MemberResetPasswordPage";
 
 // admin
-import ArticleManagmentPage from "./admin/ArticleManagementPage";
-import AdminLogInPage from "./admin/AdminLogInPage";
-import AdminCreateArticlePage from "./admin/AdminCreateArticlePage";
-import AdminEditArticlePage from "./admin/AdminEditArticlePage";
+import ArticleManagmentPage from "@/features/post/pages/ArticleManagementPage";
+import AdminLogInPage from "@/features/auth/pages/AdminLogInPage";
+import AdminCreateArticlePage from "@/features/post/pages/AdminCreateArticlePage";
+import AdminEditArticlePage from "@/features/post/pages/AdminEditArticlePage";
 import AdminCategoryManagementPage from "@/features/category/pages/AdminCategoryManagementPage";
 import AdminCreateCategoryPage from "@/features/category/pages/AdminCreateCategoryPage";
 import AdminEditCategoryPage from "@/features/category/pages/AdminEditCategoryPage";

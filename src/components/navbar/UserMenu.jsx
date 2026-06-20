@@ -1,5 +1,5 @@
 import { NotificationBell } from "@/features/notification";
-import { UserProfileMenu } from "@/features/auth/UserProfileMenu";
+import { UserProfileMenu } from "@/features/auth";
 
 export function UserMenu({ onToggle, onToggleNoti, profile, hasUnread }) {
   return (

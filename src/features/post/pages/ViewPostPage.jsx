@@ -1,5 +1,5 @@
 import NavBar from "@/components/navbar/NavBar"
-import ViewPost from "@/components/ViewPost"
+import ViewPost from "@/features/post/components/ViewPost"
 import Footer from "@/components/Footer"
 
 function ViewPostPage() {

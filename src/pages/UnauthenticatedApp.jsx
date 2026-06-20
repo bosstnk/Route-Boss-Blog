@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 // post
-import LandingPage from "./post/LandingPage";
-import ViewPostPage from "./post/ViewPostPage";
+import LandingPage from "@/features/post/pages/LandingPage";
+import ViewPostPage from "@/features/post/pages/ViewPostPage";
 // member
-import LogInPage from "./auth/LogInPage";
-import SignUpPage from "./auth/SignUpPage";
+import LogInPage from "@/features/auth/pages/LogInPage";
+import SignUpPage from "@/features/auth/pages/SignUpPage";
 
 
 // shared

@@ -1,9 +1,7 @@
 import { Menu } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { GuestActionsDesktop } from "@/features/auth/GuestActionsDesktop";
+import { GuestActionsDesktop, UserAccountMenu, MobileMenuPanel } from "@/features/auth";
 import { UserMenu } from "./UserMenu";
-import { UserAccountMenu } from "@/features/auth/UserAccountMenu";
-import { MobileMenuPanel } from "@/features/auth/MobileMenuPanel";
 import { useAuth } from "@/context/AuthContext";
 import { NavBarSkeleton } from "@/components/navbar/NavBarSkeleton";
 import { NavBarSkeletonMobile } from "@/components/navbar/NavBarSkeletonMobile";

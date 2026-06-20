@@ -1,5 +1,5 @@
 import NavBar from "@/components/navbar/NavBar"
-import SignUp from "@/components/auth/SignUp"
+import SignUp from "@/features/auth/components/SignUp"
 
 
 function SignUpPage() {

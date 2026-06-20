@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import useCreatePost from "@/hooks/Post/useCreatePost";
+import useCreatePost from "@/features/post/hooks/useCreatePost";
 import { useCategories } from "@/features/category";
 import { useAuth } from "@/context/AuthContext";
 

@@ -1,5 +1,5 @@
-import HeroSection from "@/components/home/HeroSection";
-import ArticleSection from "@/components/home/ArticleSection";
+import HeroSection from "@/features/post/components/HeroSection";
+import ArticleSection from "@/features/post/components/ArticleSection";
 import NavBar from "@/components/navbar/NavBar"
 import Footer from "@/components/Footer";
 

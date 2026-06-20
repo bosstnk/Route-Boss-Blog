@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { BlogCard } from "@/components/common/BlogCard.jsx";
-import { BlogCardSkeleton } from "@/components/common/BlogCardSkeleton.jsx";
+import { BlogCard } from "./BlogCard.jsx";
+import { BlogCardSkeleton } from "./BlogCardSkeleton.jsx";
 import {
   Select,
   SelectContent,
@@ -9,9 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useSuggestions } from "@/hooks/useSearchPost.js";
+import { useSuggestions } from "@/features/post/hooks/useSearchPost.js";
 import { categories } from "@/data/constantData.js";
-import usePosts from "@/hooks/usePosts.js";
+import usePosts from "@/features/post/hooks/usePosts.js";
 import useDebounce from "@/hooks/useDebounce.js";
 import SearchBar from "@/components/common/SearchBar.jsx";
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLogIn } from "@/hooks/auth/useLogIn";
+import { useLogIn } from "@/features/auth/hooks/useLogIn";
 import { Eye, EyeClosed } from 'lucide-react';
 import usePasswordVisibility from "@/hooks/usePasswordVisibility";
 import Button from "@/components/common/Button";

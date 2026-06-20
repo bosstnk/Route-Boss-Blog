@@ -1,5 +1,5 @@
 import NavBar from "@/components/navbar/NavBar"
-import LogIn from "@/components/auth/LogIn";
+import LogIn from "@/features/auth/components/LogIn";
 
 function LogInPage() {
     return (

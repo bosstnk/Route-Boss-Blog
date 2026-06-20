@@ -1,4 +1,4 @@
-import AdminLogIn from "@/components/AdminLogIn"
+import AdminLogIn from "@/features/auth/components/AdminLogIn"
 
 function AdminLogInPage() {
     return (

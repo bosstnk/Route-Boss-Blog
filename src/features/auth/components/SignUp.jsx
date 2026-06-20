@@ -1,4 +1,4 @@
-import { useSignUp } from "@/hooks/auth/useSignUp";
+import { useSignUp } from "@/features/auth/hooks/useSignUp";
 import { Link } from "react-router-dom";
 import Button from "@/components/common/Button";
 import FormInput from "@/components/common/FormInput";

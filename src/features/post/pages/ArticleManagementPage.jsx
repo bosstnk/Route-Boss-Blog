@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import useAdminPosts from "@/hooks/useAdminPosts";
-import useDeletePost from "@/hooks/Post/useDeletePost";
+import useAdminPosts from "@/features/post/hooks/useAdminPosts";
+import useDeletePost from "@/features/post/hooks/useDeletePost";
 import { useCategories } from "@/features/category";
 import useDebounce from "@/hooks/useDebounce";
 import SearchInput from "@/components/common/SearchInput";
