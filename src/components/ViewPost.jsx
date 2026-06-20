@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import Comments from "./post/Comment";
+import { Comment, useComments } from "@/features/comment";
 import LikeShare from "./post/LikeShare";
 import AuthorProfile from "./post/AuthorProfile";
 import usePost from "@/hooks/usePost";
 import useToggleLike from "@/hooks/useToggleLike";
 import LoadingScreen from "./common/LoadingScreen";
 import PostContent from "./post/PostContent";
-import useComments from "@/hooks/Comment/useComments";
 import ModalGuest from "./common/ModalGuest";
 
 
@@ -52,7 +51,7 @@ export default function ViewPost() {
                         onRequireAuth={openAlertIfGuest}
                         onLike={toggleLike}
                     />
-                    <Comments
+                    <Comment
                         postId={postId}
                         comments={comments}
                         refetch={refetch}

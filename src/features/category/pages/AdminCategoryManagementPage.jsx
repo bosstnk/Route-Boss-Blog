@@ -1,8 +1,8 @@
 import AdminSidebar from "@/components/AdminSidebar";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import useCategories from "@/hooks/Category/useCategories";
-import useDeleteCategory from "@/hooks/Category/useDeleteCategory";
+import useCategories from "@/features/category/hooks/useCategories";
+import useDeleteCategory from "@/features/category/hooks/useDeleteCategory";
 import useDebounce from "@/hooks/useDebounce";
 import Modal from "@/components/common/Modal";
 import SearchInput from "@/components/common/SearchInput";

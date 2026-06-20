@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import useAdminPosts from "@/hooks/useAdminPosts";
 import useDeletePost from "@/hooks/Post/useDeletePost";
-import useCategories from "@/hooks/Category/useCategories";
+import { useCategories } from "@/features/category";
 import useDebounce from "@/hooks/useDebounce";
 import SearchInput from "@/components/common/SearchInput";
 import Modal from "@/components/common/Modal";

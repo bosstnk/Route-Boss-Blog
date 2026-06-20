@@ -6,7 +6,7 @@ const items = [
   { key: "reset", to: "/member-reset-password", label: "Reset password", Icon: IterationCw },
 ];
 
-export function MenuMember({ active = "profile", className = "" }) {
+export function MemberSideMenu({ active = "profile", className = "" }) {
   return (
     <div className={`flex lg:flex-col ${className}`}>
       {items.map((item) => (
@@ -25,4 +25,4 @@ export function MenuMember({ active = "profile", className = "" }) {
   );
 }
 
-export default MenuMember;
+export default MemberSideMenu;

@@ -1,4 +1,4 @@
-import useCreateComment from "@/hooks/Comment/useCreateComment";
+import useCreateComment from "@/features/comment/hooks/useCreateComment";
 import Button from "@/components/common/Button";
 
 function Comments({ comments, postId, refetch, onRequireAuth }) {

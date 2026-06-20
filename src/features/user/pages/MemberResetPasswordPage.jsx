@@ -1,10 +1,10 @@
 import NavBar from "@/components/navbar/NavBar";
 import avatarProfile from "@/assets/images/user-profile.png"
-import useResetPassword from "@/hooks/user/useResetPassword";
+import useResetPassword from "@/features/user/hooks/useResetPassword";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
-import MenuMember from "@/components/common/MenuMember";
+import MemberSideMenu from "@/features/user/components/MemberSideMenu";
 import FormInput from "@/components/common/FormInput";
 import { useState } from "react";
 
@@ -42,7 +42,7 @@ function MemberResetPasswordPage() {
 
           <div className="lg:flex lg:gap-12 lg:mt-8">
             <div className="hidden lg:block">
-              <MenuMember active="reset" />
+              <MemberSideMenu active="reset" />
             </div>
 
             <div className="bg-base-brown-200 px-4 pt-6 pb-10 space-y-6 lg:p-10 lg:rounded-2xl lg:grow">

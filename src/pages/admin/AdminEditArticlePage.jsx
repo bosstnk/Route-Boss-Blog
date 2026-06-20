@@ -16,7 +16,7 @@ import AdminSidebar from "@/components/AdminSidebar";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import usePost from "@/hooks/usePost";
-import useCategories from "@/hooks/Category/useCategories";
+import { useCategories } from "@/features/category";
 import useUpdatePost from "@/hooks/Post/useUpdatePost";
 import useDeletePost from "@/hooks/Post/useDeletePost";
 import { showToast } from "@/components/common/showToast";

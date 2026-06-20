@@ -12,7 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import useCreatePost from "@/hooks/Post/useCreatePost";
-import useCategories from "@/hooks/Category/useCategories";
+import { useCategories } from "@/features/category";
 import { useAuth } from "@/context/AuthContext";
 
 function AdminCreateArticlePage() {

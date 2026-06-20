@@ -7,19 +7,19 @@ import SignUpSuccessPage from "./auth/SignUpPageSuccess";
 import LandingPage from "./post/LandingPage";
 import ViewPostPage from "./post/ViewPostPage";
 // member
-import MemberProfilePage from "./user/MemberProfilePage";
-import MemberResetPasswordPage from "./user/MemberResetPasswordPage";
+import MemberProfilePage from "@/features/user/pages/MemberProfilePage";
+import MemberResetPasswordPage from "@/features/user/pages/MemberResetPasswordPage";
 
 // admin
 import ArticleManagmentPage from "./admin/ArticleManagementPage";
 import AdminLogInPage from "./admin/AdminLogInPage";
 import AdminCreateArticlePage from "./admin/AdminCreateArticlePage";
 import AdminEditArticlePage from "./admin/AdminEditArticlePage";
-import AdminCategoryManagementPage from "./admin/AdminCategoryManagementPage";
-import AdminCreateCategoryPage from "./admin/AdminCreateCategoryPage";
-import AdminEditCategoryPage from "./admin/AdminEditCategoryPage";
-import AdminProfilePage from "./admin/AdminProfilePage";
-import AdminResetPasswordPage from "./admin/AdminResetPasswordPage";
+import AdminCategoryManagementPage from "@/features/category/pages/AdminCategoryManagementPage";
+import AdminCreateCategoryPage from "@/features/category/pages/AdminCreateCategoryPage";
+import AdminEditCategoryPage from "@/features/category/pages/AdminEditCategoryPage";
+import AdminProfilePage from "@/features/user/pages/AdminProfilePage";
+import AdminResetPasswordPage from "@/features/user/pages/AdminResetPasswordPage";
 import AdminNotificationPage from "@/features/notification/pages/AdminNotificationPage";
 
 // shared

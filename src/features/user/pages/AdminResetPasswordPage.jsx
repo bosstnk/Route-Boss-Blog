@@ -3,7 +3,7 @@ import Button from "@/components/common/Button";
 import Modal from "@/components/common/Modal";
 import FormInput from "@/components/common/FormInput";
 import { useState } from "react";
-import useResetPassword from "@/hooks/user/useResetPassword";
+import useResetPassword from "@/features/user/hooks/useResetPassword";
 
 export default function AdminResetPasswordPage() {
     const { form, handleChange, handleSubmit, isLoading, fieldErrors } = useResetPassword();

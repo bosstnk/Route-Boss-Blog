@@ -6,7 +6,7 @@ import { validateCategoryForm } from "@/utils/validateForm";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-function useEditCategory() {
+function useUpdateCategory() {
 
   const { categoryId } = useParams();
   const navigate = useNavigate();
@@ -108,4 +108,4 @@ function useEditCategory() {
   };
 }
 
-export default useEditCategory;
+export default useUpdateCategory;

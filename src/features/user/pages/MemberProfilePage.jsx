@@ -1,8 +1,8 @@
 import NavBar from "@/components/navbar/NavBar";
 import Button from "@/components/common/Button";
-import MenuMember from "@/components/common/MenuMember";
+import MemberSideMenu from "@/features/user/components/MemberSideMenu";
 import FormInput from "@/components/common/FormInput";
-import useUpdateProfile from "@/hooks/user/useUpdateProfile";
+import useUpdateProfile from "@/features/user/hooks/useUpdateProfile";
 import avatarProfile from "@/assets/images/user-profile.png"
 import FileUploadButton from "@/components/common/FileUploadButton";
 import { useAuth } from "@/context/AuthContext";
@@ -42,7 +42,7 @@ function MemberProfilePage() {
           <div className="lg:flex lg:gap-12 lg:mt-8">
             {/* Sidebar */}
             <div className="hidden lg:block">
-              <MenuMember active="profile" />
+              <MemberSideMenu active="profile" />
             </div>
 
             {/* Content */}

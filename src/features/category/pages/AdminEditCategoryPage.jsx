@@ -1,9 +1,9 @@
 import AdminSidebar from "@/components/AdminSidebar";
 import Button from "@/components/common/Button";
 import FormInput from "@/components/common/FormInput";
-import useCreateCategory from "@/hooks/Category/useCreateCategory";
+import useUpdateCategory from "@/features/category/hooks/useUpdateCategory";
 
-function AdminCreateCategoryPage() {
+function AdminEditCategoryPage() {
 
   const {
     name,
@@ -11,7 +11,7 @@ function AdminCreateCategoryPage() {
     handleSubmit,
     isLoading,
     errors
-  } = useCreateCategory();
+  } = useUpdateCategory();
 
   return (
     <div className="flex h-screen bg-base-brown-100">
@@ -23,7 +23,7 @@ function AdminCreateCategoryPage() {
         <div className="flex justify-between items-center py-6 px-[60px] border-b border-b-base-brown-300">
 
           <h2 className="text-2xl font-semibold">
-            Create Category
+            Edit Category
           </h2>
 
           <Button
@@ -54,4 +54,4 @@ function AdminCreateCategoryPage() {
   );
 }
 
-export default AdminCreateCategoryPage;
+export default AdminEditCategoryPage;

@@ -5,7 +5,7 @@ import FileUploadButton from "@/components/common/FileUploadButton";
 import FormInput from "@/components/common/FormInput";
 import { inputClassName } from "@/components/common/formInputStyles";
 
-import useUpdateProfile from "@/hooks/user/useUpdateProfile";
+import useUpdateProfile from "@/features/user/hooks/useUpdateProfile";
 
 function AdminProfilePage() {
     const {
