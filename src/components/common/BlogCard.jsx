@@ -21,7 +21,7 @@ export function BlogCard({ post }) {
       className="
         group
         flex flex-col rounded-2xl
-        transition-all duration-300 ease-out
+        transition-all duration-300 ease-in-out
         hover:-translate-y-2
         hover:shadow-[0_16px_32px_rgba(38,35,30,0.12)]
         cursor-pointer
@@ -40,7 +40,7 @@ export function BlogCard({ post }) {
           alt={title}
           className="
             w-full h-full object-cover
-            transition-transform duration-500 ease-out
+            transition-transform duration-600 ease-out
             group-hover:scale-105
           "
         />

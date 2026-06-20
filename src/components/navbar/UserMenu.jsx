@@ -1,4 +1,4 @@
-import { NotificationBell } from "@/features/notification/NotificationBell";
+import { NotificationBell } from "@/features/notification";
 import { UserProfileMenu } from "@/features/auth/UserProfileMenu";
 
 export function UserMenu({ onToggle, onToggleNoti, profile, hasUnread }) {

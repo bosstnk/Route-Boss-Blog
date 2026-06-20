@@ -29,11 +29,10 @@ function HeroSection() {
         </h2>
 
         <p className="text-body-1 text-base-brown-400">
-          Discover a World of Knowledge at Your Fingertips.
-          Your Daily Dose of Inspiration and Information.
+          Stories, perspectives, and lessons from a journey still in progress.
         </p>
       </div>
-      
+
       {/* CENTER : Image */}
       <div className="relative w-[343px] h-[470px] lg:w-[386px] lg:h-[529px]">
 
@@ -161,13 +160,13 @@ function HeroSection() {
         </p>
 
         <p className="mt-2 text-body-1 text-base-brown-400">
-          I am a pet enthusiast and freelance writer who specializes in animal
-          behavior and care. With a deep love for cats, I enjoy sharing insights
-          on feline companionship and wellness.
+          I love learning new things, and I enjoy listening to people and hearing different perspectives because everyone has a unique story and a different way of seeing the world.
           <br />
           <br />
-          When I’m not writing, I spend time volunteering at my local animal
-          shelter, helping cats find loving homes.
+          This space is where I share the lessons and experiences I've gained along the way. My hope is that these stories can inspire someone, help them through a difficult time, or simply remind them that they're not alone. If even one person finds comfort or encouragement here, then it's worth sharing.
+          <br />
+          <br />
+          And maybe one day, these words will remind me to keep going too.
         </p>
       </div>
     </section>

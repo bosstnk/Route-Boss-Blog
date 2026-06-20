@@ -3,9 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { User, IterationCw, LogOut, SquareArrowOutUpRight } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useState, useEffect, useRef } from "react";
-import { NotificationBell } from "../notification/NotificationBell";
-import { NotificationBox } from "../notification/NotificationBox";
-import useNotifications from "@/hooks/useNotifications";
+import { NotificationBell, NotificationBox, useNotifications } from "@/features/notification";
 
 export function MobileMenuPanel({ open, onClose }) {
   const { profile, logout } = useAuth();

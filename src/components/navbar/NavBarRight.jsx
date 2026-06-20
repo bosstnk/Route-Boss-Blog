@@ -7,8 +7,7 @@ import { MobileMenuPanel } from "@/features/auth/MobileMenuPanel";
 import { useAuth } from "@/context/AuthContext";
 import { NavBarSkeleton } from "@/components/navbar/NavBarSkeleton";
 import { NavBarSkeletonMobile } from "@/components/navbar/NavBarSkeletonMobile";
-import { NotificationBox } from "@/features/notification/NotificationBox";
-import useNotifications from "@/hooks/useNotifications";
+import { NotificationBox, useNotifications } from "@/features/notification";
 
 export default function NavBarRight() {
   const { isLoading, profile } = useAuth();

@@ -20,7 +20,7 @@ import AdminCreateCategoryPage from "./admin/AdminCreateCategoryPage";
 import AdminEditCategoryPage from "./admin/AdminEditCategoryPage";
 import AdminProfilePage from "./admin/AdminProfilePage";
 import AdminResetPasswordPage from "./admin/AdminResetPasswordPage";
-import AdminNotificationPage from "./admin/AdminNotificationPage";
+import AdminNotificationPage from "@/features/notification/pages/AdminNotificationPage";
 
 // shared
 import NotFoundPage from "./NotFoundPage";
