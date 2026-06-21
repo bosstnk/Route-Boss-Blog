@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-import { validateLoginForm } from "@/utils/validateForm";
+import { validateLoginForm } from "@/shared/utils/validateForm";
 import { useAuth } from "@/context/AuthContext";
-import { showToast } from "@/components/common/showToast";
+import { showToast } from "@/shared/components/common/showToast";
 
 export function useLogIn() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;

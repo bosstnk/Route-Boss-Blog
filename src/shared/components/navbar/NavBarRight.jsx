@@ -3,8 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { GuestActionsDesktop, UserAccountMenu, MobileMenuPanel } from "@/features/auth";
 import { UserMenu } from "./UserMenu";
 import { useAuth } from "@/context/AuthContext";
-import { NavBarSkeleton } from "@/components/navbar/NavBarSkeleton";
-import { NavBarSkeletonMobile } from "@/components/navbar/NavBarSkeletonMobile";
+import { NavBarSkeleton } from "@/shared/components/navbar/NavBarSkeleton";
+import { NavBarSkeletonMobile } from "@/shared/components/navbar/NavBarSkeletonMobile";
 import { NotificationBox, useNotifications } from "@/features/notification";
 
 export default function NavBarRight() {

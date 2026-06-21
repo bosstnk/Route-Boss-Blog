@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { showToast } from "@/components/common/showToast";
+import { showToast } from "@/shared/components/common/showToast";
 
 function useDeletePost() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;

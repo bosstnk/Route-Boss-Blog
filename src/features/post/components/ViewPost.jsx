@@ -6,9 +6,9 @@ import LikeShare from "./LikeShare";
 import AuthorProfile from "./AuthorProfile";
 import usePost from "@/features/post/hooks/usePost";
 import useToggleLike from "@/features/post/hooks/useToggleLike";
-import LoadingScreen from "@/components/common/LoadingScreen";
+import LoadingScreen from "@/shared/components/common/LoadingScreen";
 import PostContent from "./PostContent";
-import ModalGuest from "@/components/common/ModalGuest";
+import ModalGuest from "@/shared/components/common/ModalGuest";
 
 
 export default function ViewPost() {

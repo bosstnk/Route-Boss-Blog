@@ -1,6 +1,6 @@
-import NavBar from "@/components/navbar/NavBar"
+import NavBar from "@/shared/components/navbar/NavBar"
 import ViewPost from "@/features/post/components/ViewPost"
-import Footer from "@/components/Footer"
+import Footer from "@/shared/components/common/Footer"
 
 function ViewPostPage() {
     return (

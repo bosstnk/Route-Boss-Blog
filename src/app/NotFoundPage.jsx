@@ -1,8 +1,8 @@
-import NavBar from "@/components/navbar/NavBar"
-import Footer from "@/components/Footer";
+import NavBar from "@/shared/components/navbar/NavBar"
+import Footer from "@/shared/components/common/Footer";
 import { CircleAlert } from "lucide-react";
 import { Link } from "react-router-dom";
-import Button from "@/components/common/Button";
+import Button from "@/shared/components/common/Button";
 
 function NotFoundPage() {
   return (

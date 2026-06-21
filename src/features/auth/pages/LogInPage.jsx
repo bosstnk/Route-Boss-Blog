@@ -1,4 +1,4 @@
-import NavBar from "@/components/navbar/NavBar"
+import NavBar from "@/shared/components/navbar/NavBar"
 import LogIn from "@/features/auth/components/LogIn";
 
 function LogInPage() {

@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { formatDate } from "@/utils/formatDate";
+import { formatDate } from "@/shared/utils/formatDate";
 
 function PostContent({ post }) {
   return (

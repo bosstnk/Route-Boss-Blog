@@ -1,7 +1,7 @@
-import NavBar from "@/components/navbar/NavBar"
+import NavBar from "@/shared/components/navbar/NavBar"
 import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Button from "@/components/common/Button";
+import Button from "@/shared/components/common/Button";
 
 function SignUpSuccessPage() {
     const navigate = useNavigate();

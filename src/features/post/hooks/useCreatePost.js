@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { showToast } from "@/components/common/showToast";
-import { validateCreatePostForm } from "@/utils/validateForm";
+import { showToast } from "@/shared/components/common/showToast";
+import { validateCreatePostForm } from "@/shared/utils/validateForm";
 
 function useCreatePost() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;

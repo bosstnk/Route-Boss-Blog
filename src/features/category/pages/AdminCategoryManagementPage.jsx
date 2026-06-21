@@ -1,11 +1,11 @@
-import AdminSidebar from "@/components/AdminSidebar";
+import AdminSidebar from "@/shared/components/common/AdminSidebar";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import useCategories from "@/features/category/hooks/useCategories";
 import useDeleteCategory from "@/features/category/hooks/useDeleteCategory";
-import useDebounce from "@/hooks/useDebounce";
-import Modal from "@/components/common/Modal";
-import SearchInput from "@/components/common/SearchInput";
+import useDebounce from "@/shared/hooks/useDebounce";
+import Modal from "@/shared/components/common/Modal";
+import SearchInput from "@/shared/components/common/SearchInput";
 import { Link } from "react-router-dom";
 
 

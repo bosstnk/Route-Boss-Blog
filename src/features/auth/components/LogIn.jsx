@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useLogIn } from "@/features/auth/hooks/useLogIn";
 import { Eye, EyeClosed } from 'lucide-react';
-import usePasswordVisibility from "@/hooks/usePasswordVisibility";
-import Button from "@/components/common/Button";
-import FormInput from "@/components/common/FormInput";
+import usePasswordVisibility from "@/shared/hooks/usePasswordVisibility";
+import Button from "@/shared/components/common/Button";
+import FormInput from "@/shared/components/forms/FormInput";
 
 
 function LogIn() {

@@ -1,6 +1,6 @@
-import AdminSidebar from "@/components/AdminSidebar";
-import Button from "@/components/common/Button";
-import FormInput from "@/components/common/FormInput";
+import AdminSidebar from "@/shared/components/common/AdminSidebar";
+import Button from "@/shared/components/common/Button";
+import FormInput from "@/shared/components/forms/FormInput";
 import useUpdateCategory from "@/features/category/hooks/useUpdateCategory";
 
 function AdminEditCategoryPage() {

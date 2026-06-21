@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { validateSignUpForm } from "@/utils/validateForm"
+import { validateSignUpForm } from "@/shared/utils/validateForm"
 import { useAuth } from "@/context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"

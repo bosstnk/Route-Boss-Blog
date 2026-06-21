@@ -1,4 +1,4 @@
-import NavBar from "@/components/navbar/NavBar"
+import NavBar from "@/shared/components/navbar/NavBar"
 import SignUp from "@/features/auth/components/SignUp"
 
 

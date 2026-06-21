@@ -8,12 +8,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import { useSuggestions } from "@/features/post/hooks/useSearchPost.js";
 import { categories } from "@/data/constantData.js";
 import usePosts from "@/features/post/hooks/usePosts.js";
-import useDebounce from "@/hooks/useDebounce.js";
-import SearchBar from "@/components/common/SearchBar.jsx";
+import useDebounce from "@/shared/hooks/useDebounce.js";
+import SearchBar from "@/shared/components/common/SearchBar.jsx";
 
 function ArticleSection() {
 

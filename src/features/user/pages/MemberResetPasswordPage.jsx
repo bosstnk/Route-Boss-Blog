@@ -1,11 +1,11 @@
-import NavBar from "@/components/navbar/NavBar";
+import NavBar from "@/shared/components/navbar/NavBar";
 import avatarProfile from "@/assets/images/user-profile.png"
 import useResetPassword from "@/features/user/hooks/useResetPassword";
 import { useAuth } from "@/context/AuthContext";
-import Button from "@/components/common/Button";
-import Modal from "@/components/common/Modal";
+import Button from "@/shared/components/common/Button";
+import Modal from "@/shared/components/common/Modal";
 import MemberSideMenu from "@/features/user/components/MemberSideMenu";
-import FormInput from "@/components/common/FormInput";
+import FormInput from "@/shared/components/forms/FormInput";
 import { useState } from "react";
 
 function MemberResetPasswordPage() {

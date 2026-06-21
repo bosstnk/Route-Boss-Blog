@@ -1,8 +1,8 @@
-import AdminSidebar from "@/components/AdminSidebar"
-import Button from "@/components/common/Button";
-import FileUploadButton from "@/components/common/FileUploadButton";
-import FormInput from "@/components/common/FormInput";
-import { inputClassName, selectTriggerClassName } from "@/components/common/formInputStyles";
+import AdminSidebar from "@/shared/components/common/AdminSidebar"
+import Button from "@/shared/components/common/Button";
+import FileUploadButton from "@/shared/components/common/FileUploadButton";
+import FormInput from "@/shared/components/forms/FormInput";
+import { inputClassName, selectTriggerClassName } from "@/shared/components/forms/formInputStyles";
 import { ImageIcon } from "lucide-react";
 import {
     Select,
@@ -10,7 +10,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import useCreatePost from "@/features/post/hooks/useCreatePost";
 import { useCategories } from "@/features/category";
 import { useAuth } from "@/context/AuthContext";

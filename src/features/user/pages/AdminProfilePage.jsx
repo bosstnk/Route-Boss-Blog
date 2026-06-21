@@ -1,9 +1,9 @@
-import AdminSidebar from "@/components/AdminSidebar"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Button from "@/components/common/Button";
-import FileUploadButton from "@/components/common/FileUploadButton";
-import FormInput from "@/components/common/FormInput";
-import { inputClassName } from "@/components/common/formInputStyles";
+import AdminSidebar from "@/shared/components/common/AdminSidebar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import Button from "@/shared/components/common/Button";
+import FileUploadButton from "@/shared/components/common/FileUploadButton";
+import FormInput from "@/shared/components/forms/FormInput";
+import { inputClassName } from "@/shared/components/forms/formInputStyles";
 
 import useUpdateProfile from "@/features/user/hooks/useUpdateProfile";
 

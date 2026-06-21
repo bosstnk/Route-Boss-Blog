@@ -1,5 +1,5 @@
 import imageProfile from "@/assets/images/picture-profile.jpg";
-import { formatDate } from "@/utils/formatDate";
+import { formatDate } from "@/shared/utils/formatDate";
 import { useNavigate } from "react-router-dom";
 
 export function BlogCard({ post }) {

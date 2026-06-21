@@ -1,10 +1,10 @@
-import NavBar from "@/components/navbar/NavBar";
-import Button from "@/components/common/Button";
+import NavBar from "@/shared/components/navbar/NavBar";
+import Button from "@/shared/components/common/Button";
 import MemberSideMenu from "@/features/user/components/MemberSideMenu";
-import FormInput from "@/components/common/FormInput";
+import FormInput from "@/shared/components/forms/FormInput";
 import useUpdateProfile from "@/features/user/hooks/useUpdateProfile";
 import avatarProfile from "@/assets/images/user-profile.png"
-import FileUploadButton from "@/components/common/FileUploadButton";
+import FileUploadButton from "@/shared/components/common/FileUploadButton";
 import { useAuth } from "@/context/AuthContext";
 function MemberProfilePage() {
   const {

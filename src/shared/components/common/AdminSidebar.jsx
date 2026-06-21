@@ -1,6 +1,6 @@
 import { User, IterationCw, Bell, LogOut, Globe, FolderOpen, Notebook } from "lucide-react";
 import { Link } from "react-router-dom";
-import useActivePath from "@/hooks/useActivePath";
+import useActivePath from "@/shared/hooks/useActivePath";
 
 function AdminSidebar() {
     const {isActive} = useActivePath()

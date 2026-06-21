@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Button from "@/components/common/Button";
+import Button from "@/shared/components/common/Button";
 
 export default function FileUploadButton({
   children,

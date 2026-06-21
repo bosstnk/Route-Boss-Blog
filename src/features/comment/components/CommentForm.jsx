@@ -1,5 +1,5 @@
 import useCreateComment from "@/features/comment/hooks/useCreateComment";
-import Button from "@/components/common/Button";
+import Button from "@/shared/components/common/Button";
 
 function CommentForm({ postId, refetch, onRequireAuth }) {
   const {

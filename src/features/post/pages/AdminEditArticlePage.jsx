@@ -1,25 +1,25 @@
 import { ImageIcon, Trash2 } from "lucide-react";
-import Button from "@/components/common/Button";
-import FileUploadButton from "@/components/common/FileUploadButton";
-import FormInput from "@/components/common/FormInput";
-import { inputClassName, selectTriggerClassName } from "@/components/common/formInputStyles";
-import Modal from "@/components/common/Modal";
-import LoadingScreen from "@/components/common/LoadingScreen";
+import Button from "@/shared/components/common/Button";
+import FileUploadButton from "@/shared/components/common/FileUploadButton";
+import FormInput from "@/shared/components/forms/FormInput";
+import { inputClassName, selectTriggerClassName } from "@/shared/components/forms/formInputStyles";
+import Modal from "@/shared/components/common/Modal";
+import LoadingScreen from "@/shared/components/common/LoadingScreen";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import AdminSidebar from "@/components/AdminSidebar";
+} from "@/shared/components/ui/select";
+import AdminSidebar from "@/shared/components/common/AdminSidebar";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import usePost from "@/features/post/hooks/usePost";
 import { useCategories } from "@/features/category";
 import useUpdatePost from "@/features/post/hooks/useUpdatePost";
 import useDeletePost from "@/features/post/hooks/useDeletePost";
-import { showToast } from "@/components/common/showToast";
+import { showToast } from "@/shared/components/common/showToast";
 
 function AdminEditArticlePage() {
     const { postId } = useParams();

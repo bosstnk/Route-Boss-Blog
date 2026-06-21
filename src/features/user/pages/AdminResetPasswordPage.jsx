@@ -1,7 +1,7 @@
-import AdminSidebar from "@/components/AdminSidebar";
-import Button from "@/components/common/Button";
-import Modal from "@/components/common/Modal";
-import FormInput from "@/components/common/FormInput";
+import AdminSidebar from "@/shared/components/common/AdminSidebar";
+import Button from "@/shared/components/common/Button";
+import Modal from "@/shared/components/common/Modal";
+import FormInput from "@/shared/components/forms/FormInput";
 import { useState } from "react";
 import useResetPassword from "@/features/user/hooks/useResetPassword";
 

@@ -1,5 +1,5 @@
-import AdminSidebar from "@/components/AdminSidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AdminSidebar from "@/shared/components/common/AdminSidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
 import useNotifications from "@/features/notification/hooks/useNotifications";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";

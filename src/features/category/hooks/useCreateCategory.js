@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "@/components/common/showToast";
-import { validateCategoryForm } from "@/utils/validateForm";
+import { showToast } from "@/shared/components/common/showToast";
+import { validateCategoryForm } from "@/shared/utils/validateForm";
 
 function useCreateCategory() {
 

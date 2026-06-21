@@ -1,5 +1,5 @@
-import AdminSidebar from "@/components/AdminSidebar";
-import Button from "@/components/common/Button";
+import AdminSidebar from "@/shared/components/common/AdminSidebar";
+import Button from "@/shared/components/common/Button";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import {
     Select,
@@ -7,15 +7,15 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from "@/shared/components/ui/select";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import useAdminPosts from "@/features/post/hooks/useAdminPosts";
 import useDeletePost from "@/features/post/hooks/useDeletePost";
 import { useCategories } from "@/features/category";
-import useDebounce from "@/hooks/useDebounce";
-import SearchInput from "@/components/common/SearchInput";
-import Modal from "@/components/common/Modal";
+import useDebounce from "@/shared/hooks/useDebounce";
+import SearchInput from "@/shared/components/common/SearchInput";
+import Modal from "@/shared/components/common/Modal";
 
 function ArticleManagementPage() {
     const [category, setCategory] = useState("all");

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
 
 const truncate = (text, max = 30) =>
   text?.length > max ? text.slice(0, max) + "..." : text;

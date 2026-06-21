@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
-import { validateUpdateProfileForm } from "@/utils/validateForm";
-import { showToast } from "@/components/common/showToast";
+import { validateUpdateProfileForm } from "@/shared/utils/validateForm";
+import { showToast } from "@/shared/components/common/showToast";
 
 export default function useUpdateProfile() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
