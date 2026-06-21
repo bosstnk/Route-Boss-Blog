@@ -40,7 +40,7 @@ export default function ViewPost() {
                 <div>
                     <PostContent post={post} />
                     <AuthorProfile
-                        className="xl:hidden"
+                        className="xl:hidden mx-4 mb-10 mt-6"
                         authorName={post.author}
                         authorPic={post.author_pic}
                         authorBio={post.author_bio}

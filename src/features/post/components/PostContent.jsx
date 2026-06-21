@@ -3,7 +3,7 @@ import { formatDate } from "@/shared/utils/formatDate";
 
 function PostContent({ post }) {
   return (
-    <article className="px-4 pt-6 pb-10 space-y-6 xl:pt-0 xl:px-0">
+    <article className="px-4 pt-6 space-y-6 xl:pt-0 xl:px-0 xl:pb-12">
       <div>
         <div className="flex gap-4 items-center">
           <span className="bg-brand-green-soft rounded-full px-3 py-1 text-body-2 text-brand-green">
