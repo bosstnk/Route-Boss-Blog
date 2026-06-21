@@ -10,10 +10,11 @@ import {
   SelectValue,
 } from "@/shared/components/ui/select";
 import { useSuggestions } from "@/features/post/hooks/useSearchPost.js";
-import { categories } from "@/data/constantData.js";
+import usePopularCategories from "@/features/category/hooks/usePopularCategories.js";
 import usePosts from "@/features/post/hooks/usePosts.js";
 import useDebounce from "@/shared/hooks/useDebounce.js";
 import SearchBar from "@/shared/components/common/SearchBar.jsx";
+import CategoryFilter from "./CategoryFilter.jsx";
 
 function ArticleSection() {
 
@@ -22,6 +23,10 @@ function ArticleSection() {
   const [showDropdown, setShowDropdown] = useState(false);
   const debouncedKeyword = useDebounce(keyword, 100);
   const { posts, isLoading, hasMore, loadMore } = usePosts({ category });
+
+  // "Highlight" = แท็บ "ทั้งหมด" (usePosts ไม่ส่ง filter); ที่เหลือมาจาก DB เรียงตามจำนวนโพสต์
+  const { categories: dbCategories } = usePopularCategories();
+  const categoryNames = ["Highlight", ...dbCategories.map((c) => c.name)];
 
   const navigate = useNavigate();
   const { suggestions, isLoading: SuggestIsLoading } = useSuggestions(debouncedKeyword);
@@ -80,7 +85,7 @@ function ArticleSection() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent position="popper" sideOffset={4}>
-              {categories.map((cat) => (
+              {categoryNames.map((cat) => (
                 <SelectItem key={cat} value={cat} className="transition-colors data-highlighted:bg-base-brown-300/50">
                   {cat}
                 </SelectItem>
@@ -89,21 +94,13 @@ function ArticleSection() {
           </Select>
         </div>
 
-        <nav aria-label="Category tabs" className="hidden lg:flex lg:gap-2">
-          {categories.map((cat) => {
-            return (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
-                disabled={cat === category}
-                className={`px-5 py-3 rounded-lg cursor-pointer text-base-brown-400 text-body-1 ${cat === category
-                  ? "bg-base-brown-300 text-base-brown-500"
-                  : "hover:bg-base-brown-300/40"
-                  }`}>{cat}</button>
-
-            );
-          })}
-        </nav>
+        <div className="hidden lg:flex">
+          <CategoryFilter
+            categories={categoryNames}
+            activeCategory={category}
+            onChange={setCategory}
+          />
+        </div>
       </div>
 
       <div className="px-4 pt-6 pb-13 flex flex-col lg:p-0 lg:mt-12">

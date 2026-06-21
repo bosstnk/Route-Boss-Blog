@@ -16,12 +16,10 @@ export function useSuggestions (keyword) {
                 try {
                     const responsive = await axios.get(`${API_BASE_URL}/posts?keyword=${keyword}`)
                     setState({suggestions: responsive.data.posts ?? [], isLoading: false, isError: false})
-                    console.log(state)
-                } catch (error) {
+                } catch {
                     setState({suggestions:[] ,isLoading:false, isError:false})
                 }
             }
-            console.log("keyword changed:", keyword);
             fetchSuggestions()
         } else {
             setState({suggestions:[] ,isLoading:false, isError:false})

@@ -17,11 +17,6 @@ function jwtInterceptor() {
   axios.interceptors.response.use(
     (response) => response,
     (error) => {
-      console.log(
-        "❌ API Error:",
-        error.response?.data || error.message
-      );
-
       if (error.response?.status === 401) {
         const isAuthPage = window.location.pathname === "/login";
 
