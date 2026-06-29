@@ -4,8 +4,8 @@ import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "@/context/AuthContext";
 import { BrowserRouter } from "react-router-dom";
-import jwtInterceptor from "./utils/jwtinterceptor";
-import ScrollToTop from "./components/common/ScrollToTop";
+import jwtInterceptor from "@/shared/utils/jwtinterceptor";
+import ScrollToTop from "@/shared/components/common/ScrollToTop";
 
 jwtInterceptor()
 

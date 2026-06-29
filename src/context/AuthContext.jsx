@@ -16,23 +16,15 @@ export function AuthProvider({ children }) {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        console.log("❌ No token found");
         setProfile(null);
         return;
       }
 
       const result = await axios.get(`${API_BASE_URL}/user`);
 
-      console.log("✅ Fetch profile success:", result.data);
-
       setProfile(result.data);
       setIsAuthenticated(true);
-    } catch (error) {
-      console.log(
-        "❌ Fetch profile error:",
-        error.response?.data || error.message
-      );
-
+    } catch {
       setProfile(null);
       setIsAuthenticated(false);
     } finally {
@@ -45,15 +37,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function login(token) {
-    console.log("🔐 Login success");
     localStorage.setItem("token", token);
     setIsAuthenticated(true)
     await fetchProfile();
   }
 
   function logout() {
-    console.log("🚪 Logout");
-
     localStorage.removeItem("token");
     setProfile(null);
     setIsAuthenticated(false)

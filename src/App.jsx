@@ -1,8 +1,8 @@
 import './App.css';
 import { useAuth } from './context/AuthContext';
 import { Toaster } from 'sonner';
-import AuthenticatedApp from './pages/AuthenticatedApp';
-import UnauthenticatedApp from './pages/UnauthenticatedApp';
+import AuthenticatedApp from './app/AuthenticatedApp';
+import UnauthenticatedApp from './app/UnauthenticatedApp';
 
 
 function App() {
