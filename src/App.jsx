@@ -1,5 +1,5 @@
 import './App.css';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './context/useAuth';
 import { Toaster } from 'sonner';
 import AuthenticatedApp from './app/AuthenticatedApp';
 import UnauthenticatedApp from './app/UnauthenticatedApp';

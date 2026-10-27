@@ -26,4 +26,9 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    // ไฟล์ config ที่ root รันใน Node ไม่ใช่ browser (เช่น __dirname ใน vite.config.js)
+    files: ['*.config.js'],
+    languageOptions: { globals: globals.node },
+  },
 ])

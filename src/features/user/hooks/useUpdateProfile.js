@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { validateUpdateProfileForm } from "@/shared/utils/validateForm";
 import { showToast } from "@/shared/components/common/showToast";
 

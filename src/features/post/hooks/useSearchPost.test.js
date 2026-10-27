@@ -27,4 +27,16 @@ describe("useSuggestions", () => {
 
     expect(receivedKeyword).toBe("tips & tricks");
   });
+
+  it("ลบ keyword จนว่าง → suggestions กลับเป็น [] ทันที", async () => {
+    server.use(http.get(`${API}/posts`, () => HttpResponse.json({ posts: [{ id: 1, title: "Cat" }] })));
+    const { result, rerender } = renderHook(({ keyword }) => useSuggestions(keyword), {
+      initialProps: { keyword: "cat" },
+    });
+    await waitFor(() => expect(result.current.suggestions).toHaveLength(1));
+
+    rerender({ keyword: "" });
+
+    expect(result.current).toEqual({ suggestions: [], isLoading: false, isError: false });
+  });
 });
