@@ -14,10 +14,10 @@ export function useSuggestions (keyword) {
             const fetchSuggestions = async () => {
                 setState((prev) => ({...prev, isLoading: true, isError: false}))
                 try {
-                    const responsive = await axios.get(`${API_BASE_URL}/posts?keyword=${keyword}`)
+                    const responsive = await axios.get(`${API_BASE_URL}/posts`, { params: { keyword }})
                     setState({suggestions: responsive.data.posts ?? [], isLoading: false, isError: false})
                 } catch {
-                    setState({suggestions:[] ,isLoading:false, isError:false})
+                    setState({suggestions:[] ,isLoading:false, isError:true})
                 }
             }
             fetchSuggestions()

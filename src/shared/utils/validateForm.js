@@ -2,15 +2,15 @@ export function validateSignUpForm(form) {
   const { name, username, email, password } = form
   const errors = {}
 
-  if (!name.trim()) {
+  if (!name?.trim()) {
     errors.name = "Please enter your full name";
   }
 
-  if (!username.trim()) {
+  if (!username?.trim()) {
     errors.username = "Please enter a username";
   }
 
-  if (!email.trim()) {
+  if (!email?.trim()) {
     errors.email = "Please enter your email address";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase())) {
     errors.email = "Please enter a valid email address";
@@ -29,7 +29,7 @@ export function validateLoginForm(form) {
   const { email, password } = form
   const errors = {}
 
-  if (!email.trim()) {
+  if (!email?.trim()) {
     errors.email = "Please enter your email address";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase())) {
     errors.email = "Please enter a valid email address";
@@ -48,7 +48,7 @@ export function validateCategoryForm(form) {
   const { name } = form
   const errors = {}
 
-  if (!name.trim()) {
+  if (!name?.trim()) {
     errors.name = "Please enter a category name";
   }
 
