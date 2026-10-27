@@ -64,7 +64,7 @@ describe("usePosts (integration กับ API ปลอม)", () => {
     expect(result.current.hasMore).toBe(false);
   });
 
-  it("เปลี่ยนหมวด → กลับไปหน้า 1 และแทนที่โพสต์เดิม (ไม่ต่อท้าย)", async () => {
+  it("เปลี่ยนหมวด → ยิง request ครั้งเดียว (หน้า 1) และแทนที่โพสต์เดิม (ไม่ต่อท้าย)", async () => {
     const calls = setupFakePagedApi();
     const { result, rerender } = renderHook((props) => usePosts(props), {
       initialProps: { category: "Highlight", limit: 2 },
@@ -72,11 +72,13 @@ describe("usePosts (integration กับ API ปลอม)", () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     act(() => result.current.loadMore());
     await waitFor(() => expect(result.current.posts).toHaveLength(4));
+    const before = calls.length; // จำไว้ว่าก่อนเปลี่ยนหมวดยิงไปแล้วกี่ครั้ง
 
     rerender({ category: "Cat", limit: 2 });
-
-    await waitFor(() => expect(calls.at(-1)).toEqual({ page: "1", limit: "2", category: "Cat" }));
     await waitFor(() => expect(result.current.posts.map((p) => p.id)).toEqual([11, 12]));
+
+    // ดูเฉพาะ request ที่เกิดหลังเปลี่ยนหมวด → ต้องมีตัวเดียว และเป็นหน้า 1
+    expect(calls.slice(before)).toEqual([{ page: "1", limit: "2", category: "Cat" }]);
   });
 
   it("API พัง (500) → isError = true", async () => {
