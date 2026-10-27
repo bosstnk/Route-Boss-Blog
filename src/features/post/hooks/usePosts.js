@@ -12,10 +12,13 @@ function usePosts({ category, keyword, limit = 6 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [refetchIndex, setRefetchIndex] = useState(0);
 
-  // reset page เมื่อ filter เปลี่ยน
-  useEffect(() => {
+  // reset page เมื่อ filter เปลี่ยน — ทำตอน render เลย
+  // effect ด้านล่างจะเห็น page = 1 ตั้งแต่รอบแรก ไม่ยิง request ด้วย page เก่า
+  const [prevFilter, setPrevFilter] = useState({ category, keyword });
+  if (prevFilter.category !== category || prevFilter.keyword !== keyword) {
+    setPrevFilter({ category, keyword });
     setPage(1);
-  }, [category, keyword]);
+  }
 
   // fetch เมื่อ page / filter / refetch เปลี่ยน
   useEffect(() => {
