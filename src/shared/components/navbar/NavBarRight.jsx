@@ -52,10 +52,7 @@ export default function NavBarRight() {
           <div ref={menuRef} className="relative">
             <UserMenu
               onToggle={() => { setIsOpen(prev => !prev); setIsOpenNoti(false); }}
-              onToggleNoti={() => {
-                setIsOpenNoti((prev) => !prev);
-                setIsOpen(false);
-              }}
+              onToggleNoti={() => { setIsOpenNoti((prev) => !prev); setIsOpen(false); }}
               profile={profile}
               hasUnread={hasUnread}
             />
