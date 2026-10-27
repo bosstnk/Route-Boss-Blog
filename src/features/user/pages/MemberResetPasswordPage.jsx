@@ -1,7 +1,7 @@
 import NavBar from "@/shared/components/navbar/NavBar";
 import avatarProfile from "@/assets/images/user-profile.png"
 import useResetPassword from "@/features/user/hooks/useResetPassword";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import Button from "@/shared/components/common/Button";
 import Modal from "@/shared/components/common/Modal";
 import MemberSideMenu from "@/features/user/components/MemberSideMenu";

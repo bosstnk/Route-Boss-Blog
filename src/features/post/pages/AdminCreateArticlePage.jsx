@@ -13,7 +13,7 @@ import {
 } from "@/shared/components/ui/select";
 import useCreatePost from "@/features/post/hooks/useCreatePost";
 import { useCategories } from "@/features/category";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 
 function AdminCreateArticlePage() {
 

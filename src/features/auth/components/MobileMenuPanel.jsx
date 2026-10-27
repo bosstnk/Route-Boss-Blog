@@ -1,7 +1,7 @@
 import Button from "@/shared/components/common/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { User, IterationCw, LogOut, SquareArrowOutUpRight } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { useState, useEffect, useRef } from "react";
 import { NotificationBell, NotificationBox, useNotifications } from "@/features/notification";
 

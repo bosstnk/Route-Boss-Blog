@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { validateLoginForm } from "@/shared/utils/validateForm";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { showToast } from "@/shared/components/common/showToast";
 
 export function useLogIn() {

@@ -5,7 +5,7 @@ import FormInput from "@/shared/components/forms/FormInput";
 import useUpdateProfile from "@/features/user/hooks/useUpdateProfile";
 import avatarProfile from "@/assets/images/user-profile.png"
 import FileUploadButton from "@/shared/components/common/FileUploadButton";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 function MemberProfilePage() {
   const {
     form,

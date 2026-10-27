@@ -5,7 +5,8 @@ import { MemoryRouter } from "react-router-dom";
 import { http, HttpResponse } from "msw";
 import { server } from "@/test/msw/server";
 import { API } from "@/test/msw/handlers";
-import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { showToast } from "@/shared/components/common/showToast";
 import LogIn from "./LogIn";
 
